@@ -1,8 +1,8 @@
 # ☕ Giai đoạn 1 — Java Cơ Bản Cho Tester (3 Tuần)
 
-> **Học liệu chính thức — Giai đoạn 1** của giáo trình *Automation Test với Java + Playwright*.
+> **Học liệu chính thức — Giai đoạn 1** của giáo trình *Automation Test với Java + Appium*.
 > **Đối tượng:** Bạn là tester manual, **chưa từng viết code** (hoặc mới bập bẹ). Không sao cả — học liệu này được viết để cầm tay chỉ việc.
-> **Mục tiêu sau 3 tuần:** Đọc, viết và **debug** được code Java ở mức đủ để bắt đầu học Playwright. Đặc biệt là **hiểu Lambda** — thứ Playwright dùng ở khắp nơi.
+> **Mục tiêu sau 3 tuần:** Đọc, viết và **debug** được code Java ở mức đủ để bắt đầu học Appium. Đặc biệt là **hiểu Lambda** — thứ Appium/Selenium dùng ở khắp nơi.
 
 ---
 
@@ -300,43 +300,43 @@ System.out.println(ketQua); // PASS
 Khi cần so sánh **một biến** với **nhiều giá trị cố định**, `switch` gọn hơn `if` dài:
 
 ```java
-public class ChonBrowser {
+public class ChonPlatform {
     public static void main(String[] args) {
-        String browser = "firefox";
+        String platform = "android";
 
-        switch (browser) {
-            case "chrome":
-                System.out.println("Khởi động Chromium");
+        switch (platform) {
+            case "android":
+                System.out.println("Khởi động AndroidDriver");  // ← chạy dòng này
                 break;
-            case "firefox":
-                System.out.println("Khởi động Firefox");  // ← chạy dòng này
+            case "ios":
+                System.out.println("Khởi động IOSDriver");
                 break;
-            case "webkit":
-                System.out.println("Khởi động WebKit (Safari)");
+            case "web":
+                System.out.println("Khởi động ChromeDriver (mobile web)");
                 break;
             default:
-                System.out.println("Browser không hỗ trợ: " + browser);
+                System.out.println("Platform không hỗ trợ: " + platform);
         }
     }
 }
 ```
 
 **Giải thích:**
-- `switch (browser)` → lấy giá trị của `browser` rồi tìm `case` khớp.
+- `switch (platform)` → lấy giá trị của `platform` rồi tìm `case` khớp.
 - `break;` → **bắt buộc** ở cuối mỗi case, nếu quên thì code sẽ "rơi" xuống case kế tiếp (bug khó hiểu).
 - `default:` → trường hợp không khớp case nào (giống `else`).
 
 ### `switch` kiểu mũi tên (Java 14+, gọn và an toàn hơn)
 
 ```java
-String browser = "firefox";
-String ketQua = switch (browser) {
-    case "chrome" -> "Khởi động Chromium";
-    case "firefox" -> "Khởi động Firefox";
-    case "webkit" -> "Khởi động WebKit";
+String platform = "android";
+String ketQua = switch (platform) {
+    case "android" -> "Khởi động AndroidDriver";
+    case "ios" -> "Khởi động IOSDriver";
+    case "web" -> "Khởi động ChromeDriver";
     default -> "Không hỗ trợ";
 };
-System.out.println(ketQua); // Khởi động Firefox
+System.out.println(ketQua); // Khởi động AndroidDriver
 ```
 
 Kiểu `->` **không cần `break`** (không bị "rơi" xuống dưới) và có thể trả về giá trị trực tiếp. Bạn sẽ gặp cả hai kiểu trong thực tế.
@@ -418,7 +418,7 @@ public class DuyetDanhSach {
 }
 ```
 
-Đọc là: "**với mỗi** `sanPham` **trong** `danhSachSanPham`, làm...". Gọn hơn `for` thường và tránh lỗi index. Đây là kiểu vòng lặp bạn sẽ dùng nhiều nhất khi duyệt list element trong Playwright.
+Đọc là: "**với mỗi** `sanPham` **trong** `danhSachSanPham`, làm...". Gọn hơn `for` thường và tránh lỗi index. Đây là kiểu vòng lặp bạn sẽ dùng nhiều nhất khi duyệt list element (kết quả `driver.findElements(...)`) trong Appium.
 
 ### `break` và `continue`
 
@@ -657,7 +657,7 @@ public static int cong(int a, int b, int c) {   // cùng tên, 3 tham số
 // gọi: cong(2, 3) → 5 ;  cong(2, 3, 4) → 9
 ```
 
-Java tự chọn method đúng dựa trên số/kiểu tham số bạn truyền vào. (Playwright dùng overloading rất nhiều — cùng một `click()` có nhiều biến thể.)
+Java tự chọn method đúng dựa trên số/kiểu tham số bạn truyền vào. (Appium/Selenium dùng overloading rất nhiều — cùng một `findElement()` nhận nhiều kiểu locator khác nhau.)
 
 ---
 
@@ -693,7 +693,7 @@ String ten = null;
 System.out.println(ten.length()); // ❌ NullPointerException!
 ```
 
-`null` nghĩa là "chưa trỏ tới gì cả" (hộp rỗng). Gọi method trên `null` → NPE. Trong Playwright, gọi thao tác trên một element chưa tìm thấy hay gây NPE. 👉 Kiểm tra `null` trước khi dùng, hoặc đảm bảo biến đã được gán.
+`null` nghĩa là "chưa trỏ tới gì cả" (hộp rỗng). Gọi method trên `null` → NPE. Trong Appium, gọi thao tác trên một element chưa tìm thấy hay gây NPE (hoặc `NoSuchElementException`). 👉 Kiểm tra `null` trước khi dùng, hoặc đảm bảo biến đã được gán.
 
 ### 4. Truy cập index ngoài phạm vi
 
@@ -1274,7 +1274,7 @@ public class LoginPage extends BasePage {
 - `super.moTrang()` → gọi bản `moTrang()` **của class cha**. `super` = "cha của tôi". Dùng khi muốn giữ hành vi cha rồi bổ sung thêm.
 - Khi gọi `loginPage.moTrang()`, Java chạy bản **của con** (bản đã override).
 
-> Trong Playwright, bạn sẽ override `@Override` method `@BeforeMethod` để mỗi loại test setup khác nhau. Hiểu override từ bây giờ là rất đáng.
+> Trong Appium, bạn sẽ override method `@BeforeMethod` (setup) để mỗi loại test khởi tạo driver/capabilities khác nhau. Hiểu override từ bây giờ là rất đáng.
 
 ---
 
@@ -1287,35 +1287,35 @@ Cả hai đều là cách định nghĩa **"khuôn hợp đồng"** — quy đ�
 **Interface** liệt kê các method mà class thực thi nó **phải có**, nhưng **không** viết nội dung (chỉ khai báo). Ví von: một "chuẩn phích cắm điện" — bất cứ thiết bị nào muốn cắm được đều phải theo chuẩn đó.
 
 ```java
-// FILE: Browser.java
-public interface Browser {
-    void moTrang(String url);   // chỉ khai báo, KHÔNG có thân {}
-    void dongTrinhDuyet();
+// FILE: Platform.java
+public interface Platform {
+    void khoiDong(String appId);   // chỉ khai báo, KHÔNG có thân {}
+    void dongPhien();
 }
 ```
 
 ```java
-// FILE: ChromeBrowser.java — "implements" = cam kết thực thi interface
-public class ChromeBrowser implements Browser {
+// FILE: AndroidPlatform.java — "implements" = cam kết thực thi interface
+public class AndroidPlatform implements Platform {
     @Override
-    public void moTrang(String url) {
-        System.out.println("Chrome mở: " + url);
+    public void khoiDong(String appId) {
+        System.out.println("Android khởi động app: " + appId);
     }
     @Override
-    public void dongTrinhDuyet() {
-        System.out.println("Đóng Chrome");
+    public void dongPhien() {
+        System.out.println("Đóng phiên Android (driver.quit)");
     }
 }
 
-// FILE: FirefoxBrowser.java
-public class FirefoxBrowser implements Browser {
+// FILE: IOSPlatform.java
+public class IOSPlatform implements Platform {
     @Override
-    public void moTrang(String url) {
-        System.out.println("Firefox mở: " + url);
+    public void khoiDong(String appId) {
+        System.out.println("iOS khởi động app: " + appId);
     }
     @Override
-    public void dongTrinhDuyet() {
-        System.out.println("Đóng Firefox");
+    public void dongPhien() {
+        System.out.println("Đóng phiên iOS (driver.quit)");
     }
 }
 ```
@@ -1323,21 +1323,21 @@ public class FirefoxBrowser implements Browser {
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Biến kiểu Browser có thể trỏ tới BẤT KỲ class nào implements nó
-        Browser b1 = new ChromeBrowser();
-        Browser b2 = new FirefoxBrowser();
+        // Biến kiểu Platform có thể trỏ tới BẤT KỲ class nào implements nó
+        Platform p1 = new AndroidPlatform();
+        Platform p2 = new IOSPlatform();
 
-        b1.moTrang("https://saucedemo.com");  // Chrome mở: ...
-        b2.moTrang("https://saucedemo.com");  // Firefox mở: ...
+        p1.khoiDong("com.saucelabs.mydemoapp.android");  // Android khởi động app: ...
+        p2.khoiDong("com.saucelabs.mydemoapp.ios");      // iOS khởi động app: ...
     }
 }
 ```
 
 **Giải thích:**
-- `interface Browser` → định nghĩa **hợp đồng**: bất kỳ browser nào cũng phải biết `moTrang` và `dongTrinhDuyet`.
+- `interface Platform` → định nghĩa **hợp đồng**: bất kỳ nền tảng nào cũng phải biết `khoiDong` và `dongPhien`.
 - Method trong interface **không có thân** (`;` luôn thay vì `{}`).
-- `class ChromeBrowser implements Browser` → cam kết thực thi. **Bắt buộc** viết đầy đủ mọi method trong interface, nếu không sẽ báo lỗi.
-- **Điểm mạnh (polymorphism):** biến kiểu `Browser` có thể trỏ tới `ChromeBrowser` hay `FirefoxBrowser` — cùng cách gọi `moTrang()`, khác nhau ở nội dung. Đây là nền tảng của **Factory Pattern** (chọn browser lúc chạy) ở Giai đoạn 5.
+- `class AndroidPlatform implements Platform` → cam kết thực thi. **Bắt buộc** viết đầy đủ mọi method trong interface, nếu không sẽ báo lỗi.
+- **Điểm mạnh (polymorphism):** biến kiểu `Platform` có thể trỏ tới `AndroidPlatform` hay `IOSPlatform` — cùng cách gọi `khoiDong()`, khác nhau ở nội dung. Đây là nền tảng của **Factory Pattern** (chọn nền tảng lúc chạy) ở Giai đoạn 5.
 
 ### Abstract Class — "Nửa khuôn, nửa thật"
 
@@ -1347,10 +1347,10 @@ public class Main {
 public abstract class BaseTest {
     // Method viết sẵn — dùng chung cho mọi test
     public void setup() {
-        System.out.println("Khởi tạo browser, mở trang chủ");
+        System.out.println("Khởi tạo driver, mở app");
     }
     public void teardown() {
-        System.out.println("Đóng browser, dọn dẹp");
+        System.out.println("Đóng driver, dọn dẹp");
     }
 
     // Method abstract — CHƯA viết, bắt class con phải viết
@@ -1391,9 +1391,9 @@ public class Main {
 | Chứa gì | Chủ yếu khai báo method (hợp đồng) | Có cả method viết sẵn lẫn abstract, có field |
 | Kế thừa | Một class `implements` **nhiều** interface | Chỉ `extends` **một** abstract class |
 | Dùng khi | Nhiều class không liên quan cùng "có khả năng" X | Các class **cùng họ** chia sẻ code chung |
-| Ví dụ automation | `Browser`, `Comparable` | `BasePage`, `BaseTest` |
+| Ví dụ automation | `Platform`, `Comparable` | `BasePage`, `BaseTest` |
 
-Người mới chưa cần phân biệt tinh vi — chỉ cần **nhận ra** hai khái niệm này khi đọc code framework. Trong thực tế, `BasePage`/`BaseTest` thường là class thường hoặc abstract; interface hay gặp ở callback của Playwright (chính là functional interface — Tuần 3!).
+Người mới chưa cần phân biệt tinh vi — chỉ cần **nhận ra** hai khái niệm này khi đọc code framework. Trong thực tế, `BasePage`/`BaseTest` thường là class thường hoặc abstract; interface hay gặp ở callback của Appium/Selenium (ví dụ `ExpectedCondition`, `Function` trong `wait.until` — chính là functional interface, Tuần 3!).
 
 ---
 
@@ -1474,9 +1474,9 @@ Phải `this.username = username;`. Không có `this`, Java hiểu cả hai là 
 
 ```java
 BaseTest t = new BaseTest();  // ❌ không được — abstract
-Browser b = new Browser();    // ❌ không được — interface
+Platform p = new Platform();  // ❌ không được — interface
 ```
-Chỉ tạo object từ **class con cụ thể**: `new LoginTest()`, `new ChromeBrowser()`.
+Chỉ tạo object từ **class con cụ thể**: `new LoginTest()`, `new AndroidPlatform()`.
 
 ### 5. Gọi field/method non-static từ `main` (static)
 
@@ -1517,8 +1517,8 @@ Tạo `BasePage` với field `protected String url` và method `moTrang()` (in "
 **Bài 2.5 (TB–Khó) — Override.**
 Tạo `BasePage` có method `moTrang()` in "BasePage đang mở trang". Tạo `HomePage extends BasePage` **override** `moTrang()`: gọi `super.moTrang()` rồi in thêm "HomePage: chờ banner hiển thị". Chạy và quan sát thứ tự in.
 
-**Bài 2.6 (Khó) — Interface `Browser`.**
-Tạo interface `Browser` với method `moTrang(String url)` và `String tenTrinhDuyet()`. Tạo `ChromeBrowser` và `WebkitBrowser` implements nó. Trong `Main`, tạo một `List<Browser>` chứa cả hai, duyệt qua và gọi `moTrang("https://test.com")` cho từng cái (thể hiện polymorphism).
+**Bài 2.6 (Khó) — Interface `Platform`.**
+Tạo interface `Platform` với method `khoiDong(String appId)` và `String tenPlatform()`. Tạo `AndroidPlatform` và `IOSPlatform` implements nó. Trong `Main`, tạo một `List<Platform>` chứa cả hai, duyệt qua và gọi `khoiDong("com.example.app")` cho từng cái (thể hiện polymorphism).
 
 **Bài 2.7 (Khó) — `static` đếm object.**
 Tạo class `TestCase` với field `private String ten` và một field `static int tongSoTest`. Mỗi lần tạo object `TestCase`, tăng `tongSoTest`. Thêm method `static int getTongSoTest()`. Trong `Main`, tạo 4 object rồi in tổng số test đã tạo.
@@ -1711,32 +1711,32 @@ public class Main {
 }
 ```
 
-**Đáp án 2.6 — Interface `Browser` + polymorphism.**
+**Đáp án 2.6 — Interface `Platform` + polymorphism.**
 ```java
-// FILE: Browser.java
-public interface Browser {
-    void moTrang(String url);
-    String tenTrinhDuyet();
+// FILE: Platform.java
+public interface Platform {
+    void khoiDong(String appId);
+    String tenPlatform();
 }
 
-// FILE: ChromeBrowser.java
-public class ChromeBrowser implements Browser {
+// FILE: AndroidPlatform.java
+public class AndroidPlatform implements Platform {
     @Override
-    public void moTrang(String url) {
-        System.out.println("[Chrome] mở " + url);
+    public void khoiDong(String appId) {
+        System.out.println("[Android] khởi động " + appId);
     }
     @Override
-    public String tenTrinhDuyet() { return "Chrome"; }
+    public String tenPlatform() { return "Android"; }
 }
 
-// FILE: WebkitBrowser.java
-public class WebkitBrowser implements Browser {
+// FILE: IOSPlatform.java
+public class IOSPlatform implements Platform {
     @Override
-    public void moTrang(String url) {
-        System.out.println("[WebKit] mở " + url);
+    public void khoiDong(String appId) {
+        System.out.println("[iOS] khởi động " + appId);
     }
     @Override
-    public String tenTrinhDuyet() { return "WebKit"; }
+    public String tenPlatform() { return "iOS"; }
 }
 
 // FILE: Main.java
@@ -1744,13 +1744,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<Browser> dsBrowser = List.of(new ChromeBrowser(), new WebkitBrowser());
+        List<Platform> dsPlatform = List.of(new AndroidPlatform(), new IOSPlatform());
 
-        for (Browser b : dsBrowser) {
-            System.out.println("Đang chạy trên: " + b.tenTrinhDuyet());
-            b.moTrang("https://test.com");
+        for (Platform p : dsPlatform) {
+            System.out.println("Đang chạy trên: " + p.tenPlatform());
+            p.khoiDong("com.example.app");
         }
-        // Cùng vòng lặp, cùng cách gọi, nhưng mỗi browser hành xử khác nhau
+        // Cùng vòng lặp, cùng cách gọi, nhưng mỗi nền tảng hành xử khác nhau
         // → đây chính là polymorphism (đa hình), nền tảng của Factory Pattern.
     }
 }
@@ -1789,11 +1789,11 @@ public class Main {
 
 # 📅 TUẦN 3 — Java Thực Dụng Cho Automation
 
-**Đây là tuần "vàng".** Những thứ trong tuần này là **thứ Playwright dùng liên tục** mà người mới hay hổng. Đặc biệt là **Lambda** — nếu không hiểu, bạn sẽ copy code Playwright mà không biết mình đang viết gì. Chúng ta sẽ dạy Lambda **thật kỹ**.
+**Đây là tuần "vàng".** Những thứ trong tuần này là **thứ Appium/Selenium dùng liên tục** mà người mới hay hổng. Đặc biệt là **Lambda** — nếu không hiểu, bạn sẽ copy code Appium mà không biết mình đang viết gì. Chúng ta sẽ dạy Lambda **thật kỹ**.
 
 **Nội dung tuần 3:**
 1. **Lambda & Functional Interface (TRỌNG TÂM — dạy kỹ nhất)**
-2. Generics cơ bản (`List<T>`, `ThreadLocal<Page>`)
+2. Generics cơ bản (`List<T>`, `ThreadLocal<AndroidDriver>`)
 3. Enum
 4. Exception handling (`try/catch/finally`, `try-with-resources`)
 5. Đọc/ghi file cơ bản
@@ -1805,20 +1805,20 @@ public class Main {
 
 ## 3.1. ⭐ Lambda & Functional Interface (PHẦN QUAN TRỌNG NHẤT)
 
-> Hãy đọc mục này **chậm**, gõ lại **mọi** ví dụ. Đây là chỗ quyết định bạn có hiểu code Playwright hay không.
+> Hãy đọc mục này **chậm**, gõ lại **mọi** ví dụ. Đây là chỗ quyết định bạn có hiểu code Appium hay không.
 
 ### Bối cảnh: Vì sao phải học Lambda?
 
-Mở tài liệu Playwright Java, bạn sẽ thấy ngay những dòng như:
+Mở tài liệu Appium/Selenium Java, bạn sẽ thấy ngay những dòng như:
 
 ```java
-page.onDialog(dialog -> dialog.accept());
-page.waitForResponse("**/api/users", () -> page.click("#load"));
-page.waitForPopup(() -> page.click("a[target=_blank]"));
-locator.all().forEach(item -> System.out.println(item.textContent()));
+wait.until(driver -> driver.findElement(AppiumBy.accessibilityId("login")).isDisplayed());
+wait.until(d -> d.findElements(AppiumBy.className("android.widget.TextView")).size() > 0);
+wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("username")));
+elements.forEach(e -> System.out.println(e.getText()));
 ```
 
-Những cái `dialog -> dialog.accept()` và `() -> page.click(...)` chính là **lambda**. Nếu bạn không hiểu nó, bạn sẽ bị "khựng" ngay ở test đầu tiên. Vậy nên ta phá vỡ nỗi sợ này ngay bây giờ.
+Những cái `driver -> driver.findElement(...)` và `d -> d.findElements(...).size() > 0` chính là **lambda**. Nếu bạn không hiểu nó, bạn sẽ bị "khựng" ngay ở test đầu tiên (mọi lệnh chờ động `wait.until(...)` đều dùng nó). Vậy nên ta phá vỡ nỗi sợ này ngay bây giờ.
 
 ### Lambda là gì? (giải thích đời thường)
 
@@ -1826,7 +1826,7 @@ Những cái `dialog -> dialog.accept()` và `() -> page.click(...)` chính là 
 
 Ví von: Bạn giao cho người giúp việc một **tờ ghi chú**: "**Khi** có người bấm chuông cửa, **hãy** mở cửa và mời họ vào". Bạn không tự mở cửa ngay — bạn đưa **hướng dẫn** (một hành động) để người khác thực hiện **khi đến lúc**. Lambda chính là tờ ghi chú đó.
 
-Trong Playwright: `page.onDialog(dialog -> dialog.accept())` nghĩa là "**Khi** có hộp thoại (dialog) hiện ra, **hãy** chấp nhận (accept) nó". Bạn không biết khi nào dialog xuất hiện — nên bạn đưa **hành động** cho Playwright giữ, nó sẽ chạy hành động đó **khi** dialog hiện lên. Đây gọi là **callback** (hàm gọi lại).
+Trong Appium: `wait.until(driver -> driver.findElement(AppiumBy.accessibilityId("login")).isDisplayed())` nghĩa là "**Cứ thử đi thử lại cho tới KHI** nút login hiện ra thì thôi". Bạn không biết chính xác khi nào màn hình vẽ xong element — nên bạn đưa **điều kiện chờ** (một hành động trả về true/false) cho `WebDriverWait` giữ, nó sẽ chạy điều kiện đó lặp lại **cho tới khi** thỏa (hoặc hết thời gian chờ). Đây gọi là **callback** (hàm gọi lại) / **điều kiện chờ động**.
 
 ### Functional Interface — "cái khuôn" chứa lambda
 
@@ -1920,7 +1920,7 @@ chay(() -> System.out.println("Hello!"));
 
 **Java tự hiểu:** vì `HanhDong` chỉ có **một** method (`thucHien`), Java biết chắc lambda này là để viết method đó. Nên bạn **không cần** viết lại `new HanhDong()`, `@Override`, tên method, kiểu... Java điền hết giúp. Bạn chỉ cần cung cấp: **(tham số) -> (nội dung)**. Đó chính là lambda.
 
-> 💡 **Chốt ý:** Lambda = anonymous class được **rút gọn tối đa**, chỉ dùng được khi interface có **đúng 1 method** (functional interface). Playwright thiết kế mọi callback của nó là functional interface, chính là để bạn viết được bằng lambda gọn gàng.
+> 💡 **Chốt ý:** Lambda = anonymous class được **rút gọn tối đa**, chỉ dùng được khi interface có **đúng 1 method** (functional interface). Appium/Selenium thiết kế các callback (như `ExpectedCondition`, `Function` trong `wait.until`) là functional interface, chính là để bạn viết được bằng lambda gọn gàng.
 
 ### Cú pháp Lambda — 3 dạng bạn PHẢI thuộc
 
@@ -1932,7 +1932,7 @@ Dùng khi hành động **không cần dữ liệu đầu vào**.
 
 ```java
 () -> System.out.println("Chạy!")
-() -> page.click("#load")          // Playwright: "hãy click nút load"
+() -> driver.findElement(AppiumBy.id("load")).click()   // Appium: "hãy chạm nút load"
 ```
 
 Cặp ngoặc `()` rỗng nghĩa là "không nhận tham số nào".
@@ -1942,12 +1942,12 @@ Cặp ngoặc `()` rỗng nghĩa là "không nhận tham số nào".
 Dùng khi hành động **cần một dữ liệu đầu vào**. Có thể bỏ ngoặc quanh tham số.
 
 ```java
-dialog -> dialog.accept()          // Playwright: "nhận dialog, thì accept nó"
+d -> d.findElement(AppiumBy.id("otp")).isDisplayed()   // Appium: "nhận driver, kiểm tra ô OTP đã hiện chưa"
 name -> System.out.println(name)   // nhận name, thì in ra
 n -> n * 2                         // nhận n, thì trả về n nhân 2
 ```
 
-`dialog` ở đây là **tên tham số** bạn tự đặt (đặt `d` cũng được). Playwright sẽ "trao" object dialog vào đó khi dialog xuất hiện.
+`d` ở đây là **tên tham số** bạn tự đặt (đặt `driver` cũng được). `WebDriverWait` sẽ "trao" đối tượng driver vào đó mỗi lần nó thử lại điều kiện.
 
 #### Dạng 3: `(a, b) -> ...` — NHIỀU tham số
 
@@ -2014,7 +2014,7 @@ Bạn không phải lúc nào cũng tự định nghĩa interface. Java có sẵ
 
 | Interface | Method | Ý nghĩa | Ví dụ lambda |
 |-----------|--------|---------|--------------|
-| `Runnable` | `run()` | Hành động, không input, không output | `() -> page.click("#x")` |
+| `Runnable` | `run()` | Hành động, không input, không output | `() -> driver.findElement(AppiumBy.id("x")).click()` |
 | `Consumer<T>` | `accept(T)` | Nhận 1 input, không trả về ("tiêu thụ") | `s -> System.out.println(s)` |
 | `Supplier<T>` | `get()` | Không input, trả về 1 giá trị ("cung cấp") | `() -> "dữ liệu"` |
 | `Function<T,R>` | `apply(T)` | Nhận T, trả về R (biến đổi) | `s -> s.length()` |
@@ -2050,45 +2050,48 @@ public class FunctionalCoSan {
 
 Đừng cố học thuộc bảng này ngay — chỉ cần **nhận ra** khi gặp. `Predicate` (trả boolean, để lọc) và `Consumer`/`Runnable` (làm hành động) là hay gặp nhất.
 
-### 🎭 LIÊN HỆ TRỰC TIẾP TỚI PLAYWRIGHT (phần "aha")
+### 📱 LIÊN HỆ TRỰC TIẾP TỚI APPIUM (phần "aha")
 
-Bây giờ ta soi lại đúng những dòng Playwright ở đầu mục, và bạn sẽ **hiểu hết**:
+Bây giờ ta soi lại đúng những dòng Appium ở đầu mục, và bạn sẽ **hiểu hết**.
+
+> Các đoạn dưới giả sử đã có: `import io.appium.java_client.AppiumBy;`, `import io.appium.java_client.android.AndroidDriver;`, `import org.openqa.selenium.support.ui.WebDriverWait;`, `import org.openqa.selenium.support.ui.ExpectedConditions;` và một `WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));`.
 
 ```java
-// 1) CALLBACK dialog: "KHI có dialog, hãy accept nó"
-page.onDialog(dialog -> dialog.accept());
+// 1) CHỜ ĐỘNG: "cứ thử lại tới KHI nút login hiện ra thì thôi"
+wait.until(driver -> driver.findElement(AppiumBy.accessibilityId("login")).isDisplayed());
 ```
-- `onDialog(...)` nhận một lambda dạng **1 tham số** (`dialog -> ...`).
-- Playwright giữ lambda này. **Khi** trang bật một hộp thoại (alert/confirm), Playwright trao object `dialog` vào và chạy `dialog.accept()`.
-- Đây đúng là "tờ ghi chú" ta ví von: bạn không biết khi nào dialog hiện, nên đưa **hành động** cho Playwright.
+- `until(...)` nhận một lambda dạng **1 tham số** (`driver -> ...`) trả về `boolean`.
+- `WebDriverWait` giữ lambda này rồi **chạy đi chạy lại** nó (mặc định ~500ms/lần) cho tới khi nó trả về `true` (hoặc hết thời gian chờ thì ném `TimeoutException`). Mỗi lần thử, nó trao object `driver` vào cho bạn dùng.
+- Đây đúng là "tờ ghi chú" ta ví von: bạn không biết chính xác khi nào element vẽ xong, nên đưa **điều kiện** cho Appium tự kiểm tra giúp.
 
 ```java
-// 2) CHỜ CÓ ĐIỀU KIỆN: "hãy click #load, và chờ response từ API users"
-Response res = page.waitForResponse("**/api/users", () -> page.click("#load"));
+// 2) CHỜ DANH SÁCH: "chờ tới khi có ít nhất 1 dòng TextView xuất hiện"
+wait.until(d -> d.findElements(AppiumBy.className("android.widget.TextView")).size() > 0);
 ```
-- Tham số thứ hai là lambda dạng **không tham số** (`() -> page.click("#load")`).
-- Playwright cần **bắt đầu lắng nghe** response *trước*, **rồi mới** thực hiện hành động gây ra request. Nó làm đúng thứ tự đó bằng cách: bật lắng nghe → chạy lambda (`page.click`) → chờ response khớp `**/api/users`.
-- Nếu không có lambda, bạn sẽ dễ click **trước** khi kịp lắng nghe → bỏ lỡ response (một lỗi race condition kinh điển). Lambda giải quyết gọn.
+- Lambda dạng **1 tham số** trả về `boolean`. `findElements` (số nhiều) trả về `List` rỗng nếu chưa có gì — nên `.size() > 0` nghĩa là "đã có ít nhất 1 element".
+- Nếu vội gọi `findElement` (số ít) lúc màn hình chưa render xong, bạn dính `NoSuchElementException` — lỗi kinh điển của mobile khi màn hình load chậm. Lambda + `WebDriverWait` xử lý gọn.
 
 ```java
-// 3) CHỜ POPUP: click link mở tab mới, Playwright trả về Page của popup
-Page popup = page.waitForPopup(() -> page.click("a[target=_blank]"));
+// 3) ExpectedConditions dựng sẵn — bên trong cũng chỉ là lambda được đóng gói giúp bạn
+wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("username")));
 ```
 
 ```java
 // 4) DUYỆT DANH SÁCH element bằng forEach + lambda
-page.locator(".product-name").all()
-    .forEach(item -> System.out.println(item.textContent()));
+List<WebElement> items = driver.findElements(AppiumBy.className("android.widget.TextView"));
+items.forEach(e -> System.out.println(e.getText()));
 ```
-- `.all()` trả về `List<Locator>`. `.forEach(item -> ...)` chạy lambda cho **từng** element: `item` lần lượt là từng locator, in text của nó.
+- `findElements(...)` trả về `List<WebElement>`. `.forEach(e -> ...)` chạy lambda cho **từng** element: `e` lần lượt là từng element, in text của nó.
 
 ```java
-// 5) route/mock API cũng dùng lambda
-page.route("**/api/**", route -> route.fulfill(
-    new Route.FulfillOptions().setBody("{ \"ok\": true }")));
+// 5) Điều kiện chờ phức tạp cũng viết bằng lambda (thân nhiều dòng)
+wait.until(d -> {
+    WebElement el = d.findElement(AppiumBy.id("status"));
+    return el.getText().equals("Thành công");
+});
 ```
 
-> **Chốt lại:** Ở đâu bạn thấy `->` trong code Playwright, hãy đọc là: "**đây là một hành động tôi đưa cho Playwright chạy vào đúng lúc**". Tham số bên trái `->` là "dữ liệu Playwright sẽ trao cho tôi" (dialog, route, response...), phần bên phải là "việc tôi muốn làm với nó". Hiểu tới đây là bạn đã qua được cửa ải khó nhất của người mới. 🎉
+> **Chốt lại:** Ở đâu bạn thấy `->` trong code Appium/Selenium, hãy đọc là: "**đây là một hành động/điều kiện tôi đưa cho `WebDriverWait` (hoặc `forEach`) chạy vào đúng lúc**". Tham số bên trái `->` là "dữ liệu Appium sẽ trao cho tôi" (`driver`, từng `element`...), phần bên phải là "việc tôi muốn làm/kiểm tra với nó". Hiểu tới đây là bạn đã qua được cửa ải khó nhất của người mới. 🎉
 
 ### Method Reference — viết tắt của lambda (biết để đọc code)
 
@@ -2108,7 +2111,7 @@ list.forEach(System.out::println);          // method reference — giống hệ
 
 ---
 
-## 3.2. Generics Cơ Bản (`List<T>`, `ThreadLocal<Page>`)
+## 3.2. Generics Cơ Bản (`List<T>`, `ThreadLocal<AndroidDriver>`)
 
 Bạn đã dùng generics từ Tuần 1 mà chưa biết tên: `List<String>`, `Map<String, Integer>`. Phần trong `< >` chính là **generics**.
 
@@ -2128,26 +2131,26 @@ String x = ten.get(0);  // ✅ lấy ra chắc chắn là String, không cần �
 
 `T`, `K`, `V`, `R` chỉ là **chữ đại diện cho một kiểu** (T = Type, K = Key, V = Value). `List<T>` nghĩa là "list chứa kiểu T nào đó". Khi dùng thật, `T` được thay bằng kiểu cụ thể: `List<String>`, `List<User>`, `List<Product>`.
 
-### `ThreadLocal<Page>` — bạn sẽ gặp ở framework parallel
+### `ThreadLocal<AndroidDriver>` — bạn sẽ gặp ở framework parallel
 
-Trong automation chạy song song (parallel), mỗi luồng (thread) cần một `Page` **riêng** để không "giẫm chân" nhau. `ThreadLocal<Page>` là "hộp chứa một Page riêng cho mỗi thread".
+Trong automation chạy song song (parallel), mỗi luồng (thread) cần một `AndroidDriver` **riêng** để không "giẫm chân" nhau. `ThreadLocal<AndroidDriver>` là "hộp chứa một driver riêng cho mỗi thread".
 
 ```java
 // Xem trước — sẽ học kỹ ở Giai đoạn 6. Giờ chỉ cần ĐỌC HIỂU cú pháp generics.
 public class DriverManager {
-    private static ThreadLocal<Page> pageThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<AndroidDriver> driverThreadLocal = new ThreadLocal<>();
 
-    public static void setPage(Page page) {
-        pageThreadLocal.set(page);       // đặt Page cho thread hiện tại
+    public static void setDriver(AndroidDriver driver) {
+        driverThreadLocal.set(driver);       // đặt driver cho thread hiện tại
     }
-    public static Page getPage() {
-        return pageThreadLocal.get();    // lấy Page CỦA RIÊNG thread hiện tại
+    public static AndroidDriver getDriver() {
+        return driverThreadLocal.get();      // lấy driver CỦA RIÊNG thread hiện tại
     }
 }
 ```
 
-- `ThreadLocal<Page>` → generics: "một ThreadLocal chứa kiểu `Page`".
-- `.set(page)` / `.get()` → mỗi thread thao tác trên **bản riêng** của nó. Không cần hiểu sâu bây giờ, chỉ cần **không sợ** khi thấy cú pháp `ThreadLocal<Page>` — nó chỉ là generics.
+- `ThreadLocal<AndroidDriver>` → generics: "một ThreadLocal chứa kiểu `AndroidDriver`".
+- `.set(driver)` / `.get()` → mỗi thread thao tác trên **bản riêng** của nó. Không cần hiểu sâu bây giờ, chỉ cần **không sợ** khi thấy cú pháp `ThreadLocal<AndroidDriver>` — nó chỉ là generics.
 
 ### Viết một generic method đơn giản (đọc hiểu là đủ)
 
@@ -2176,35 +2179,33 @@ Cùng một method `layPhanTuDau` chạy được với `List<String>` lẫn `Li
 
 **Enum** là kiểu dữ liệu có **một tập giá trị cố định, có tên rõ ràng**. Ví von: các ngày trong tuần, các hướng (Bắc/Nam/Đông/Tây) — danh sách đóng, không thêm bừa.
 
-Trong automation cực hay dùng cho: **loại browser**, **môi trường** (dev/staging/prod), **loại user**.
+Trong automation cực hay dùng cho: **nền tảng** (Android/iOS), **môi trường** (dev/staging/prod), **loại user**.
 
 ```java
-public enum BrowserType {
-    CHROMIUM,
-    FIREFOX,
-    WEBKIT
+public enum PlatformName {
+    ANDROID,
+    IOS
 }
 ```
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        BrowserType browser = BrowserType.FIREFOX;
+        PlatformName platform = PlatformName.ANDROID;
 
         // Dùng với switch rất gọn và an toàn
-        switch (browser) {
-            case CHROMIUM -> System.out.println("Khởi động Chromium");
-            case FIREFOX  -> System.out.println("Khởi động Firefox");
-            case WEBKIT   -> System.out.println("Khởi động WebKit");
+        switch (platform) {
+            case ANDROID -> System.out.println("Khởi động AndroidDriver");
+            case IOS     -> System.out.println("Khởi động IOSDriver");
         }
     }
 }
 ```
 
-**Vì sao dùng enum thay vì String `"firefox"`?**
-- **An toàn:** `BrowserType.FIREFOX` không thể gõ sai. Còn `"firefox"` dễ gõ nhầm thành `"Firfox"` → bug âm thầm.
+**Vì sao dùng enum thay vì String `"android"`?**
+- **An toàn:** `PlatformName.ANDROID` không thể gõ sai. Còn `"android"` dễ gõ nhầm thành `"Andriod"` → bug âm thầm.
 - **Gợi ý IDE:** IntelliJ liệt kê sẵn các giá trị hợp lệ.
-- **Rõ ràng:** đọc code biết ngay chỉ có 3 loại browser.
+- **Rõ ràng:** đọc code biết ngay chỉ có 2 nền tảng.
 
 ### Enum môi trường — ví dụ thực tế
 
@@ -2281,16 +2282,16 @@ public class TryCatchCoBan {
 
 ```java
 try {
-    System.out.println("Mở kết nối / mở browser");
+    System.out.println("Khởi tạo driver / mở app");
     int x = 5 / 0;                       // ném lỗi
 } catch (ArithmeticException e) {
     System.out.println("Bắt được lỗi: " + e.getMessage());
 } finally {
-    System.out.println("Đóng browser / dọn dẹp");  // LUÔN chạy
+    System.out.println("Đóng driver (quit) / dọn dẹp");  // LUÔN chạy
 }
 ```
 
-`finally` **luôn** chạy — dù có lỗi hay không, dù đã `return`. Dùng để **dọn dẹp** (đóng browser, đóng file, đóng kết nối). Trong automation, `finally` hay dùng để `browser.close()` cho chắc chắn.
+`finally` **luôn** chạy — dù có lỗi hay không, dù đã `return`. Dùng để **dọn dẹp** (đóng driver, đóng file, đóng kết nối). Trong automation, `finally` hay dùng để `driver.quit()` cho chắc chắn.
 
 ### Bắt nhiều loại lỗi
 
@@ -2326,24 +2327,22 @@ public static void datTuoi(int tuoi) {
 
 ### `try-with-resources` — tự động đóng tài nguyên (RẤT QUAN TRỌNG)
 
-Với những thứ cần **đóng lại sau khi dùng** (file, kết nối, và... **`Playwright`**!), Java có cú pháp `try (...)` **tự đóng** giúp bạn — kể cả khi có lỗi.
+Với những thứ cần **đóng lại sau khi dùng** (file, `InputStream`, kết nối DB...), Java có cú pháp `try (...)` **tự đóng** giúp bạn — kể cả khi có lỗi.
 
 ```java
-// Đây CHÍNH LÀ mẫu bạn thấy trong test Playwright đầu tiên!
-try (Playwright playwright = Playwright.create()) {
-    Browser browser = playwright.chromium().launch();
-    Page page = browser.newPage();
-    page.navigate("https://playwright.dev");
-    System.out.println(page.title());
-}   // ← hết try, playwright TỰ ĐỘNG được đóng (không cần gọi .close())
+// Ví dụ: đọc file dữ liệu test — BufferedReader "tự đóng được"
+try (BufferedReader br = new BufferedReader(new FileReader("testdata.csv"))) {
+    String dong = br.readLine();
+    System.out.println("Dòng đầu: " + dong);
+}   // ← hết try, br TỰ ĐỘNG được đóng (không cần gọi .close())
 ```
 
 **Giải thích:**
-- `try (Playwright playwright = Playwright.create())` → mở tài nguyên **trong ngoặc** của `try`.
-- Khi khối `try` kết thúc (dù xong bình thường hay do lỗi), Java **tự gọi `.close()`** cho `playwright`. Không lo quên đóng → không rò rỉ tài nguyên.
-- Điều kiện: tài nguyên phải "đóng được" (implements `AutoCloseable`). `Playwright`, file stream... đều vậy.
+- `try (BufferedReader br = new BufferedReader(...))` → mở tài nguyên **trong ngoặc** của `try`.
+- Khi khối `try` kết thúc (dù xong bình thường hay do lỗi), Java **tự gọi `.close()`** cho `br`. Không lo quên đóng → không rò rỉ tài nguyên.
+- Điều kiện: tài nguyên phải "đóng được" (implements `AutoCloseable`). File stream, `Scanner`, `BufferedReader`... đều vậy.
 
-> 🎯 Đây là lý do test Playwright đầu tiên (xem giáo trình Giai đoạn 3) viết `try (Playwright playwright = Playwright.create()) { ... }`. Giờ bạn hiểu **vì sao** rồi — nó tự đóng Playwright cho bạn.
+> 🎯 Với **`AndroidDriver`**, bạn thường **không** đóng bằng try-with-resources mà gọi `driver.quit()` trong `finally` (hoặc `@AfterMethod`) — xem lại mục `finally` ở trên. Còn try-with-resources là "vũ khí" cho file/stream/kết nối: chỉ cần mở trong `try(...)` là Java tự đóng, khỏi lo rò rỉ tài nguyên.
 
 ---
 
@@ -2519,10 +2518,10 @@ public class StreamCoBan {
 | `.sorted()` | Sắp xếp | |
 | `.anyMatch(đk)` / `.allMatch(đk)` | Có/mọi phần tử thỏa điều kiện? (trả boolean) | |
 
-**Quan sát quan trọng:** mọi tham số của `filter`, `map`, `forEach`... đều là **lambda**. Đây là lý do ta học lambda **trước** stream. Trong Playwright bạn sẽ viết:
+**Quan sát quan trọng:** mọi tham số của `filter`, `map`, `forEach`... đều là **lambda**. Đây là lý do ta học lambda **trước** stream. Trong Appium bạn sẽ viết:
 ```java
-List<String> tenSP = page.locator(".product-name").all().stream()
-    .map(loc -> loc.textContent())
+List<String> tenSP = driver.findElements(AppiumBy.className("android.widget.TextView")).stream()
+    .map(el -> el.getText())
     .collect(Collectors.toList());
 ```
 → "lấy tất cả element tên sản phẩm, biến mỗi cái thành text, thu thành List". Đọc trơn tru nhờ đã hiểu stream + lambda.
@@ -2541,7 +2540,7 @@ Bạn đã gặp `@Override`, `@FunctionalInterface`. Các annotation hay gặp:
 |-----------|---------|
 | `@Override` | "Method này ghi đè method của class cha" — Java kiểm tra giúp |
 | `@FunctionalInterface` | "Interface này chỉ có 1 method" — để dùng lambda |
-| `@Deprecated` | "Cái này lỗi thời, đừng dùng nữa" (như `type()` trong Playwright) |
+| `@Deprecated` | "Cái này lỗi thời, đừng dùng nữa" (như `launchApp()`/`closeApp()` cũ trong Appium) |
 | `@Test` | (JUnit/TestNG) "Đây là một test case cần chạy" — học ở Giai đoạn 2 |
 | `@BeforeEach` / `@BeforeMethod` | "Chạy method này **trước mỗi** test" (setup) |
 | `@SuppressWarnings` | "Bỏ qua cảnh báo này" |
@@ -2556,7 +2555,7 @@ public class LoginTest {
 
     @BeforeEach                       // chạy TRƯỚC mỗi test
     void setup() {
-        System.out.println("Mở browser, vào trang login");
+        System.out.println("Khởi tạo driver, mở màn hình login");
     }
 
     @Test                             // ĐÂY là một test case
@@ -2653,12 +2652,12 @@ Khi vòng lặp chạy 1000 lần mà bạn chỉ quan tâm lúc `i == 500`:
 
 ### Vì sao debug quan trọng với automation?
 
-Khi một test Playwright fail, bạn đặt breakpoint **ngay dòng thao tác lỗi**, chạy Debug, rồi:
+Khi một test Appium fail, bạn đặt breakpoint **ngay dòng thao tác lỗi**, chạy Debug, rồi:
 - Xem **locator** đang trỏ tới cái gì, `getText()` trả về gì thật sự.
-- Dùng **Evaluate Expression** thử `page.locator("#abc").count()` để biết có bao nhiêu element khớp (bắt lỗi strict mode).
+- Dùng **Evaluate Expression** thử `driver.findElements(AppiumBy.id("abc")).size()` để biết có bao nhiêu element khớp locator.
 - Chạy **Step Over** để xem chính xác dòng nào ném exception.
 
-👉 Kỹ năng này giúp bạn **tiết kiệm hàng giờ** so với việc rải `println` rồi chạy đi chạy lại. Hãy tập ngay từ bây giờ trên chương trình Java thường, để tới Playwright là dùng thành thạo.
+👉 Kỹ năng này giúp bạn **tiết kiệm hàng giờ** so với việc rải `println` rồi chạy đi chạy lại. Hãy tập ngay từ bây giờ trên chương trình Java thường, để tới Appium là dùng thành thạo.
 
 > 💡 **Mẹo:** Muốn tạm tắt tất cả breakpoint mà không xóa: nhấn **Mute Breakpoints** (biểu tượng chấm đỏ gạch chéo) trong khung Debug.
 
@@ -2702,13 +2701,13 @@ try { ... } catch (Exception e) { }   // ❌ lỗi biến mất, debug khốn kh
 
 ### 6. Quên đóng tài nguyên (không dùng try-with-resources)
 
-Mở file/browser mà quên đóng → rò rỉ tài nguyên, máy chậm dần, test flaky. Ưu tiên `try (...) { }` để tự đóng.
+Mở file/driver mà quên đóng → rò rỉ tài nguyên, máy chậm dần, test flaky. Ưu tiên `try (...) { }` cho file/stream, và `driver.quit()` trong `finally` cho driver.
 
 ### 7. Nhầm enum với String
 
 ```java
-if (browser == BrowserType.FIREFOX)   // ✅ đúng — enum so sánh bằng ==
-if (browser.equals("FIREFOX"))        // ❌ sai kiểu — browser là enum, không phải String
+if (platform == PlatformName.ANDROID)   // ✅ đúng — enum so sánh bằng ==
+if (platform.equals("ANDROID"))         // ❌ sai kiểu — platform là enum, không phải String
 ```
 Enum so sánh bằng `==` (an toàn), không phải `.equals("...")` với String.
 
@@ -2730,8 +2729,8 @@ Cho functional interface `KiemTra` với method `boolean test(int n)`. Viết **
 **Bài 3.3 (TB) — Predicate lọc tuổi.**
 Dùng `java.util.function.Predicate<Integer>`. Tạo predicate `laNguoiLon` kiểm tra `tuoi >= 18`. Cho `List<Integer> tuoi = List.of(15, 20, 17, 30, 18);`. Duyệt list, dùng `laNguoiLon.test(...)` để in ra những tuổi là người lớn.
 
-**Bài 3.4 (TB) — Enum `BrowserType`.**
-Tạo enum `BrowserType` gồm `CHROMIUM, FIREFOX, WEBKIT`. Viết method `static void khoiDong(BrowserType b)` dùng `switch` (kiểu `->`) in ra thông báo khởi động tương ứng. Gọi với cả 3 giá trị.
+**Bài 3.4 (TB) — Enum `PlatformName`.**
+Tạo enum `PlatformName` gồm `ANDROID, IOS`. Viết method `static void khoiDong(PlatformName p)` dùng `switch` (kiểu `->`) in ra thông báo khởi động tương ứng. Gọi với cả 2 giá trị.
 
 **Bài 3.5 (TB) — Stream lọc + biến đổi.**
 Cho `List<String> emails = List.of("admin@test.com", "guest@demo.io", "bob@test.com", "sam@abc.org");`. Dùng **Stream** để: lọc các email chứa `"@test.com"`, chuyển sang CHỮ HOA, thu về một `List<String>` và in ra.
@@ -2769,11 +2768,11 @@ Dùng Stream để: (a) lọc sản phẩm **còn hàng** và **giá > 100**, (b
 - [ ] Biết **functional interface** là interface có **đúng 1 method**.
 - [ ] Viết được cả 3 dạng lambda: `() -> ...`, `x -> ...`, `(a,b) -> ...`.
 - [ ] Chuyển được một **anonymous class** thành **lambda** tương đương.
-- [ ] **Đọc hiểu** `page.onDialog(dialog -> dialog.accept())` và `page.waitForResponse(url, () -> page.click(...))` — nói được mỗi phần nghĩa là gì.
-- [ ] Hiểu generics `List<T>`, `Map<K,V>` và không "sợ" khi thấy `ThreadLocal<Page>`.
+- [ ] **Đọc hiểu** `wait.until(driver -> driver.findElement(...).isDisplayed())` và `elements.forEach(e -> System.out.println(e.getText()))` — nói được mỗi phần nghĩa là gì.
+- [ ] Hiểu generics `List<T>`, `Map<K,V>` và không "sợ" khi thấy `ThreadLocal<AndroidDriver>`.
 - [ ] Tạo và dùng được **enum** (kèm switch).
 - [ ] Viết được `try/catch/finally` và hiểu `finally` luôn chạy.
-- [ ] Hiểu và dùng được **try-with-resources** (biết vì sao test Playwright viết `try (Playwright... )`).
+- [ ] Hiểu và dùng được **try-with-resources** (tự đóng file/stream) và biết đóng driver bằng `driver.quit()` trong `finally`.
 - [ ] Đọc được file bằng `Files.readAllLines` và tách dòng bằng `.split(",")`.
 - [ ] Viết được stream `filter → map → collect` và biết phải có thao tác kết thúc.
 - [ ] Hiểu **annotation** là "nhãn báo hiệu" cho framework (`@Test`, `@Override`).
@@ -2846,23 +2845,21 @@ public class Bai3_3 {
 }
 ```
 
-**Đáp án 3.4 — Enum `BrowserType`.**
+**Đáp án 3.4 — Enum `PlatformName`.**
 ```java
 public class Bai3_4 {
-    enum BrowserType { CHROMIUM, FIREFOX, WEBKIT }
+    enum PlatformName { ANDROID, IOS }
 
-    static void khoiDong(BrowserType b) {
-        switch (b) {
-            case CHROMIUM -> System.out.println("Khởi động Chromium...");
-            case FIREFOX  -> System.out.println("Khởi động Firefox...");
-            case WEBKIT   -> System.out.println("Khởi động WebKit...");
+    static void khoiDong(PlatformName p) {
+        switch (p) {
+            case ANDROID -> System.out.println("Khởi động AndroidDriver...");
+            case IOS     -> System.out.println("Khởi động IOSDriver...");
         }
     }
 
     public static void main(String[] args) {
-        khoiDong(BrowserType.CHROMIUM);
-        khoiDong(BrowserType.FIREFOX);
-        khoiDong(BrowserType.WEBKIT);
+        khoiDong(PlatformName.ANDROID);
+        khoiDong(PlatformName.IOS);
     }
 }
 ```
@@ -3016,25 +3013,25 @@ C. Chỉ dùng trong constructor  D. Chỉ dùng trong `main`
 **Câu 11.** Một **functional interface** có bao nhiêu method chưa cài đặt (abstract)?
 A. 0  B. **Đúng 1**  C. 2  D. Không giới hạn
 
-**Câu 12.** Lambda `dialog -> dialog.accept()` thuộc dạng nào?
+**Câu 12.** Lambda `driver -> driver.findElement(AppiumBy.id("ok")).click()` thuộc dạng nào?
 A. Không tham số  B. **Một tham số**  C. Hai tham số  D. Không phải lambda
 
-**Câu 13.** Trong `page.waitForResponse("**/api/x", () -> page.click("#go"))`, phần `() -> page.click("#go")` là gì?
-A. Một chuỗi  B. **Một lambda (hành động) Playwright sẽ chạy để kích hoạt request**
+**Câu 13.** Trong `wait.until(d -> d.findElement(AppiumBy.id("go")).isDisplayed())`, phần `d -> d.findElement(AppiumBy.id("go")).isDisplayed()` là gì?
+A. Một chuỗi  B. **Một lambda (điều kiện chờ) `WebDriverWait` sẽ chạy lại tới khi trả về true**
 C. Tên biến  D. Một vòng lặp
 
 **Câu 14.** Cú pháp `List<String>` — phần `<String>` gọi là?
 A. Mảng  B. **Generics** (chỉ định kiểu phần tử)  C. Annotation  D. Lambda
 
-**Câu 15.** Enum `BrowserType { CHROMIUM, FIREFOX, WEBKIT }` — so sánh `b == BrowserType.FIREFOX` là?
-A. Sai, phải dùng `.equals("FIREFOX")`  B. **Đúng, enum so sánh bằng `==`**
+**Câu 15.** Enum `PlatformName { ANDROID, IOS }` — so sánh `p == PlatformName.ANDROID` là?
+A. Sai, phải dùng `.equals("ANDROID")`  B. **Đúng, enum so sánh bằng `==`**
 C. Luôn trả về false  D. Lỗi cú pháp
 
 **Câu 16.** Khối `finally` trong try/catch?
 A. Chỉ chạy khi có lỗi  B. Chỉ chạy khi không lỗi  C. **Luôn chạy dù có lỗi hay không**  D. Không bao giờ chạy
 
-**Câu 17.** `try (Playwright playwright = Playwright.create()) { ... }` có tác dụng đặc biệt gì?
-A. Chạy nhanh hơn  B. **Tự động đóng `playwright` khi hết khối try**  C. Bỏ qua lỗi  D. Lặp lại code
+**Câu 17.** `try (BufferedReader br = new BufferedReader(new FileReader("data.csv"))) { ... }` có tác dụng đặc biệt gì?
+A. Chạy nhanh hơn  B. **Tự động đóng `br` khi hết khối try**  C. Bỏ qua lỗi  D. Lặp lại code
 
 **Câu 18.** Trong Stream, chuỗi `.filter(...).map(...)` **chưa chạy** cho tới khi?
 A. Ngay lập tức  B. **Có thao tác kết thúc như `.collect()` / `.count()` / `.forEach()`**
@@ -3083,7 +3080,7 @@ A. Step Over  B. Resume  C. **Evaluate Expression**  D. Breakpoint
 |-----|--------|-----|--------|
 | 1 | **B** (`2` — chia nguyên) | 11 | **B** (đúng 1) |
 | 2 | **C** (`.equals`) | 12 | **B** (một tham số) |
-| 3 | **B** (`0`) | 13 | **B** (lambda hành động) |
+| 3 | **B** (`0`) | 13 | **B** (lambda điều kiện chờ) |
 | 4 | **A** (`add`) | 14 | **B** (generics) |
 | 5 | **B** (`get`) | 15 | **B** (`==` cho enum) |
 | 6 | **B** (`void`) | 16 | **C** (luôn chạy) |
@@ -3240,7 +3237,7 @@ public class TestReport {
 
 **Java thực dụng (Tuần 3):**
 - [ ] **Hiểu và viết được lambda** (`() ->`, `x ->`, `(a,b) ->`) — *(milestone chính thức)*.
-- [ ] **Đọc hiểu cách Playwright dùng lambda** (`onDialog`, `waitForResponse`).
+- [ ] **Đọc hiểu cách Appium/Selenium dùng lambda** (`wait.until(...)`, `forEach`).
 - [ ] Dùng được enum, generics cơ bản, try/catch, try-with-resources.
 - [ ] Viết được stream `filter/map/collect`.
 - [ ] **Đặt breakpoint và debug một chương trình bằng IntelliJ** — *(milestone chính thức)*.
@@ -3292,9 +3289,10 @@ Cách đọc:
 - JetBrains — Debug your first Java application: https://www.jetbrains.com/help/idea/debugging-your-first-java-application.html
 - JetBrains — Evaluate expressions: https://www.jetbrains.com/help/idea/examining-suspended-program.html
 
-**Liên hệ Playwright (đọc lướt để thấy đích đến — sẽ học kỹ ở Giai đoạn 3):**
-- Playwright Java — Intro: https://playwright.dev/java/docs/intro
-- Playwright Java — API Reference: https://playwright.dev/java/docs/api/class-playwright
+**Liên hệ Appium (đọc lướt để thấy đích đến — sẽ học kỹ ở Giai đoạn 3):**
+- Appium — Tài liệu chính thức: https://appium.io/docs/en/latest/
+- Appium Java Client (GitHub): https://github.com/appium/java-client
+- Selenium — Waits (`WebDriverWait`, `ExpectedConditions`): https://www.selenium.dev/documentation/webdriver/waits/
 
 **Sách:**
 - *Head First Java* (Kathy Sierra & Bert Bates) — cực kỳ hợp cho người mới, dạy OOP trực quan.

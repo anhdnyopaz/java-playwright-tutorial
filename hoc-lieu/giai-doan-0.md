@@ -1,392 +1,403 @@
-# 🧭 Giai đoạn 0 — Mindset, Môi trường & Nền tảng Web
+# 📱 Giai đoạn 0 — Mindset, Môi trường & Nền tảng UI Android
 
-> **Học liệu chính thức — Khóa Automation Test với Java + Playwright**
-> **Đối tượng:** Tester (manual) chưa biết code, mới bắt đầu học automation.
-> **Hệ điều hành thực hành:** macOS.
-> **Thời lượng gợi ý:** ~1 tuần (nhưng hãy đi chậm cho chắc — phần nền tảng này quyết định 80% việc bạn có viết được locator tốt sau này hay không).
+> **Học liệu chính thức — Khóa Automation Test Mobile với Java + Appium**
+> **Đối tượng:** Tester (manual) chưa biết code, mới bắt đầu học automation **mobile**.
+> **Nền tảng trọng tâm:** **Android** (iOS cần Mac + Xcode, sẽ học sau).
+> **Hệ điều hành máy học:** hướng dẫn cài đặt cho **CẢ macOS VÀ Windows**.
+> **Thời lượng gợi ý:** ~1–2 tuần (phần cài môi trường mobile dài hơn web — cứ đi chậm cho chắc; nền tảng này quyết định 80% việc bạn có viết được locator tốt sau này hay không).
 
 ---
 
 ## 📖 Mục lục
 
 1. [Giai đoạn 0 dạy gì và tại sao quan trọng](#0)
-2. [Phần 1 — Mindset Automation (Bài đọc)](#1)
+2. [Phần 1 — Mindset Mobile Automation (Bài đọc)](#1)
 3. [Phần 2 — Cài đặt môi trường](#2)
-   - [Phần 2A — macOS](#2)
+   - [Phần 2A — macOS](#2a)
    - [Phần 2W — Windows](#2w)
-4. [Phần 3 — HTML nền tảng cho Automation](#3)
-5. [Phần 4 — CSS Selector](#4)
-6. [Phần 5 — DOM là gì](#5)
-7. [Phần 6 — Chrome DevTools (F12)](#6)
-8. [Phần 7 — Bài thực hành có hướng dẫn: SauceDemo](#7)
-9. [Phần 8 — Bài tập tự làm](#8)
-10. [Phần 9 — Quiz tự đánh giá](#9)
-11. [Phần 10 — Đáp án bài tập](#10)
-12. [Phần 11 — Đáp án quiz](#11)
-13. [Phần 12 — Checklist Milestone Giai đoạn 0](#12)
-14. [Phần 13 — Tài nguyên tham khảo](#13)
+   - [Phần 2C — Chung cho cả hai hệ (AVD, Appium, Inspector, APK)](#2c)
+4. [Phần 3 — Nền tảng cấu trúc UI Android (View & cây UI)](#3)
+5. [Phần 4 — Thuộc tính định danh & Chiến lược locator Appium](#4)
+6. [Phần 5 — Dùng Appium Inspector (thay cho F12)](#5)
+7. [Phần 6 — Bài thực hành có hướng dẫn: Sauce Labs My Demo App](#6)
+8. [Phần 7 — Bài tập tự làm](#7)
+9. [Phần 8 — Quiz tự đánh giá](#8)
+10. [Phần 9 — Đáp án bài tập](#9)
+11. [Phần 10 — Đáp án quiz](#10)
+12. [Phần 11 — Checklist Milestone Giai đoạn 0](#11)
+13. [Phần 12 — Tài nguyên tham khảo](#12)
 
 ---
 
 <a id="0"></a>
 ## 🎯 Giai đoạn 0 dạy gì và tại sao quan trọng
 
-Bạn sắp học viết code để máy tính **tự click, tự nhập liệu, tự kiểm tra** thay bạn. Nhưng trước khi máy làm được điều đó, **bạn** phải chỉ cho nó: "Hãy click vào **cái nút này**, gõ vào **ô này**". Vấn đề là máy không nhìn màn hình bằng mắt như bạn — nó nhìn trang web qua **cấu trúc code bên trong** (HTML/DOM). Vì vậy:
+Bạn sắp học viết code để máy tính **tự mở app, tự chạm, tự nhập liệu, tự vuốt, tự kiểm tra** trên điện thoại thay bạn. Nhưng trước khi máy làm được điều đó, **bạn** phải chỉ cho nó: "Hãy chạm vào **cái nút này**, gõ vào **ô này**". Vấn đề là máy không nhìn màn hình điện thoại bằng mắt như bạn — nó nhìn app qua **cấu trúc bên trong** (cây các View của Android). Vì vậy:
 
-> **Muốn ra lệnh cho máy thao tác trên trang web, bạn phải biết đọc "bản đồ bên trong" của trang web đó.**
+> **Muốn ra lệnh cho máy thao tác trên app, bạn phải biết đọc "bản đồ bên trong" của màn hình app đó.**
 
-Giai đoạn 0 chính là học đọc bản đồ đó, cộng với chuẩn bị "xưởng làm việc" (môi trường) và "tư duy nghề" (mindset). Cụ thể bạn sẽ:
+Giai đoạn 0 chính là học đọc bản đồ đó, cộng với dựng "xưởng làm việc" (môi trường mobile) và "tư duy nghề" (mindset). Cụ thể bạn sẽ:
 
 | Mục tiêu | Bạn sẽ làm được |
 |----------|-----------------|
-| **Mindset** | Hiểu automation để làm gì, khi nào nên/không nên dùng, bỏ được kỳ vọng sai |
-| **Môi trường** | Cài JDK, IntelliJ, Git, Maven trên macOS và kiểm tra chạy đúng |
-| **HTML** | Đọc hiểu thẻ và thuộc tính của một element bất kỳ |
-| **CSS Selector** | Tự viết được "địa chỉ" trỏ tới một element |
-| **DOM** | Hiểu trang web là một cái cây, và Playwright thao tác trên cái cây đó |
-| **DevTools (F12)** | Inspect element, test selector trong Console, xem Network |
+| **Mindset** | Hiểu automation mobile để làm gì, khi nào nên/không nên dùng, biết đặc thù test mobile, bỏ được kỳ vọng sai |
+| **Môi trường** | Cài JDK, IntelliJ, Android Studio + SDK, tạo máy ảo (emulator), cài Appium 2 + driver, chạy được trên macOS **hoặc** Windows |
+| **Cấu trúc UI Android** | Hiểu app là một **cây View**, đọc được thuộc tính của một element bất kỳ |
+| **Locator Appium** | Tự viết được "địa chỉ" trỏ tới một element bằng `AppiumBy` |
+| **Appium Inspector** | "Soi" cây UI của app, đọc `resource-id`/`content-desc`, tự lấy locator |
 
-Đây **chưa phải** lúc viết test Java. Đây là lúc xây móng. Móng chắc thì nhà cao mới không sập.
+Đây **chưa phải** lúc viết bộ test Java hoàn chỉnh. Đây là lúc xây móng. Móng chắc thì nhà cao mới không sập.
+
+> 🌐➡️📱 **Nếu bạn từng nghe về automation web (Selenium/Playwright):** tin vui là 80% tư duy giống nhau. Chỗ khác biệt lớn nhất: web thao tác trên **DOM/HTML** trong trình duyệt, còn mobile thao tác trên **cây View** của app Android. Ta sẽ học chính cây View đó ở Phần 3–5.
 
 ---
 
 <a id="1"></a>
-## 🧠 Phần 1 — Mindset Automation (Bài đọc)
+## 🧠 Phần 1 — Mindset Mobile Automation (Bài đọc)
 
-### 1.1. Tại sao một tester giỏi nên học automation?
+### 1.1. Tại sao một tester giỏi nên học automation mobile?
 
-Hãy tưởng tượng một ngày làm việc của bạn với vai trò manual tester. Team vừa ra bản build mới. Bạn mở checklist regression 120 test case — login, tìm kiếm, thêm giỏ hàng, thanh toán, đổi mật khẩu, phân trang... Bạn click, nhập, so sánh kết quả, ghi lại. Mất 2 ngày. Xong xuôi thì dev báo: "Anh vừa fix thêm một bug, em test lại từ đầu giúp nhé." Và bạn lại click từ đầu.
+Hãy tưởng tượng một ngày làm việc của bạn với vai trò manual mobile tester. Team vừa ra bản build mới của app. Bạn cầm chiếc điện thoại, mở checklist regression 80 test case — mở app, đăng nhập, tìm sản phẩm, thêm giỏ hàng, thanh toán, đổi mật khẩu, đăng xuất... Bạn chạm, vuốt, nhập, so sánh, chụp màn hình, ghi lại. Rồi sếp nói: "Test lại giúp anh trên con Samsung màn to, con Xiaomi Android 11, và con Pixel Android 14 nữa nhé." Thế là bạn cầm **3 máy**, làm lại **cùng 80 case** cho **từng máy**. Mất 2–3 ngày. Xong xuôi thì dev báo: "Anh vừa fix thêm một bug, em test lại từ đầu giúp nhé."
 
-Việc đó **cần thiết** — nhưng nó lặp đi lặp lại, nhàm chán, và **con người rất dễ sai khi làm việc lặp lại**. Đến case thứ 90 bạn mệt, mắt lướt qua, bỏ sót một lỗi nhỏ. Đó không phải lỗi của bạn — đó là giới hạn tự nhiên của con người.
+Việc đó **cần thiết** — nhưng nó lặp đi lặp lại, nhàm chán, và **con người rất dễ sai khi làm việc lặp lại**. Đến máy thứ 3, case thứ 60, bạn mỏi tay, mắt lướt qua, bỏ sót một lỗi hiển thị nhỏ. Đó không phải lỗi của bạn — đó là giới hạn tự nhiên của con người.
 
-Bây giờ tưởng tượng khác đi: bạn viết một lần bộ script, gõ một lệnh, đi pha cà phê. 8 phút sau quay lại, 120 case đã chạy xong, có báo cáo màu xanh/đỏ rõ ràng, kèm ảnh chụp màn hình chỗ lỗi. Bạn dùng thời gian được giải phóng để làm việc mà **máy không làm được**: khám phá (exploratory testing), test trải nghiệm người dùng, nghĩ ra các kịch bản mới lắt léo.
+Bây giờ tưởng tượng khác đi: bạn viết một lần bộ script Appium, gõ một lệnh, đi pha cà phê. Script tự bật emulator (hoặc nhiều emulator/thiết bị), tự cài app, tự chạy hết 80 case, chụp màn hình chỗ lỗi, xuất báo cáo xanh/đỏ. Bạn dùng thời gian được giải phóng để làm việc mà **máy không làm được**: test cảm giác vuốt/chạm có mượt không, khám phá (exploratory), test tình huống lắt léo trên thiết bị thật.
 
-> **Automation không lấy mất việc của bạn. Nó lấy đi phần việc tẻ nhạt nhất, để trả lại cho bạn phần việc thú vị và có giá trị nhất.**
+> **Automation không lấy mất việc của bạn. Nó lấy đi phần việc tẻ nhạt nhất (bấm đi bấm lại trên nhiều máy), để trả lại cho bạn phần việc thú vị và có giá trị nhất.**
 
-Và về mặt sự nghiệp: automation tester ở Việt Nam hiện có mức lương và cơ hội cao hơn đáng kể so với thuần manual, vì bạn vừa hiểu **nghiệp vụ kiểm thử** vừa biết **lập trình** — một kết hợp mà thị trường luôn thiếu.
+Và về mặt sự nghiệp: automation tester mobile ở Việt Nam hiện còn **hiếm hơn** cả automation web, nên lương và cơ hội rất tốt — bạn vừa hiểu **nghiệp vụ kiểm thử**, vừa biết **lập trình**, lại còn nắm **đặc thù mobile** mà thị trường luôn thiếu người.
 
-### 1.2. Automation vs Manual — không phải cuộc chiến, mà là phân công
+### 1.2. Automation vs Manual trên mobile — không phải cuộc chiến, mà là phân công
 
-Nhiều người mới hiểu lầm rằng "học automation là để thay thế manual". Sai. Hai bên **bổ sung** cho nhau:
+Nhiều người mới hiểu lầm rằng "học automation là để thay thế manual". Sai. Hai bên **bổ sung** cho nhau, đặc biệt trên mobile — nơi cảm giác chạm/vuốt và trải nghiệm rất quan trọng:
 
-| Tiêu chí | Manual Test | Automation Test |
-|----------|-------------|-----------------|
-| **Mạnh ở** | Khám phá, đánh giá UX/cảm giác, case mới, ad-hoc | Lặp lại, regression, chạy nhiều lần, khối lượng lớn |
-| **Yếu ở** | Chậm khi lặp lại, dễ mệt/sai, tốn người | Không "cảm nhận" được đẹp/xấu, khó test case chưa ổn định |
-| **Tốc độ** | Chậm | Rất nhanh |
-| **Chi phí ban đầu** | Thấp (test luôn) | Cao (phải viết code trước) |
-| **Chi phí về sau** | Cao (lặp lại tốn người) | Thấp (chạy lại gần như miễn phí) |
-| **Phù hợp nhất** | Test lần đầu, tính năng đang thay đổi liên tục | Test đã ổn định, chạy đi chạy lại nhiều lần |
+| Tiêu chí | Manual Mobile Test | Automation Mobile Test |
+|----------|--------------------|------------------------|
+| **Mạnh ở** | Cảm nhận UX/gesture, khám phá, test trên thiết bị thật, camera/cảm biến, case mới | Lặp lại, regression, chạy trên **nhiều thiết bị/độ phân giải**, chạy nhiều lần |
+| **Yếu ở** | Chậm khi lặp trên nhiều máy, dễ mệt/sai, tốn người & tốn thiết bị | Không "cảm" được mượt/giật, khó test tính năng đang thay đổi, tốn công dựng ban đầu |
+| **Tốc độ** | Chậm | Rất nhanh (nhất là khi chạy song song nhiều máy ảo) |
+| **Chi phí ban đầu** | Thấp | Cao (phải dựng môi trường + viết code trước) |
+| **Chi phí về sau** | Cao (mỗi bản build lại làm tay trên từng máy) | Thấp (chạy lại gần như miễn phí) |
+| **Phù hợp nhất** | Test lần đầu, cảm quan, tính năng đang thay đổi | Regression đã ổn định, chạy đi chạy lại trên nhiều cấu hình |
 
-**Một ví von:** Manual test giống nếm thử món ăn — cần lưỡi người, cảm nhận, phán đoán. Automation test giống dây chuyền kiểm tra chai nước trong nhà máy — chai nào thiếu nắp thì loại, làm hàng nghìn chai một giờ không mệt. Bạn cần **cả hai** trong một nhà bếp chuyên nghiệp.
+**Một ví von:** Manual test mobile giống lái thử một chiếc xe — cần cảm giác vô-lăng, độ êm, tiếng máy. Automation test giống dây chuyền kiểm tra trong nhà máy ô tô — mỗi chiếc xe chạy qua trạm kiểm đèn, kiểm phanh tự động, hàng trăm chiếc một giờ không mệt. Bạn cần **cả hai** trong một xưởng chuyên nghiệp.
 
 ### 1.3. Không phải test case nào cũng nên automate
 
-Đây là tư duy **quan trọng nhất** của người làm automation chuyên nghiệp. Người mới thường mắc bệnh "automate tất cả mọi thứ" và lãnh hậu quả: tốn hàng tuần viết script cho những case chẳng bao giờ chạy lại, hoặc script gãy liên tục vì tính năng còn đang thay đổi.
+Đây là tư duy **quan trọng nhất** của người làm automation chuyên nghiệp. Người mới thường mắc bệnh "automate tất cả mọi thứ" và lãnh hậu quả: tốn hàng tuần viết script cho những case chẳng bao giờ chạy lại, hoặc script gãy liên tục vì app còn đang thay đổi.
 
 **Tiêu chí ƯU TIÊN automate một case** (càng nhiều dấu ✅ càng nên automate):
 
 - ✅ **Chạy lặp lại nhiều lần** (regression, smoke test mỗi lần build).
-- ✅ **Ổn định** — tính năng đã "chốt", ít thay đổi giao diện/logic.
-- ✅ **Quan trọng / rủi ro cao** — luồng nghiệp vụ cốt lõi (login, thanh toán, đặt hàng).
-- ✅ **Tốn công làm tay** — nhiều bước, nhiều dữ liệu (data-driven: 50 bộ dữ liệu login).
+- ✅ **Ổn định** — màn hình/luồng đã "chốt", ít thay đổi giao diện/logic.
+- ✅ **Quan trọng / rủi ro cao** — luồng nghiệp vụ cốt lõi (đăng nhập, thanh toán, đặt hàng).
+- ✅ **Tốn công làm tay** — nhiều bước, hoặc phải chạy lại trên **nhiều thiết bị/độ phân giải**.
+- ✅ **Data-driven** — cùng một luồng nhưng chạy với 50 bộ dữ liệu.
 - ✅ **Kết quả rõ ràng, kiểm tra được bằng logic** (đúng/sai xác định, không mơ hồ).
-- ✅ **Khó test tay** — ví dụ cần chạy trên 3 trình duyệt, hoặc cần lặp 100 lần.
 
 **Tiêu chí NÊN CÂN NHẮC / KHÔNG nên automate (ít nhất là chưa):**
 
-- ❌ **Case chỉ chạy một lần** (test một tính năng nhỏ sắp bị gỡ bỏ).
-- ❌ **Tính năng đang thay đổi liên tục** — viết xong sáng, chiều gãy.
-- ❌ **Cần đánh giá cảm quan** — "màu này có đẹp không?", "bố cục có dễ nhìn không?".
-- ❌ **Case cực kỳ phức tạp về setup**, chi phí automate lớn hơn lợi ích thu về.
-- ❌ **Captcha, OTP thật, xác thực sinh trắc học** — vốn được thiết kế để chặn máy.
+- ❌ **Case chỉ chạy một lần** (test một tính năng nhỏ sắp bị gỡ).
+- ❌ **Màn hình đang thay đổi liên tục** — viết xong sáng, chiều gãy.
+- ❌ **Cần đánh giá cảm quan** — "animation này có mượt không?", "màu này có đẹp không?", "chạm có đã tay không?".
+- ❌ **Phụ thuộc phần cứng thật** — camera, vân tay, khuôn mặt, NFC, cảm biến, cuộc gọi thật... (emulator không mô phỏng tốt).
+- ❌ **Captcha, OTP thật, sinh trắc học** — vốn được thiết kế để chặn máy.
 
-> **Câu hỏi vàng để tự hỏi trước khi automate một case:** *"Case này sẽ được chạy lại bao nhiêu lần? Nó có ổn định không? Nếu tôi bỏ 3 giờ viết script, tôi có tiết kiệm được nhiều hơn 3 giờ trong tương lai không?"* Nếu câu trả lời là "chỉ chạy 1 lần" hoặc "tính năng còn đổi liên tục" → khoan automate.
+> **Câu hỏi vàng trước khi automate một case:** *"Case này sẽ được chạy lại bao nhiêu lần, trên bao nhiêu thiết bị? Nó có ổn định không? Nếu tôi bỏ 3 giờ viết script, tôi có tiết kiệm được nhiều hơn 3 giờ trong tương lai không?"* Nếu câu trả lời là "chỉ chạy 1 lần" hoặc "màn hình còn đổi liên tục" → khoan automate.
 
-### 1.4. Những kỳ vọng SAI cần bỏ ngay hôm nay
+### 1.4. Đặc thù & thách thức RIÊNG của test mobile (khác web ở đây!)
 
-Người mới bước vào automation thường mang theo vài niềm tin sai lầm, khiến họ nản hoặc đi sai đường. Bỏ chúng đi:
+Test mobile có những thử thách mà test web ít gặp. Biết trước để không bị "sốc":
 
-1. **"Automation là click chuột nâng cao, không cần biết code."**
-   ❌ Sai. **Automation LÀ lập trình.** Bạn sẽ viết code Java thật, dùng vòng lặp, hàm, class. Công cụ record-and-playback (ghi lại thao tác) chỉ giúp lúc đầu, nhưng script tạo ra thường mong manh, khó bảo trì. Muốn đi xa, bạn phải code.
+1. **Rừng thiết bị (device fragmentation).** Android có **hàng nghìn** kiểu máy: Samsung, Xiaomi, Oppo, Pixel... mỗi hãng lại tùy biến giao diện (One UI, MIUI...). Một app chạy đẹp trên Pixel có thể vỡ layout trên Samsung. → Automation giúp bạn chạy **cùng bộ test trên nhiều máy** dễ dàng.
 
-2. **"Học automation là hết flaky test, test luôn xanh."**
-   ❌ Sai. Test tự động vẫn có thể "chập chờn" (flaky) — lúc pass lúc fail dù code không đổi — do trang load chậm, do chờ sai cách, do dữ liệu chồng chéo. **Một phần lớn kỹ năng automation là học cách viết test ỔN ĐỊNH.** Đây là điều phân biệt junior với người đi làm được.
+2. **Nhiều độ phân giải & kích thước màn hình.** Điện thoại nhỏ, điện thoại to, máy tính bảng... Vị trí (toạ độ x,y) của một nút **khác nhau** trên mỗi máy. → Đây là lý do **tuyệt đối tránh** click theo toạ độ cố định; phải dùng **locator** (định danh element) — ta học ở Phần 3–5.
 
-3. **"Viết test một lần là xong, không cần đụng lại."**
-   ❌ Sai. Ứng dụng thay đổi thì test phải cập nhật theo. Test là **code sống**, cần bảo trì. Vì vậy ta học viết test **dễ bảo trì** (Page Object Model, đặt tên rõ ràng...) ngay từ đầu.
+3. **Nhiều phiên bản Android (OS version).** Android 10, 11, 12, 13, 14... hành vi khác nhau (quyền, thông báo, cử chỉ điều hướng). → Cần test trên nhiều API level.
 
-4. **"Cứ automate hết 100% là chuyên nghiệp."**
-   ❌ Sai (đã nói ở 1.3). Automate đúng chỗ mới là chuyên nghiệp. 100% automation là ảo tưởng và lãng phí.
+4. **Cử chỉ (gesture).** Web chủ yếu là click. Mobile có **chạm (tap), chạm giữ (long press), vuốt (swipe), kéo-thả, chụm/mở (pinch zoom), cuộn (scroll)**. Automation mobile phải xử lý các cử chỉ này (học sâu ở giai đoạn sau).
+
+5. **Quyền (permission) & popup hệ thống.** App thường xin quyền: vị trí, camera, thông báo, danh bạ... Các hộp thoại này **của hệ điều hành**, không phải của app, và **nhảy ra bất chợt** → dễ làm gãy test nếu không xử lý.
+
+6. **Loại app khác nhau:** **Native** (viết thuần cho Android), **Hybrid** (web nhúng trong app — có WebView), **Web app** (mở trên trình duyệt di động). Cách "soi" element mỗi loại hơi khác. Khóa này tập trung app **Native** Android trước.
+
+7. **Trạng thái thiết bị.** Xoay ngang/dọc, cuộc gọi đến, hết pin, mất mạng, app chạy nền rồi quay lại... đều là tình huống cần nghĩ tới.
+
+8. **Emulator vs thiết bị thật.** Emulator (máy ảo) tiện, miễn phí, dễ tự động hoá → ta dùng để **học**. Nhưng nó không thay được thiết bị thật ở khoản hiệu năng, cảm biến, camera. Thực tế thường chạy automation trên **cả hai**.
+
+> 🧩 **Chốt lại:** So với web, mobile "khó" hơn ở **sự đa dạng thiết bị và cử chỉ**. Nhưng đừng sợ — Appium + locator tốt sẽ giúp bạn viết **một** bộ test chạy được trên nhiều máy. Nền tảng của việc đó chính là biết chọn **locator bền** (Phần 4), thứ bạn sắp học.
+
+### 1.5. Những kỳ vọng SAI cần bỏ ngay hôm nay
+
+Người mới bước vào automation mobile thường mang theo vài niềm tin sai lầm, khiến họ nản hoặc đi sai đường. Bỏ chúng đi:
+
+1. **"Automation là chạm chuột/record lại thao tác, không cần biết code."**
+   ❌ Sai. **Automation LÀ lập trình.** Bạn sẽ viết code Java thật với vòng lặp, hàm, class. Công cụ record chỉ giúp lúc đầu, nhưng script tạo ra thường mong manh, click theo toạ độ, gãy ngay khi đổi máy. Muốn đi xa, phải code.
+
+2. **"Cứ dùng toạ độ (x, y) để chạm cho nhanh."**
+   ❌ Sai — và đây là bẫy chết người của mobile. Toạ độ đổi theo từng độ phân giải/máy. Chạm toạ độ cố định = test gãy ngay trên máy khác. **Luôn dùng locator** (`resource-id`, `content-desc`...), không dùng toạ độ.
+
+3. **"Học automation là hết flaky test, test luôn xanh."**
+   ❌ Sai. Test mobile vẫn "chập chờn" (flaky) — do app load chậm, do animation, do popup quyền nhảy ra, do emulator lag. **Một phần lớn kỹ năng automation là học viết test ỔN ĐỊNH** (chờ đúng cách). Đây là điều phân biệt junior với người đi làm được.
+
+4. **"Viết test một lần là xong, không cần đụng lại."**
+   ❌ Sai. App thay đổi thì test phải cập nhật theo. Test là **code sống**, cần bảo trì. Vì vậy ta học viết test **dễ bảo trì** (Page Object Model, đặt tên rõ ràng...) ngay từ đầu.
 
 5. **"Tôi không biết code, chắc không học nổi."**
-   ❌ Sai. Bạn đã có thứ quý nhất mà lập trình viên thuần thường thiếu: **tư duy kiểm thử** — biết đặt câu hỏi "cái gì có thể hỏng?". Code là kỹ năng học được. Hàng nghìn manual tester đã chuyển thành automation engineer giỏi. Bạn đi từng bước, mỗi ngày viết một chút, sẽ tới.
+   ❌ Sai. Bạn đã có thứ quý nhất mà lập trình viên thuần thường thiếu: **tư duy kiểm thử** — biết đặt câu hỏi "cái gì có thể hỏng?". Code là kỹ năng học được. Hàng nghìn manual tester đã chuyển thành automation engineer giỏi. Đi từng bước, mỗi ngày viết một chút, sẽ tới.
 
-> **Nguyên tắc vàng của cả khóa:** Học automation = **code mỗi ngày**. Đọc 10 tutorial không bằng tự tay viết 1 dòng và làm nó chạy. Ngay ở Giai đoạn 0 này, hãy **thực sự mở terminal gõ lệnh, thực sự mở F12 test selector** — đừng chỉ đọc.
+> **Nguyên tắc vàng của cả khóa:** Học automation = **code mỗi ngày**. Đọc 10 tutorial không bằng tự tay mở Appium Inspector soi một element và làm nó chạy. Ngay ở Giai đoạn 0 này, hãy **thực sự cài môi trường, bật emulator, mở Inspector soi app** — đừng chỉ đọc.
 
 ---
 
 <a id="2"></a>
-## 💻 Phần 2A — Cài đặt môi trường trên macOS
+## 💻 Phần 2 — Cài đặt môi trường
 
-> 🍎 Phần này dành cho **macOS**. Nếu bạn dùng **Windows**, hãy nhảy tới **[Phần 2W — Cài đặt trên Windows](#2w)** rồi quay lại làm bài Hello World ở mục 2.8. Cả hai hệ đều cho kết quả cuối như nhau: JDK + IntelliJ + Git + Maven sẵn sàng.
+> ⚠️ **Đây là phần dài & quan trọng nhất của Giai đoạn 0.** Cài môi trường mobile phức tạp hơn web (thêm Android Studio, SDK, emulator, Appium server). Đừng nản — làm từng bước, kiểm tra từng bước. Xong phần này là bạn đã vượt qua chỗ nhiều người bỏ cuộc.
 
-Mục tiêu phần này: biến chiếc Mac của bạn thành một "xưởng làm việc automation" hoàn chỉnh. Sau khi xong, bạn sẽ có:
+### 2.0. Bức tranh tổng thể: các mảnh ghép của một "xưởng automation mobile"
 
-- **JDK 17+** — bộ công cụ để chạy code Java (Java Development Kit).
-- **Homebrew** — "chợ ứng dụng dòng lệnh" của macOS, giúp cài phần mềm bằng 1 câu lệnh.
-- **IntelliJ IDEA Community** — phần mềm để viết code Java (IDE).
-- **Git** — công cụ quản lý phiên bản mã nguồn.
-- **Maven** — công cụ quản lý thư viện và build project Java.
+Trước khi cài, hãy hiểu **các mảnh ghép** kết nối với nhau ra sao. Nắm sơ đồ này rồi thì mỗi bước cài đặt sau sẽ có nghĩa:
 
-> 💡 **Terminal là gì?** Là ứng dụng cho phép bạn gõ lệnh ra cho máy tính thay vì click chuột. Trên macOS, mở bằng `Cmd + Space` → gõ `Terminal` → Enter. Đừng sợ nó — bạn chỉ cần copy-paste các lệnh dưới đây.
+```
+[ Code test Java (IntelliJ) ]
+        │  gửi lệnh "tìm nút Login, chạm vào"
+        ▼
+[ Appium Server  (http://127.0.0.1:4723) ]   ← cài bằng Node.js/npm
+        │  dịch lệnh sang ngôn ngữ Android
+        ▼
+[ Driver UiAutomator2 ]                        ← cài bằng: appium driver install uiautomator2
+        │  điều khiển thiết bị qua adb
+        ▼
+[ adb (Android Debug Bridge) ]                 ← đi kèm Android SDK (platform-tools)
+        │
+        ▼
+[ Emulator (máy ảo Android)  hoặc  điện thoại thật ]   ← tạo bằng Android Studio Device Manager
+        │
+        ▼
+[ App cần test (file .apk) ]                    ← cài vào máy ảo bằng: adb install app.apk
+```
 
-### 2.1. Cài Homebrew (nền tảng để cài mọi thứ khác)
+**Đọc sơ đồ:** Code Java của bạn không nói chuyện trực tiếp với điện thoại. Nó gửi lệnh tới **Appium Server**. Server nhờ **driver UiAutomator2** dịch lệnh, driver dùng **adb** để điều khiển **emulator/thiết bị** đang chạy **app** của bạn. Mỗi mảnh là một thứ ta phải cài.
 
-Homebrew giống như "App Store cho terminal". Cài nó trước, mọi thứ sau sẽ dễ.
+**Danh sách cần cài (tick dần khi làm):**
 
-Mở Terminal và dán lệnh sau (đây là lệnh chính thức từ trang [brew.sh](https://brew.sh/)):
+| # | Thành phần | Vai trò |
+|---|-----------|---------|
+| 1 | **JDK 17+** | Chạy code Java (và cả Appium/Android đều cần Java) |
+| 2 | **IntelliJ IDEA Community** | IDE để viết code test (dùng nhiều ở giai đoạn sau) |
+| 3 | **Android Studio + Android SDK** | Cho ta `adb`, emulator, và các thư viện Android |
+| 4 | **Biến môi trường `ANDROID_HOME` + PATH** | Để gõ được lệnh `adb`, `emulator` ở bất kỳ đâu |
+| 5 | **Máy ảo Android (AVD/Emulator)** | "Điện thoại giả" để test |
+| 6 | **Node.js** | Nền tảng để cài Appium |
+| 7 | **Appium 2 + driver UiAutomator2** | "Bộ não" điều khiển thiết bị |
+| 8 | **Appium Inspector** | Công cụ "soi" element (như F12 của web) |
+| 9 | **APK mẫu** | App để luyện tập |
+
+> 👉 **Chọn phần của bạn:** Dùng **macOS** thì làm **[Phần 2A](#2a)**. Dùng **Windows** thì làm **[Phần 2W](#2w)**. Sau đó **cả hai** cùng làm **[Phần 2C](#2c)** (tạo emulator, cài Appium, Inspector, APK) — phần này gần như giống nhau cho hai hệ.
+
+---
+
+<a id="2a"></a>
+## 🍎 Phần 2A — Cài đặt trên macOS
+
+> 🍎 Phần này dành cho **macOS**. Dùng Windows thì nhảy tới **[Phần 2W](#2w)**. Xong phần OS của mình, cả hai cùng gặp nhau ở **[Phần 2C](#2c)**.
+
+> 💡 **Terminal là gì?** Là ứng dụng cho phép bạn gõ lệnh ra cho máy tính thay vì click chuột. Trên macOS, mở bằng `Cmd + Space` → gõ `Terminal` → Enter. Đừng sợ — bạn chủ yếu copy-paste các lệnh dưới đây.
+
+### 2A.1. Cài Homebrew (nền tảng để cài mọi thứ khác)
+
+Homebrew giống như "App Store cho terminal". Cài nó trước, mọi thứ sau sẽ dễ. Mở Terminal và dán lệnh chính thức từ [brew.sh](https://brew.sh/):
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Nó sẽ hỏi mật khẩu máy Mac của bạn (gõ vào, **màn hình không hiện ký tự** — đó là bình thường, cứ gõ rồi Enter).
+Nó sẽ hỏi mật khẩu máy Mac (gõ vào, **màn hình không hiện ký tự** — đó là bình thường, cứ gõ rồi Enter).
 
-**Quan trọng với máy Mac chip Apple Silicon (M1/M2/M3/M4):** sau khi cài xong, Homebrew thường yêu cầu bạn chạy thêm 2 lệnh để "đăng ký" brew vào hệ thống. Màn hình cài đặt sẽ in ra chính xác 2 lệnh đó (mục *Next steps*). Thường là:
+**Máy Mac chip Apple Silicon (M1/M2/M3/M4):** sau khi cài xong, Homebrew thường in ra 2 lệnh ở mục *Next steps* để "đăng ký" brew vào hệ thống. Thường là:
 
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
-> 📌 Trên Mac Intel (đời cũ), Homebrew nằm ở `/usr/local/bin` và thường không cần bước này.
-
-**Kiểm tra Homebrew đã cài đúng:**
+Kiểm tra:
 
 ```bash
 brew --version
 ```
 
-Nếu thấy in ra ví dụ `Homebrew 4.x.x` là thành công. ✅
+Thấy `Homebrew 4.x.x` là ✅.
 
-### 2.2. Cài JDK 17+ (Java Development Kit)
+### 2A.2. Cài JDK 17+ (Java Development Kit)
 
-Có 2 cách. Chọn **một**.
-
-**Cách A — Cài bằng Homebrew (khuyến nghị, nhanh gọn nhất):**
-
-Ta dùng bản **Temurin** của Eclipse Adoptium — bản JDK miễn phí, phổ biến, chuẩn cho automation.
+Automation Java **và** cả Appium/Android đều cần Java. Dùng bản **Temurin** của Eclipse Adoptium (miễn phí, chuẩn cho automation):
 
 ```bash
-brew install --cask temurin@21
+brew install --cask temurin@17
 ```
 
-> 💡 Vì sao là 21? JDK 21 là bản LTS (hỗ trợ dài hạn) mới, rất hợp cho khóa học này. Giáo trình yêu cầu **17 trở lên**, nên 17 hoặc 21 đều được. Nếu muốn 17: `brew install --cask temurin@17`.
+> 💡 Giáo trình yêu cầu **17 trở lên**. Bản 17 hoặc 21 (LTS) đều được. Muốn 21: `brew install --cask temurin@21`.
 
-**Cách B — Tải file cài từ trang Adoptium:**
-
-1. Vào [https://adoptium.net/temurin/releases/](https://adoptium.net/temurin/releases/)
-2. Chọn: **Operating System = macOS**, **Architecture = aarch64** (nếu máy chip Apple M-series) hoặc **x64** (nếu Mac Intel), **Package Type = JDK**, **Version = 21 (hoặc 17)**.
-3. Tải file `.pkg` về, mở lên, bấm Next → Next → Install như cài app bình thường.
-
-> ❓ **Máy tôi là chip gì?** Bấm logo Apple  góc trái trên → *About This Mac*. Nếu thấy "Apple M1/M2/M3..." → chọn **aarch64**. Nếu thấy "Intel" → chọn **x64**.
-
-**Kiểm tra JDK đã cài đúng — bước QUAN TRỌNG NHẤT của mục này:**
+**Kiểm tra — bước QUAN TRỌNG:**
 
 ```bash
-java -version
-```
-
-Kết quả mong đợi (con số có thể là 17.x hoặc 21.x):
-
-```
-openjdk version "21.0.x" 2024-xx-xx
-OpenJDK Runtime Environment Temurin-21.0.x (build 21.0.x+...)
-OpenJDK 64-Bit Server VM Temurin-21.0.x (build 21.0.x+..., mixed mode)
-```
-
-Nếu thấy số phiên bản **17 trở lên** là ✅ thành công.
-
-Kiểm tra thêm trình biên dịch:
-
-```bash
-javac -version
-```
-
-Phải in ra ví dụ `javac 21.0.x` — nghĩa là bộ **biên dịch** (compiler) đã sẵn sàng.
-
-> ⚠️ **Nếu `java -version` báo "command not found" hoặc ra số cũ (như 1.8):**
-> - Đóng hẳn Terminal rồi mở lại (để nạp cấu hình mới).
-> - Kiểm tra biến `JAVA_HOME`. Thêm dòng sau vào cuối file `~/.zshrc` (mở bằng `open -e ~/.zshrc`), lưu, rồi mở Terminal mới:
->   ```bash
->   export JAVA_HOME=$(/usr/libexec/java_home -v 21)
->   ```
->   (Đổi `21` thành `17` nếu bạn cài 17.)
-> - `/usr/libexec/java_home -V` (chữ V hoa) liệt kê mọi bản JDK đang có trên máy.
-
-### 2.3. Cài IntelliJ IDEA Community (IDE viết code)
-
-**IDE (Integrated Development Environment)** là phần mềm giúp bạn viết code: tô màu cú pháp, gợi ý code, báo lỗi ngay khi gõ, chạy/debug bằng một nút bấm. IntelliJ IDEA Community Edition là bản **miễn phí** và tốt nhất cho Java.
-
-**Cách A — bằng Homebrew:**
-
-```bash
-brew install --cask intellij-idea-ce
-```
-
-(`ce` = Community Edition, bản miễn phí. Đừng cài bản `intellij-idea` không có `-ce` vì đó là bản trả phí.)
-
-**Cách B — tải thủ công:**
-
-1. Vào [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/)
-2. Kéo xuống mục **Community Edition** (KHÔNG phải Ultimate — đó là bản trả phí), tải file `.dmg`.
-3. Chọn đúng bản chip: **Apple Silicon** hoặc **Intel**.
-4. Mở file `.dmg`, kéo icon IntelliJ vào thư mục Applications.
-
-**Kiểm tra:** Mở IntelliJ (`Cmd + Space` → gõ `IntelliJ`). Lần đầu mở nó sẽ hỏi vài cấu hình — cứ chọn mặc định (theme tùy thích). Vào được màn hình *Welcome to IntelliJ IDEA* là ✅.
-
-### 2.4. Cài Git (quản lý mã nguồn)
-
-Git giúp bạn lưu lịch sử code, quay lại phiên bản cũ, và làm việc nhóm. macOS đôi khi đã có sẵn Git (kèm Xcode Command Line Tools), nhưng ta cài bản mới cho chắc:
-
-```bash
-brew install git
-```
-
-**Kiểm tra:**
-
-```bash
-git --version
-```
-
-In ra ví dụ `git version 2.4x.x` là ✅.
-
-**Cấu hình danh tính lần đầu** (Git cần biết ai đang commit — làm một lần cho cả máy):
-
-```bash
-git config --global user.name "Ten Cua Ban"
-git config --global user.email "email_cua_ban@example.com"
-```
-
-Kiểm tra lại cấu hình:
-
-```bash
-git config --global --list
-```
-
-### 2.5. Cài Maven (quản lý thư viện & build)
-
-**Maven** là công cụ tự động tải về các thư viện (như Playwright, JUnit) mà project của bạn cần, và build/chạy test. Nó đọc một file tên `pom.xml` để biết cần những gì.
-
-> 💡 Thực tế IntelliJ có Maven đi kèm bên trong, nên bạn **có thể** chạy Maven qua IntelliJ mà không cần cài riêng. Nhưng ta vẫn cài Maven ở dòng lệnh để chạy được `mvn` trong terminal — sẽ cần khi làm CI/CD sau này.
-
-```bash
-brew install maven
-```
-
-**Kiểm tra — quan trọng:**
-
-```bash
-mvn -version
-```
-
-Kết quả mong đợi (in ra cả version Maven và version Java nó đang dùng):
-
-```
-Apache Maven 3.9.x (...)
-Maven home: /opt/homebrew/Cellar/maven/3.9.x/libexec
-Java version: 21.0.x, vendor: Eclipse Adoptium, runtime: ...
-```
-
-Chú ý dòng **Java version** — nó phải khớp với JDK bạn vừa cài (17 hoặc 21). Nếu khớp là ✅ hoàn hảo.
-
-### 2.6. (Tùy chọn) Node.js — cho Playwright Codegen sau này
-
-Chưa bắt buộc ở Giai đoạn 0, nhưng cài luôn cho tiện. Node.js giúp dùng công cụ `playwright codegen` (ghi thao tác thành code) rất tiện ở giai đoạn sau:
-
-```bash
-brew install node
-node -v
-npm -v
-```
-
-### 2.7. ✅ Bảng kiểm tra "đã cài đúng chưa"
-
-Chạy lần lượt các lệnh sau trong **một Terminal mới** (mở lại để chắc chắn nạp cấu hình mới nhất). Đối chiếu kết quả:
-
-| Lệnh | Kết quả kỳ vọng | Ý nghĩa |
-|------|-----------------|---------|
-| `brew --version` | `Homebrew 4.x.x` | Trình cài đặt hoạt động |
-| `java -version` | `openjdk version "17..."` hoặc `"21..."` | JDK chạy được, đúng version |
-| `javac -version` | `javac 17.x` / `javac 21.x` | Trình biên dịch sẵn sàng |
-| `git --version` | `git version 2.4x.x` | Git sẵn sàng |
-| `mvn -version` | `Apache Maven 3.9.x` + dòng `Java version` khớp JDK | Maven sẵn sàng, dùng đúng JDK |
-| `node -v` (nếu cài) | `v2x.x.x` | Node sẵn sàng (tùy chọn) |
-| Mở IntelliJ | Vào được màn hình Welcome | IDE sẵn sàng |
-
-> 🎉 Nếu cả 5 lệnh bắt buộc đầu tiên đều cho kết quả đúng và IntelliJ mở được → **môi trường của bạn đã sẵn sàng.** Đây là một cột mốc thật sự, nhiều người mới vấp ngay ở đây. Bạn qua rồi!
-
----
-
-<a id="2w"></a>
-## 🪟 Phần 2W — Cài đặt môi trường trên Windows
-
-> 🪟 Phần này dành cho bạn dùng **Windows 10 / 11**. Nếu bạn dùng macOS, hãy làm Phần 2A ở trên và bỏ qua phần này. Kết quả cuối của cả hai hệ là như nhau: JDK + IntelliJ + Git + Maven sẵn sàng.
-
-Mục tiêu vẫn là biến máy Windows thành "xưởng automation": có **JDK 17+**, **IntelliJ IDEA Community**, **Git**, **Maven** (và Node.js tùy chọn).
-
-> 💡 **Terminal trên Windows là gì?** Là **PowerShell** hoặc **Command Prompt (cmd)**. Khuyến nghị dùng **PowerShell**: bấm nút Start → gõ `PowerShell` → mở **Windows PowerShell**. Một vài lệnh cài đặt nên chạy ở chế độ quản trị: chuột phải vào PowerShell → **Run as administrator**.
-
-### 2W.1. Chọn cách cài: winget (khuyến nghị) hay tải file thủ công
-
-Windows 11 và Windows 10 (bản cập nhật mới) có sẵn **winget** — trình cài đặt dòng lệnh, đóng vai trò giống Homebrew của macOS. Kiểm tra:
-
-```powershell
-winget --version
-```
-
-- Nếu in ra ví dụ `v1.x.x` → dùng **Cách A (winget)** ở mỗi mục dưới, nhanh gọn nhất.
-- Nếu báo lỗi "không nhận lệnh" → cài **App Installer** từ Microsoft Store (tìm "App Installer"), hoặc cứ dùng **Cách B (tải file thủ công)** — cũng hoàn toàn ổn.
-
-> 💡 Ngoài winget còn có **Chocolatey** (`choco`) — một trình quản lý gói phổ biến khác. Không bắt buộc; nếu đã quen thì dùng cũng được.
-
-### 2W.2. Cài JDK 17+ (Java Development Kit)
-
-**Cách A — winget:**
-
-```powershell
-winget install EclipseAdoptium.Temurin.21.JDK
-```
-
-(Muốn bản 17: `winget install EclipseAdoptium.Temurin.17.JDK`. Giáo trình yêu cầu **17 trở lên**, nên 17 hoặc 21 đều được.)
-
-**Cách B — tải file cài từ Adoptium:**
-
-1. Vào [https://adoptium.net/temurin/releases/](https://adoptium.net/temurin/releases/)
-2. Chọn: **Operating System = Windows**, **Architecture = x64**, **Package Type = JDK**, **Version = 21 (hoặc 17)**.
-3. Tải file **`.msi`** về, mở lên, bấm Next.
-4. ⭐ **QUAN TRỌNG:** ở bước tùy chọn (*Custom Setup*), tìm mục **"Set JAVA_HOME variable"** và **"Add to PATH"** → bấm vào biểu tượng ổ cứng nhỏ → chọn *"Will be installed on local hard drive"*. Bật 2 cái này giúp bạn **khỏi phải** chỉnh biến môi trường thủ công về sau.
-5. Next → Install.
-
-**Kiểm tra JDK — mở một cửa sổ PowerShell MỚI** (để nạp PATH mới) rồi gõ:
-
-```powershell
 java -version
 javac -version
 ```
 
 Thấy số phiên bản **17 trở lên** là ✅. `javac` in ra được nghĩa là bộ **biên dịch** đã sẵn sàng.
 
-> ⚠️ **Nếu báo "java is not recognized" hoặc ra version cũ:** biến môi trường chưa được set. Sửa thủ công:
-> 1. Bấm Start → gõ **"environment variables"** → mở **"Edit the system environment variables"** → nút **Environment Variables…**
-> 2. Ở mục **System variables**, bấm **New**: tên `JAVA_HOME`, giá trị là thư mục JDK, ví dụ `C:\Program Files\Eclipse Adoptium\jdk-21.0.x-hotspot`.
-> 3. Vẫn trong System variables, chọn biến **Path** → **Edit** → **New** → thêm `%JAVA_HOME%\bin`.
-> 4. OK hết các cửa sổ, **đóng và mở lại PowerShell**, thử `java -version` lại.
+> ⚠️ **Nếu `java -version` báo "command not found" hoặc ra bản cũ (1.8):** đóng hẳn Terminal rồi mở lại. Nếu vẫn lỗi, thêm dòng sau vào cuối `~/.zshrc` (mở bằng `open -e ~/.zshrc`), lưu, mở Terminal mới:
+> ```bash
+> export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+> ```
+> Lệnh `/usr/libexec/java_home -V` (chữ V hoa) liệt kê mọi JDK đang có.
+
+### 2A.3. Cài IntelliJ IDEA Community (IDE viết code)
+
+**IDE** là phần mềm giúp bạn viết code: tô màu cú pháp, gợi ý code, báo lỗi khi gõ, chạy/debug bằng một nút. IntelliJ IDEA Community Edition là bản **miễn phí** tốt nhất cho Java.
+
+```bash
+brew install --cask intellij-idea-ce
+```
+
+(`ce` = Community Edition, miễn phí. Đừng cài `intellij-idea` không có `-ce` vì đó là bản trả phí.)
+
+Mở thử (`Cmd + Space` → gõ `IntelliJ`). Vào được màn hình *Welcome to IntelliJ IDEA* là ✅.
+
+> 💡 **Git & Maven:** khóa mobile này bạn cũng sẽ cần **Git** (`brew install git`) và **Maven** (`brew install maven`) ở giai đoạn sau — cài luôn cho tiện, kiểm tra bằng `git --version` và `mvn -version`. Ở Giai đoạn 0 hai thứ này chưa bắt buộc, nên đây chỉ là ghi chú.
+
+### 2A.4. Cài Android Studio + Android SDK
+
+Đây là mảnh ghép **quan trọng nhất** riêng của mobile. Android Studio đem lại cho ta: **Android SDK** (thư viện Android), **platform-tools** (chứa `adb`), **emulator**, và **Device Manager** để tạo máy ảo.
+
+**Cài Android Studio:**
+
+```bash
+brew install --cask android-studio
+```
+
+(Hoặc tải thủ công tại [https://developer.android.com/studio](https://developer.android.com/studio), mở file `.dmg`, kéo vào Applications. Nhớ chọn đúng bản chip **Apple Silicon** hoặc **Intel**.)
+
+**Chạy trình cài đặt SDK lần đầu:**
+
+1. Mở **Android Studio**. Lần đầu nó chạy **Setup Wizard** → chọn **Standard** → Next → Finish. Nó sẽ tải về **Android SDK**, **SDK Platform** (một phiên bản Android), và **emulator**. Bước này tải khá nặng (vài GB) — kiên nhẫn.
+2. Sau khi vào màn hình chào, mở **SDK Manager**: bấm **More Actions** (hoặc biểu tượng ⚙️) → **SDK Manager**. (Trong project đang mở thì vào **Settings → Languages & Frameworks → Android SDK**.)
+3. Tab **SDK Platforms**: tick chọn ít nhất **một** phiên bản Android, ví dụ **Android 14 (API 34)** hoặc **Android 13 (API 33)**.
+4. Tab **SDK Tools**: đảm bảo các mục sau được **tick** (bấm *Apply* để tải):
+   - ✅ **Android SDK Platform-Tools** (chứa `adb` — bắt buộc!)
+   - ✅ **Android SDK Build-Tools**
+   - ✅ **Android Emulator**
+   - ✅ **Android SDK Command-line Tools (latest)**
+5. Ghi nhớ **Android SDK Location** hiện ở đầu cửa sổ SDK Manager — thường là:
+   ```
+   /Users/<tên-bạn>/Library/Android/sdk
+   ```
+   Ta cần đường dẫn này ở bước sau.
+
+### 2A.5. Cấu hình biến môi trường `ANDROID_HOME` + PATH (zsh)
+
+Để gõ được `adb`, `emulator` ở **bất kỳ thư mục nào** trong Terminal, hệ thống cần biết chúng nằm đâu. Ta khai báo qua biến môi trường trong file `~/.zshrc` (macOS mới dùng shell **zsh**).
+
+Mở file cấu hình:
+
+```bash
+open -e ~/.zshrc
+```
+
+Thêm các dòng sau vào **cuối file** (nếu SDK của bạn nằm chỗ khác, sửa lại đường dẫn cho khớp mục *Android SDK Location* ở bước trên):
+
+```bash
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+```
+
+> 💡 `ANDROID_HOME` là "địa chỉ nhà" của Android SDK; ba dòng `PATH` thêm lần lượt: `adb` (platform-tools), `emulator`, và các công cụ dòng lệnh. Appium **cần** biến `ANDROID_HOME` để tìm SDK.
+
+**Lưu file, rồi nạp lại cấu hình** (hoặc đóng/mở Terminal):
+
+```bash
+source ~/.zshrc
+```
+
+**Kiểm tra:**
+
+```bash
+echo $ANDROID_HOME        # phải in ra đường dẫn SDK
+adb --version             # phải in ra "Android Debug Bridge version 1.x.x"
+emulator -version         # in ra version emulator
+```
+
+Cả ba in ra kết quả (không báo "command not found") là ✅. Nếu `adb` báo not found → kiểm tra lại đường dẫn `ANDROID_HOME` có đúng thư mục SDK không, và đã `source ~/.zshrc` chưa.
+
+### 2A.6. Cài Node.js (nền tảng cho Appium)
+
+Appium 2 chạy trên **Node.js**. Cài bản LTS:
+
+```bash
+brew install node
+node -v      # nên là v18 trở lên
+npm -v
+```
+
+Thấy version in ra là ✅. `npm` (Node Package Manager) là công cụ ta dùng để cài Appium ở Phần 2C.
+
+> ✅ **Xong phần macOS!** Bạn đã có JDK, IntelliJ, Android Studio + SDK (có `adb`), biến môi trường, và Node.js. Giờ nhảy tới **[Phần 2C](#2c)** để tạo emulator và cài Appium (chung cho cả hai hệ điều hành).
+
+---
+
+<a id="2w"></a>
+## 🪟 Phần 2W — Cài đặt trên Windows
+
+> 🪟 Phần này dành cho **Windows 10 / 11**. Dùng macOS thì làm Phần 2A ở trên. Xong phần OS của mình, cả hai cùng gặp nhau ở **[Phần 2C](#2c)**.
+
+> 💡 **Terminal trên Windows là gì?** Là **PowerShell** hoặc **Command Prompt (cmd)**. Khuyến nghị **PowerShell**: Start → gõ `PowerShell` → mở **Windows PowerShell**. Vài lệnh cài đặt nên chạy quyền quản trị: chuột phải PowerShell → **Run as administrator**.
+
+### 2W.1. Chọn cách cài: winget (khuyến nghị) hay tải file thủ công
+
+Windows 11 và Windows 10 (bản mới) có sẵn **winget** — trình cài đặt dòng lệnh, giống Homebrew của macOS. Kiểm tra:
+
+```powershell
+winget --version
+```
+
+- In ra `v1.x.x` → dùng **Cách A (winget)**, nhanh gọn nhất.
+- Báo lỗi "không nhận lệnh" → cài **App Installer** từ Microsoft Store, hoặc dùng **Cách B (tải file thủ công)** — cũng ổn.
+
+### 2W.2. Cài JDK 17+ (Java Development Kit)
+
+**Cách A — winget:**
+
+```powershell
+winget install EclipseAdoptium.Temurin.17.JDK
+```
+
+(Muốn bản 21: `winget install EclipseAdoptium.Temurin.21.JDK`. Yêu cầu là **17 trở lên**.)
+
+**Cách B — tải file cài từ Adoptium:**
+
+1. Vào [https://adoptium.net/temurin/releases/](https://adoptium.net/temurin/releases/)
+2. Chọn: **OS = Windows**, **Architecture = x64**, **Package Type = JDK**, **Version = 17 (hoặc 21)**.
+3. Tải file **`.msi`**, mở lên, Next.
+4. ⭐ **QUAN TRỌNG:** ở bước *Custom Setup*, bật **"Set JAVA_HOME variable"** và **"Add to PATH"** (bấm biểu tượng ổ cứng → *Will be installed on local hard drive*). Bật 2 cái này để **khỏi phải** chỉnh biến môi trường thủ công.
+5. Next → Install.
+
+**Kiểm tra — mở PowerShell MỚI** (để nạp PATH mới):
+
+```powershell
+java -version
+javac -version
+```
+
+Thấy số phiên bản **17 trở lên** là ✅.
+
+> ⚠️ **Nếu báo "java is not recognized":** biến môi trường chưa set. Sửa thủ công: Start → gõ **"environment variables"** → **Edit the system environment variables** → **Environment Variables…** → trong **System variables** tạo `JAVA_HOME` trỏ tới thư mục JDK (ví dụ `C:\Program Files\Eclipse Adoptium\jdk-17.0.x-hotspot`), rồi thêm `%JAVA_HOME%\bin` vào biến **Path**. Đóng/mở lại PowerShell, thử lại.
 
 ### 2W.3. Cài IntelliJ IDEA Community (IDE viết code)
-
-**IDE** là phần mềm giúp bạn viết code: tô màu cú pháp, gợi ý code, báo lỗi khi gõ, chạy/debug bằng một nút. IntelliJ IDEA Community Edition là bản **miễn phí** và tốt nhất cho Java.
 
 **Cách A — winget:**
 
@@ -394,1028 +405,1136 @@ Thấy số phiên bản **17 trở lên** là ✅. `javac` in ra được nghĩ
 winget install JetBrains.IntelliJIDEA.Community
 ```
 
-**Cách B — tải thủ công:**
+**Cách B — tải thủ công:** vào [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/) → tab **Windows** → mục **Community Edition** (KHÔNG phải Ultimate — bản trả phí) → tải `.exe` → chạy → tick *Create Desktop Shortcut* → Install.
 
-1. Vào [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/) , chọn tab **Windows**.
-2. Kéo xuống mục **Community Edition** (KHÔNG phải Ultimate — bản trả phí), tải file `.exe`.
-3. Chạy file `.exe`. Ở màn hình *Installation Options*, nên tick **"Create Desktop Shortcut (64-bit)"** và mục associate `.java` cho tiện. Next → Install.
+Mở IntelliJ từ Start Menu, vào được màn hình *Welcome* là ✅.
 
-**Kiểm tra:** Mở IntelliJ từ Start Menu. Vào được màn hình *Welcome to IntelliJ IDEA* là ✅.
+> 💡 **Git & Maven** cũng sẽ cần ở giai đoạn sau: `winget install Git.Git` và `winget install Apache.Maven`. Ở Giai đoạn 0 chưa bắt buộc.
 
-### 2W.4. Cài Git (quản lý mã nguồn)
+### 2W.4. Cài Android Studio + Android SDK
 
-Git giúp bạn lưu lịch sử code, quay lại phiên bản cũ, và làm việc nhóm.
+Android Studio đem lại **Android SDK**, **platform-tools** (chứa `adb`), **emulator**, và **Device Manager**.
 
-**Cách A — winget:**
-
-```powershell
-winget install Git.Git
-```
-
-**Cách B — tải thủ công:** vào [https://git-scm.com/download/win](https://git-scm.com/download/win) , tải bản 64-bit, chạy file cài. Bộ cài có nhiều tùy chọn nhưng cứ **Next** theo mặc định là an toàn cho người mới.
-
-**Kiểm tra (mở PowerShell mới):**
-
-```powershell
-git --version
-```
-
-In ra ví dụ `git version 2.4x.x` là ✅.
-
-**Cấu hình danh tính lần đầu** (làm một lần cho cả máy):
-
-```powershell
-git config --global user.name "Ten Cua Ban"
-git config --global user.email "email_cua_ban@example.com"
-git config --global --list
-```
-
-### 2W.5. Cài Maven (quản lý thư viện & build)
-
-**Maven** tự động tải các thư viện (Playwright, JUnit…) mà project cần và build/chạy test, dựa trên file `pom.xml`.
-
-> 💡 IntelliJ đã có Maven đi kèm bên trong, nên bạn **có thể tạm bỏ qua** mục này mà vẫn build/chạy test trong IntelliJ. Nhưng nên cài để chạy được lệnh `mvn` trong terminal — sẽ cần khi làm CI/CD sau này.
+**Cài Android Studio:**
 
 **Cách A — winget:**
 
 ```powershell
-winget install Apache.Maven
+winget install Google.AndroidStudio
 ```
 
-**Cách B — cài thủ công (cách truyền thống, chắc ăn nhất):**
+**Cách B — tải thủ công:** [https://developer.android.com/studio](https://developer.android.com/studio) → tải file `.exe` → chạy → Next theo mặc định → Install.
 
-1. Vào [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi) , tải file **Binary zip archive** (ví dụ `apache-maven-3.9.x-bin.zip`).
-2. Giải nén ra một thư mục cố định, ví dụ `C:\Program Files\Apache\maven` (bên trong có thư mục `bin`).
-3. Thêm vào PATH: Start → "environment variables" → Environment Variables → chọn **Path** (System variables) → Edit → New → thêm đường dẫn tới thư mục `bin`, ví dụ `C:\Program Files\Apache\maven\bin`.
-4. (Khuyến nghị) tạo biến `MAVEN_HOME` trỏ tới `C:\Program Files\Apache\maven`.
+**Chạy trình cài đặt SDK lần đầu:**
 
-> 💡 Nếu bạn dùng Chocolatey: `choco install maven` sẽ tự lo phần PATH.
+1. Mở **Android Studio**. Lần đầu chạy **Setup Wizard** → chọn **Standard** → Next → Finish. Nó tải về **Android SDK**, **SDK Platform**, **emulator** (vài GB — kiên nhẫn).
+2. Ở màn hình chào, mở **SDK Manager**: **More Actions** (hoặc ⚙️) → **SDK Manager**.
+3. Tab **SDK Platforms**: tick ít nhất **một** phiên bản, ví dụ **Android 14 (API 34)** hoặc **Android 13 (API 33)**.
+4. Tab **SDK Tools**: đảm bảo được **tick** rồi bấm *Apply* để tải:
+   - ✅ **Android SDK Platform-Tools** (chứa `adb` — bắt buộc!)
+   - ✅ **Android SDK Build-Tools**
+   - ✅ **Android Emulator**
+   - ✅ **Android SDK Command-line Tools (latest)**
+5. Ghi nhớ **Android SDK Location** hiện ở đầu cửa sổ — trên Windows thường là:
+   ```
+   C:\Users\<tên-bạn>\AppData\Local\Android\Sdk
+   ```
+   Ta cần đường dẫn này ở bước sau. (`AppData` là thư mục ẩn — cứ copy nguyên đường dẫn trên là được.)
 
-**Kiểm tra (mở PowerShell mới):**
+### 2W.5. Cấu hình biến môi trường `ANDROID_HOME` + PATH (Environment Variables)
+
+Để gõ được `adb`, `emulator` ở bất kỳ đâu, ta khai báo biến môi trường qua giao diện Windows:
+
+1. Bấm **Start** → gõ **"environment variables"** → mở **"Edit the system environment variables"** → nút **Environment Variables…**
+2. Ở mục **User variables** (hoặc System variables), bấm **New**:
+   - **Variable name:** `ANDROID_HOME`
+   - **Variable value:** `C:\Users\<tên-bạn>\AppData\Local\Android\Sdk` (đúng theo *Android SDK Location* ở bước trên)
+3. Vẫn trong mục đó, chọn biến **Path** → **Edit** → **New**, thêm lần lượt **ba** dòng sau (mỗi dòng một entry):
+   ```
+   %ANDROID_HOME%\platform-tools
+   %ANDROID_HOME%\emulator
+   %ANDROID_HOME%\cmdline-tools\latest\bin
+   ```
+4. Bấm **OK** đóng hết các cửa sổ.
+5. ⭐ **Đóng hẳn PowerShell rồi mở lại** (bắt buộc — để nạp biến mới).
+
+**Kiểm tra (PowerShell mới):**
 
 ```powershell
-mvn -version
+echo $env:ANDROID_HOME     # phải in ra đường dẫn SDK
+adb --version              # phải in ra "Android Debug Bridge version 1.x.x"
+emulator -version          # in ra version emulator
 ```
 
-Chú ý dòng **Java version** in ra phải khớp JDK bạn đã cài (17 hoặc 21). Khớp là ✅ hoàn hảo.
+Cả ba in ra kết quả là ✅. Nếu `adb` báo not recognized → kiểm tra lại đường dẫn `ANDROID_HOME` và nhớ đã **mở PowerShell mới** chưa.
 
-### 2W.6. (Tùy chọn) Node.js — cho Playwright Codegen sau này
+### 2W.6. Cài Node.js (nền tảng cho Appium)
 
-Chưa bắt buộc ở Giai đoạn 0, cài luôn cho tiện:
+**Cách A — winget:**
 
 ```powershell
 winget install OpenJS.NodeJS.LTS
 ```
 
-Hoặc tải bản **LTS** tại [https://nodejs.org/](https://nodejs.org/) . Kiểm tra:
+**Cách B:** tải bản **LTS** tại [https://nodejs.org/](https://nodejs.org/) rồi chạy file cài.
+
+**Kiểm tra (PowerShell mới):**
 
 ```powershell
-node -v
+node -v      # nên là v18 trở lên
 npm -v
 ```
 
-### 2W.7. ✅ Bảng kiểm tra "đã cài đúng chưa" (Windows)
+> 🎯 **Mẹo vàng cho Windows:** gần như MỌI lỗi "command not found / not recognized" đều do (1) chưa mở PowerShell **mới** sau khi cài/đổi biến môi trường, hoặc (2) biến Path chưa đúng. Đóng hẳn, mở lại, thử lại — trước khi nghĩ là cài hỏng.
 
-Mở một **PowerShell mới** (để nạp cấu hình mới nhất) rồi chạy lần lượt, đối chiếu kết quả:
-
-| Lệnh | Kết quả kỳ vọng | Ý nghĩa |
-|------|-----------------|---------|
-| `winget --version` | `v1.x.x` | Trình cài đặt (nếu dùng) hoạt động |
-| `java -version` | `openjdk version "17..."` hoặc `"21..."` | JDK chạy được, đúng version |
-| `javac -version` | `javac 17.x` / `javac 21.x` | Trình biên dịch sẵn sàng |
-| `git --version` | `git version 2.4x.x` | Git sẵn sàng |
-| `mvn -version` | `Apache Maven 3.9.x` + dòng `Java version` khớp JDK | Maven sẵn sàng, đúng JDK |
-| `node -v` (nếu cài) | `v2x.x.x` | Node sẵn sàng (tùy chọn) |
-| Mở IntelliJ | Vào được màn hình Welcome | IDE sẵn sàng |
-
-> 🎯 **Mẹo vàng cho Windows:** gần như MỌI lỗi "command not found / not recognized" đều do (1) chưa mở PowerShell **mới** sau khi cài, hoặc (2) biến PATH chưa có đường dẫn. Đóng hẳn PowerShell, mở lại, thử lại — trước khi nghĩ là cài hỏng.
-
-> 🎉 Nếu 5 lệnh bắt buộc đầu tiên đều đúng và IntelliJ mở được → **môi trường Windows của bạn đã sẵn sàng.** Tiếp tục làm bài Hello World ở mục 2.8 ngay dưới (giống hệt cho cả hai hệ điều hành).
+> ✅ **Xong phần Windows!** Bạn đã có JDK, IntelliJ, Android Studio + SDK (có `adb`), biến môi trường, và Node.js. Giờ nhảy tới **[Phần 2C](#2c)** để tạo emulator và cài Appium (chung cho cả hai hệ điều hành).
 
 ---
 
-### 2.8. Bài kiểm tra nhỏ (dùng chung cho macOS & Windows): tạo project "Hello World" trong IntelliJ
+<a id="2c"></a>
+## 🔗 Phần 2C — Chung cho cả hai hệ (Emulator, Appium, Inspector, APK)
 
-Để chắc chắn mọi thứ liên thông:
+> 🍎🪟 Từ đây trở đi **giống nhau** cho macOS và Windows (chỉ khác vài chi tiết nhỏ — sẽ ghi rõ). Đảm bảo bạn đã hoàn thành Phần 2A **hoặc** 2W trước khi làm phần này.
 
-1. Mở IntelliJ → **New Project**.
-2. Bên trái chọn **New Project** (loại project thường). Đặt tên `hello-world`.
-3. **Language:** Java. **Build system:** IntelliJ (hoặc Maven cũng được). **JDK:** chọn bản 17/21 bạn vừa cài (IntelliJ thường tự nhận ra).
-4. Bấm **Create**.
-5. Trong thư mục `src`, chuột phải → **New → Java Class**, đặt tên `Main`.
-6. Gõ đoạn code này:
+### 2C.1. Tạo máy ảo Android (AVD) bằng Device Manager
 
-```java
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Xin chao, day la buoc dau tien cua toi!");
-    }
-}
+**AVD (Android Virtual Device)** = "điện thoại giả" chạy trên máy tính bạn. Đây là nơi ta cài app và chạy test.
+
+1. Mở **Android Studio** → ở màn hình chào bấm **More Actions** → **Virtual Device Manager** (hoặc biểu tượng điện thoại ⚙️). (Trong project đang mở: menu **Tools → Device Manager**.)
+2. Bấm **Create Device** (dấu **+**).
+3. **Chọn phần cứng (Select Hardware):** chọn một điện thoại phổ biến, ví dụ **Pixel 6** hoặc **Pixel 7** → **Next**.
+4. **Chọn ảnh hệ điều hành (System Image):** chọn một API level bạn đã tải (ví dụ **API 34 – Android 14** hoặc **API 33**). Nếu thấy nút **Download** cạnh tên → bấm để tải ảnh hệ điều hành về (vài GB) → **Next**.
+   > 💡 Ưu tiên ảnh có ghi **"Google APIs"** (có sẵn Google services) hoặc bản thường đều được để học.
+5. **Đặt tên AVD** (ví dụ `Pixel_6_API_34`) → **Finish**.
+6. Máy ảo mới xuất hiện trong danh sách. Bấm nút **▶ (Play)** để khởi động → một cửa sổ điện thoại Android hiện lên. Lần đầu boot khá lâu (1–3 phút), hãy chờ tới khi thấy màn hình chính Android.
+
+> 🖥️ **Máy yếu?** Emulator ăn RAM. Nếu lag: chọn thiết bị nhỏ (Pixel 4), tắt bớt app khác. Máy Apple Silicon nên chọn ảnh **arm64**; máy Intel/Windows chọn ảnh **x86_64**. Không chạy nổi emulator thì có thể **cắm điện thoại Android thật** qua USB (bật **Developer Options → USB Debugging**) — `adb` sẽ nhận ra tương tự.
+
+### 2C.2. Kiểm tra thiết bị bằng `adb devices`
+
+Với emulator **đang chạy**, mở Terminal/PowerShell mới và gõ:
+
+```bash
+adb devices
 ```
 
-7. Bấm nút ▶️ (Run) màu xanh bên cạnh dòng `main`.
-8. Nếu khung *Run* dưới đáy hiện dòng chữ `Xin chao, day la buoc dau tien cua toi!` → **XONG! Môi trường hoàn hảo.** 🎉
+Kết quả mong đợi:
+
+```
+List of devices attached
+emulator-5554	device
+```
+
+Thấy dòng `emulator-5554   device` (hoặc một device khác kèm chữ `device`) là ✅ — máy tính đã "nhìn thấy" điện thoại/emulator.
+
+> ⚠️ Nếu thấy `unauthorized` (khi cắm máy thật) → nhìn màn hình điện thoại, bấm **Allow** cho popup "Allow USB debugging". Nếu list rỗng → đảm bảo emulator đã boot xong, hoặc chạy `adb kill-server` rồi `adb devices` lại.
+
+**Vài lệnh adb hữu ích (nhớ dần):**
+
+```bash
+adb devices                 # liệt kê thiết bị đang kết nối
+emulator -list-avds         # liệt kê các AVD đã tạo
+emulator -avd Pixel_6_API_34   # khởi động emulator bằng dòng lệnh (không cần mở Android Studio)
+adb install duong-dan/app.apk  # cài một file apk vào máy đang chạy
+adb uninstall com.vi.du.package  # gỡ app theo package name
+```
+
+### 2C.3. Cài Appium 2 và driver UiAutomator2
+
+**Appium** là "bộ não" điều khiển thiết bị. Cài toàn cục (global) bằng npm:
+
+```bash
+npm install -g appium
+```
+
+**Kiểm tra:**
+
+```bash
+appium -v          # in ra ví dụ 2.x.x
+```
+
+> 📌 Số version có thể thay đổi theo thời gian — miễn là **2.x** trở lên là đúng (khóa này dùng **Appium 2**).
+
+**Cài driver UiAutomator2** (driver để điều khiển app **Android**):
+
+```bash
+appium driver install uiautomator2
+```
+
+**Kiểm tra driver đã cài:**
+
+```bash
+appium driver list --installed
+```
+
+Thấy `uiautomator2` trong danh sách (kèm dấu tích/ghi "installed") là ✅.
+
+> 💡 **Vì sao cần driver?** Appium chỉ là "khung". Mỗi nền tảng cần một **driver** riêng: **UiAutomator2** cho Android, **XCUITest** cho iOS (cần Mac). Ta đang học Android nên cài UiAutomator2.
+
+### 2C.4. Chạy Appium Server
+
+```bash
+appium
+```
+
+Server khởi động và in ra dòng tương tự:
+
+```
+[Appium] Welcome to Appium v2.x.x
+[Appium] Appium REST http interface listener started on http://127.0.0.1:4723
+```
+
+→ Server đang lắng nghe ở **`http://127.0.0.1:4723`** (đây chính là địa chỉ code Java và Appium Inspector sẽ kết nối tới). **Để nguyên cửa sổ này chạy** — đừng đóng. Muốn dừng server: bấm `Ctrl + C`.
+
+> 💡 **Địa chỉ này quan trọng, nhớ kỹ:** `http://127.0.0.1:4723`. (`127.0.0.1` = "chính máy này"; `4723` là cổng mặc định của Appium 2.) Ở Appium 1.x cũ, địa chỉ có đuôi `/wd/hub` — Appium 2 **bỏ** đuôi đó, chỉ còn cổng `4723`.
+
+### 2C.5. Kiểm tra môi trường bằng "doctor"
+
+Appium có công cụ tự kiểm tra xem môi trường Android đã đủ chưa (Java, ANDROID_HOME, adb...). Cách khuyến nghị với Appium 2:
+
+```bash
+appium driver doctor uiautomator2
+```
+
+Nó chạy một loạt kiểm tra và in ✅/❌ cho từng mục (Java, `ANDROID_HOME`, `adb`, ...). Chỗ nào ❌ thì làm theo gợi ý sửa.
+
+> 💡 **Cách cũ (vẫn dùng được):** công cụ `appium-doctor`:
+> ```bash
+> npm install -g appium-doctor
+> appium-doctor --android
+> ```
+> Cả hai đều nhằm mục đích: xác nhận Java + Android SDK + biến môi trường đã sẵn sàng. Nếu nó báo thiếu `ANDROID_HOME` → quay lại Phần 2A.5 / 2W.5.
+
+### 2C.6. Cài Appium Inspector (công cụ "soi" element — như F12 của web)
+
+**Appium Inspector** là ứng dụng desktop cho phép bạn **nhìn cây UI của app** và **đọc thuộc tính từng element** (`resource-id`, `content-desc`...) — đúng vai trò mà DevTools/F12 làm cho web. Đây là công cụ bạn dùng **hằng ngày**.
+
+1. Vào trang releases chính thức: [https://github.com/appium/appium-inspector/releases](https://github.com/appium/appium-inspector/releases)
+2. Tải bản mới nhất phù hợp máy:
+   - **macOS:** file `.dmg` (chọn đúng `mac` / `mac-arm64` cho chip Apple).
+   - **Windows:** file `.exe` (Setup).
+3. Cài như app bình thường.
+   > 🍎 **macOS chặn mở app "chưa xác thực"?** Chuột phải vào app → **Open** → **Open** lần nữa. Hoặc vào **System Settings → Privacy & Security** → bấm **Open Anyway**.
+
+Ta sẽ dùng Inspector ở **Phần 5 & 6**. Bây giờ chỉ cần cài xong.
+
+### 2C.7. Tải APK mẫu để luyện & cài vào emulator
+
+Ta cần một app thật để luyện "soi element". Dùng **Sauce Labs My Demo App** — app demo mua sắm được tạo riêng cho automation (giống vai trò của SauceDemo bên web).
+
+1. Vào releases: [https://github.com/saucelabs/my-demo-app-rn/releases](https://github.com/saucelabs/my-demo-app-rn/releases)
+2. Tải file **`.apk`** cho Android (tên dạng `Android-myRNDemoApp.x.y.z.build-nnn.apk`). Lưu vào một chỗ dễ nhớ, ví dụ thư mục `Downloads`.
+3. Với **emulator đang chạy**, cài app bằng `adb`:
+
+   **macOS:**
+   ```bash
+   adb install ~/Downloads/Android-myRNDemoApp.1.3.0.build-244.apk
+   ```
+   **Windows (PowerShell):**
+   ```powershell
+   adb install "$env:USERPROFILE\Downloads\Android-myRNDemoApp.1.3.0.build-244.apk"
+   ```
+   (Đổi tên file cho khớp bản bạn tải.)
+4. Thấy dòng `Success` là ✅ — mở màn hình app trên emulator, bạn sẽ thấy icon **My Demo App** vừa được cài.
+
+> 💡 **App thay thế (tuỳ chọn):** **ApiDemos** — app mẫu kinh điển của Appium, rất ổn định để luyện. Tải `ApiDemos-debug.apk` tại [https://github.com/appium/android-apidemos/releases](https://github.com/appium/android-apidemos/releases) rồi `adb install`. Package của nó là `io.appium.android.apis`.
+
+**Tìm `appPackage` và `appActivity` của app** (sẽ cần khi cấu hình Inspector ở Phần 5). Mở app trên emulator rồi chạy:
+
+**macOS/Linux:**
+```bash
+adb shell dumpsys window | grep -i mCurrentFocus
+```
+**Windows (PowerShell):**
+```powershell
+adb shell dumpsys window | Select-String mCurrentFocus
+```
+
+Kết quả dạng `mCurrentFocus=Window{... com.saucelabs.mydemoapp.rn/com.saucelabs.mydemoapp.rn.MainActivity}` → phần trước dấu `/` là **appPackage** (`com.saucelabs.mydemoapp.rn`), phần sau là **appActivity** (`com.saucelabs.mydemoapp.rn.MainActivity`).
+
+> 💡 Liệt kê mọi package đã cài: `adb shell pm list packages | grep -i sauce` (macOS) / `... | Select-String sauce` (Windows).
+
+### 2C.8. ✅ Bảng kiểm tra "đã cài đúng chưa" (cho CẢ macOS & Windows)
+
+Mở một Terminal/PowerShell **mới** (để nạp cấu hình mới nhất), bật **emulator**, và chạy lần lượt. Đối chiếu:
+
+| # | Lệnh | Kết quả kỳ vọng | Ý nghĩa |
+|---|------|-----------------|---------|
+| 1 | `java -version` | `openjdk version "17..."` (hoặc 21) | JDK sẵn sàng, đúng version |
+| 2 | `javac -version` | `javac 17.x` / `21.x` | Trình biên dịch sẵn sàng |
+| 3 | `echo $ANDROID_HOME` (mac) / `echo $env:ANDROID_HOME` (win) | đường dẫn tới SDK | Biến môi trường đúng |
+| 4 | `adb --version` | `Android Debug Bridge version 1.x.x` | adb sẵn sàng |
+| 5 | `adb devices` | có dòng `emulator-5554  device` | Máy tính thấy được emulator/thiết bị |
+| 6 | `node -v` | `v18...` trở lên | Node.js sẵn sàng |
+| 7 | `appium -v` | `2.x.x` | Appium 2 sẵn sàng |
+| 8 | `appium driver list --installed` | có `uiautomator2` | Driver Android đã cài |
+| 9 | `appium` (rồi mở) | in ra `...listener started on http://127.0.0.1:4723` | Server chạy được |
+| 10 | Mở **IntelliJ** | vào được màn hình Welcome | IDE sẵn sàng |
+| 11 | Mở **Appium Inspector** | app mở được | Công cụ soi element sẵn sàng |
+| 12 | `adb shell pm list packages \| grep -i sauce` | có `com.saucelabs.mydemoapp.rn` | APK mẫu đã cài vào emulator |
+
+> 🎉 **Nếu tất cả (đặc biệt 1–9) đều đúng → môi trường automation mobile của bạn đã sẵn sàng.** Đây là một cột mốc thật sự — cài môi trường mobile khó hơn web, rất nhiều người vấp ở đây. Bạn qua rồi! Giờ ta học phần "đọc bản đồ app" ở Phần 3.
 
 ---
 
 <a id="3"></a>
-## 🧱 Phần 3 — HTML nền tảng cho Automation
+## 🧱 Phần 3 — Nền tảng cấu trúc UI Android (View & cây UI)
 
-### 3.1. HTML là gì? (ví von dễ hiểu)
+> 🌐➡️📱 **Đây là phần thay cho HTML/CSS/DOM của bản web.** Web có "cây DOM" gồm các thẻ HTML; Android có "cây View" gồm các View. Tư duy giống hệt, chỉ khác tên gọi. Nếu nắm chắc phần này, bạn viết được locator tốt — kỹ năng cốt lõi số 1 của automation.
 
-Khi bạn mở một trang web, cái bạn **nhìn thấy** (nút, ô nhập, chữ, ảnh) chỉ là lớp "sơn bên ngoài". Bên dưới, trình duyệt đọc một file văn bản gọi là **HTML** để biết cần vẽ cái gì, ở đâu.
+### 3.1. Một màn hình app Android được dựng từ gì?
 
-> **Ví von:** HTML giống như **bản thiết kế xây nhà**. Bản thiết kế ghi: "Chỗ này là cửa, chỗ kia là cửa sổ, tường cao 3m". Trình duyệt là **thợ xây** đọc bản thiết kế đó và dựng thành ngôi nhà (trang web bạn thấy). Còn bạn — automation tester — cần đọc được **bản thiết kế** để chỉ cho máy "hãy mở **cái cửa này**".
+Khi bạn mở một app và **nhìn thấy** nút, ô nhập, chữ, ảnh — đó chỉ là "lớp sơn bên ngoài". Bên dưới, Android dựng màn hình từ những viên gạch gọi là **View**:
 
-**HTML** viết tắt của *HyperText Markup Language* — ngôn ngữ **đánh dấu** để mô tả cấu trúc trang web. Nó không phải ngôn ngữ lập trình (không có if/else, vòng lặp) — nó chỉ **mô tả**: "đây là một tiêu đề", "đây là một nút bấm".
+- **View** = một thành phần giao diện **đơn lẻ**: một cái nút (`Button`), một ô nhập (`EditText`), một dòng chữ (`TextView`), một ô tick (`CheckBox`), một ảnh (`ImageView`)...
+- **ViewGroup** = một "cái hộp" **chứa** các View khác để sắp xếp bố cục: `LinearLayout` (xếp hàng ngang/dọc), `FrameLayout`, `RecyclerView` (danh sách cuộn)... ViewGroup giống thẻ `<div>` bên web — nó gom nhóm.
 
-### 3.2. Cấu trúc một "thẻ" (tag/element) HTML
+> **Ví von:** Màn hình app giống một **cái tủ nhiều ngăn**. Cái tủ và các ngăn lớn là **ViewGroup** (cái hộp chứa). Từng món đồ trong ngăn — cây bút, quyển sổ, cục tẩy — là **View** (thành phần đơn lẻ). Bạn — automation tester — cần chỉ đích danh "lấy **cây bút xanh ở ngăn thứ hai**", tức là trỏ đúng vào **một View** cụ thể.
 
-Đơn vị cơ bản của HTML là **thẻ** (tag). Ví dụ một nút bấm:
+Các View lồng vào nhau (ViewGroup chứa View và cả ViewGroup con) tạo thành một **cây phân cấp** — y hệt cây DOM của web.
 
-```html
-<button id="login" class="btn primary" type="submit">Đăng nhập</button>
+### 3.2. Cây UI (giống cây DOM của web)
+
+Hãy hình dung một màn hình **Đăng nhập** đơn giản: có tiêu đề, ô username, ô password, ô tick "ghi nhớ", nút đăng nhập, link quên mật khẩu. Android dựng nó thành cây như sau:
+
+```
+FrameLayout                          ← gốc màn hình (ViewGroup)
+└── LinearLayout (login_container)   ← hộp chứa (ViewGroup)
+    ├── TextView   ("Đăng nhập")         ← View: tiêu đề
+    ├── EditText   (ô username)          ← View: ô nhập
+    ├── EditText   (ô password)          ← View: ô nhập
+    ├── CheckBox   ("Ghi nhớ đăng nhập") ← View
+    ├── Button     ("ĐĂNG NHẬP")         ← View: nút
+    └── TextView   ("Quên mật khẩu?")    ← View: chữ bấm được
 ```
 
-Mổ xẻ từng phần:
+**Thuật ngữ quan hệ trong cây** (giống hệt DOM — sẽ gặp lại khi viết XPath):
 
-```
-<button  id="login"  class="btn primary"  type="submit">  Đăng nhập  </button>
-  │        │              │                    │              │           │
-  │        │              │                    │              │           └─ Thẻ đóng
-  │        │              │                    │              └─ Nội dung (text hiển thị)
-  │        │              │                    └─ Thuộc tính type
-  │        │              └─ Thuộc tính class (có thể chứa nhiều giá trị cách nhau bởi dấu cách)
-  │        └─ Thuộc tính id
-  └─ Thẻ mở, tên thẻ là "button"
-```
+| Thuật ngữ | Nghĩa | Ví dụ trong cây trên |
+|-----------|-------|----------------------|
+| **Node / element** | Mỗi View là một nút | `Button`, `EditText`... |
+| **Parent (cha)** | ViewGroup bao ngoài trực tiếp | `LinearLayout` là cha của `Button` |
+| **Child (con)** | View bên trong trực tiếp | `Button` là con của `LinearLayout` |
+| **Sibling (anh em)** | Các View cùng cha | ô username và ô password là anh em |
+| **Descendant (hậu duệ)** | Con, cháu, chắt... | mọi View là hậu duệ của `FrameLayout` |
+| **Root (gốc)** | Nút trên cùng | `FrameLayout` |
 
-- **Thẻ mở** `<button>` và **thẻ đóng** `</button>` (có dấu `/`). Mọi thứ giữa hai thẻ là **nội dung**.
-- **Thuộc tính (attribute)** nằm trong thẻ mở, dạng `tên="giá trị"`. Đây là thứ **cực kỳ quan trọng** với automation — ta dùng chúng để "định vị" element.
-- Một số thẻ **không có nội dung và không cần thẻ đóng**, gọi là thẻ tự đóng — ví dụ `<input>`, `<img>`.
+> 🔑 **Điểm mấu chốt:** Máy tính **không "nhìn" nút bằng mắt** như bạn. Với con người, "ĐĂNG NHẬP" là một hình chữ nhật xanh. Với Appium, nó là một **View trong cây UI** có tên lớp `android.widget.Button` và các thuộc tính định danh. Khi bạn ra lệnh "chạm nút đăng nhập", Appium đi vào **cây UI**, tìm đúng **View** đó, rồi chạm. Vì thao tác trên cây (chứ không phải trên ảnh chụp), Appium **chính xác** — nó biết View ở đâu, đã hiện chưa, có bị disable không.
 
-### 3.3. Các thuộc tính QUAN TRỌNG NHẤT cho automation
+### 3.3. Các thuộc tính định danh của một View Android
 
-Khi automate, bạn cần "chỉ đích danh" một element. Các thuộc tính sau là "chứng minh thư" của element — hãy thuộc lòng:
+Mỗi View mang theo một loạt **thuộc tính** — giống "chứng minh thư". Đây chính là thứ ta dùng để "chỉ đích danh" View khi automation. Hãy thuộc lòng bảng này:
 
-| Thuộc tính | Ý nghĩa | Vì sao quan trọng với automation |
-|-----------|---------|----------------------------------|
-| **`id`** | Định danh **DUY NHẤT** trong trang | ⭐ Tốt nhất để định vị — một trang chỉ có một `id` nhất định. Rất ổn định. |
-| **`class`** | Nhóm/kiểu (dùng cho CSS trang trí) | Hay dùng, nhưng **có thể trùng** ở nhiều element. Một element có thể có nhiều class. |
-| **`name`** | Tên trường (đặc biệt trong form) | Thường dùng cho `<input>`; khá ổn định khi gửi form. |
-| **`data-*`** | Thuộc tính "tùy biến" của lập trình viên | ⭐ Ví dụ `data-test="username"`. Rất được ưa chuộng vì thường **dành riêng cho test**, ít bị đổi. |
-| **`type`** | Loại của input/button | Phân biệt `text`, `password`, `submit`, `checkbox`... |
-| **`placeholder`** | Chữ mờ gợi ý trong ô nhập | Có thể dùng để định vị ô nhập ("Username", "Email"). |
-| **`href`** | Địa chỉ đích của một link `<a>` | Kiểm tra link trỏ đúng chỗ. |
-| **`value`** | Giá trị hiện tại của input | Đọc/kiểm tra nội dung ô nhập. |
+| Thuộc tính | Ý nghĩa | Giá trị so sánh với web | Dùng làm locator? |
+|-----------|---------|-------------------------|-------------------|
+| **`content-desc`** | *Accessibility ID* — mô tả để hỗ trợ người khiếm thị (đọc màn hình) | ~ `data-test` / aria-label | ⭐⭐⭐ **TỐT NHẤT** — ổn định, thường do dev cố ý đặt |
+| **`resource-id`** | Định danh tài nguyên, dạng `package:id/tên` | ~ thuộc tính `id` của HTML | ⭐⭐ **RẤT TỐT** — thường duy nhất trong màn hình |
+| **`text`** | Chữ hiển thị trên View | ~ nội dung text của thẻ | ⚠️ Được, nhưng **đổi theo ngôn ngữ** (Việt/Anh) → dễ gãy |
+| **`class`** | Tên lớp Android của View | ~ tên thẻ (`button`, `input`) | ⚠️ Thường **trùng** nhiều View (nhiều `EditText`) → ít khi đủ để chỉ đích danh |
+| **`bounds`** | Toạ độ khung `[trái,trên][phải,dưới]` | ~ vị trí pixel | ❌ **Tránh** — đổi theo độ phân giải/máy |
+| **`clickable`** | View có bấm được không (`true`/`false`) | — | Không phải locator, nhưng giúp biết View có tương tác được |
+| **`enabled`** | View có đang bật (dùng được) không | ~ `disabled` | Kiểm tra trạng thái, không phải locator |
+| **`displayed`** | View có đang hiển thị trên màn hình không | ~ visible | Kiểm tra trạng thái |
+| **`checkable` / `checked`** | Áp dụng cho CheckBox/Switch | ~ checkbox `checked` | Kiểm tra trạng thái tick |
+| **`package`** | App nào chứa View này | — | Ít dùng để định vị |
+| **`focusable` / `scrollable` / `password`** | Các cờ trạng thái khác | — | Bổ trợ |
 
-> 💡 **Vì sao `id` và `data-*` là "vàng"?**
-> - `id` **duy nhất** → chỉ một element khớp → không nhầm lẫn.
-> - `data-test` / `data-testid` thường do dev **cố ý đặt cho tester**, nên nó không đổi khi giao diện thay đổi (đổi màu, đổi chữ). Selector dựa vào nó **bền** nhất.
-> - Ngược lại, `class` dùng để trang trí (CSS) nên **hay bị đổi** khi designer chỉnh giao diện → selector dựa vào class dễ gãy hơn.
+> 💡 **Vì sao `content-desc` (accessibility id) và `resource-id` là "vàng"?**
+> - **`content-desc`** (accessibility id) thường do **dev cố ý đặt** để hỗ trợ trình đọc màn hình — và cũng để **cho tester**. Nó ít bị đổi khi giao diện thay đổi, và **không đổi theo ngôn ngữ**. Bền nhất. Các app viết cho automation (như Sauce Labs demo) đặt sẵn dạng `test-Username`, `test-LOGIN`...
+> - **`resource-id`** giống `id` bên web: thường **duy nhất** trong một màn hình → chỉ một View khớp → không nhầm lẫn.
+> - Ngược lại, **`text`** đổi khi app đổi ngôn ngữ (nút "ĐĂNG NHẬP" → "LOGIN"); **`class`** (như `android.widget.EditText`) **trùng** ở nhiều ô; **`bounds`** đổi theo màn hình. Ba cái này dễ gãy.
 
-### 3.4. Các thẻ HTML bạn sẽ gặp nhiều nhất
+> ⚠️ **Cảnh báo về `resource-id`:** Không phải View nào cũng có. Nhiều app (đặc biệt viết bằng **React Native** hoặc **Flutter**) **không có** `resource-id` rõ ràng cho mọi element — nhưng thường lại đặt **`content-desc`** rất tốt. Đó là thêm một lý do nữa để **ưu tiên accessibility id**.
 
-| Thẻ | Dùng để | Ví dụ |
-|-----|---------|-------|
-| `<input>` | Ô nhập liệu (text, password, checkbox...) | `<input type="text" id="user">` |
-| `<button>` | Nút bấm | `<button>Gửi</button>` |
-| `<a>` | Đường link (anchor) | `<a href="/home">Trang chủ</a>` |
-| `<div>` | "Cái hộp" gom nhóm, chia bố cục (không có ý nghĩa riêng) | `<div class="card">...</div>` |
-| `<span>` | Đoạn text nhỏ trong dòng | `<span class="price">100đ</span>` |
-| `<form>` | Bao quanh một biểu mẫu | `<form>...</form>` |
-| `<label>` | Nhãn mô tả cho một input | `<label for="user">Tên</label>` |
-| `<select>` / `<option>` | Danh sách xổ xuống (dropdown) | `<select><option>A</option></select>` |
-| `<table>` `<tr>` `<td>` | Bảng, hàng, ô | `<tr><td>Tên</td></tr>` |
-| `<ul>` / `<li>` | Danh sách và mục danh sách | `<ul><li>Mục 1</li></ul>` |
-| `<h1>`...`<h6>` | Tiêu đề (heading), h1 to nhất | `<h1>Tiêu đề</h1>` |
-| `<p>` | Đoạn văn (paragraph) | `<p>Nội dung...</p>` |
-| `<img>` | Hình ảnh | `<img src="logo.png">` |
+### 3.4. Ví dụ đầy đủ: cây UI của một màn hình Đăng nhập (dạng XML)
 
-**Chi tiết về `<input>` — thẻ bạn sẽ tương tác nhiều nhất:**
+Appium Inspector và lệnh dump sẽ cho bạn thấy cây UI dưới dạng **XML** (giống HTML). Đây là XML mô phỏng màn hình Login ở trên — **hãy đọc thật kỹ**, ta sẽ dùng lại nó xuyên suốt Phần 4, bài tập, và đáp án (giống cách bản web dùng lại form login):
 
-Thuộc tính `type` quyết định input là loại gì:
+```xml
+<hierarchy rotation="0">
+  <android.widget.FrameLayout>
+    <android.widget.LinearLayout resource-id="com.example.app:id/login_container">
 
-```html
-<input type="text" ...>       <!-- ô nhập chữ thường -->
-<input type="password" ...>   <!-- ô mật khẩu (che ký tự) -->
-<input type="email" ...>      <!-- ô email -->
-<input type="checkbox" ...>   <!-- ô tick chọn -->
-<input type="radio" ...>      <!-- nút chọn tròn (chỉ chọn 1 trong nhóm) -->
-<input type="submit" ...>     <!-- nút gửi form -->
-```
+      <android.widget.TextView
+          resource-id="com.example.app:id/title"
+          class="android.widget.TextView"
+          text="Đăng nhập"
+          content-desc=""
+          clickable="false" enabled="true" displayed="true"
+          bounds="[120,300][600,380]" />
 
-### 3.5. Ví dụ đầy đủ: một form Login thật
+      <android.widget.EditText
+          resource-id="com.example.app:id/username"
+          class="android.widget.EditText"
+          text=""
+          content-desc="test-Username"
+          clickable="true" enabled="true" displayed="true"
+          bounds="[80,420][1000,520]" />
 
-Đây là đoạn HTML mô phỏng một trang đăng nhập điển hình. **Hãy đọc thật kỹ** — sau đó ta sẽ mổ xẻ nó, và ở phần CSS Selector & DevTools ta sẽ dùng lại chính nó.
+      <android.widget.EditText
+          resource-id="com.example.app:id/password"
+          class="android.widget.EditText"
+          text=""
+          content-desc="test-Password"
+          password="true"
+          clickable="true" enabled="true" displayed="true"
+          bounds="[80,560][1000,660]" />
 
-```html
-<form id="login-form" class="auth-box" action="/login" method="post">
-  <h2>Đăng nhập hệ thống</h2>
+      <android.widget.CheckBox
+          resource-id="com.example.app:id/remember"
+          class="android.widget.CheckBox"
+          text="Ghi nhớ đăng nhập"
+          content-desc=""
+          checkable="true" checked="false"
+          clickable="true" enabled="true" displayed="true"
+          bounds="[80,700][620,760]" />
 
-  <label for="username">Tên đăng nhập</label>
-  <input
-    type="text"
-    id="username"
-    name="user"
-    class="form-input"
-    data-test="username-field"
-    placeholder="Nhập username của bạn"
-  />
+      <android.widget.Button
+          resource-id="com.example.app:id/login_button"
+          class="android.widget.Button"
+          text="ĐĂNG NHẬP"
+          content-desc="test-LOGIN"
+          clickable="true" enabled="true" displayed="true"
+          bounds="[80,820][1000,920]" />
 
-  <label for="password">Mật khẩu</label>
-  <input
-    type="password"
-    id="password"
-    name="pass"
-    class="form-input"
-    data-test="password-field"
-    placeholder="Nhập mật khẩu"
-  />
+      <android.widget.TextView
+          resource-id="com.example.app:id/forgot"
+          class="android.widget.TextView"
+          text="Quên mật khẩu?"
+          content-desc="test-Forgot password"
+          clickable="true" enabled="true" displayed="true"
+          bounds="[350,960][730,1010]" />
 
-  <div class="options">
-    <input type="checkbox" id="remember" name="remember" />
-    <label for="remember">Ghi nhớ đăng nhập</label>
-  </div>
-
-  <button type="submit" id="login-btn" class="btn btn-primary" data-test="submit">
-    Đăng nhập
-  </button>
-
-  <a href="/forgot-password" class="link-forgot">Quên mật khẩu?</a>
-</form>
+    </android.widget.LinearLayout>
+  </android.widget.FrameLayout>
+</hierarchy>
 ```
 
 **Giải thích từng phần:**
 
-1. **`<form id="login-form" ...>`** — cả biểu mẫu được bọc trong thẻ `<form>`, có `id="login-form"` (duy nhất). `action="/login"` là địa chỉ dữ liệu sẽ được gửi tới, `method="post"` là cách gửi.
+1. **`<hierarchy>`** là gốc của bản dump cây UI. Bên trong là các View lồng nhau (thụt vào = cấp sâu hơn).
 
-2. **`<label for="username">`** — nhãn "Tên đăng nhập". Thuộc tính `for="username"` **liên kết** nhãn này với input có `id="username"` (click vào nhãn sẽ focus vào ô đó). Điều này rất hữu ích — sau này Playwright có `getByLabel("Tên đăng nhập")`.
+2. **Ô username** (`EditText`):
+   - `resource-id="com.example.app:id/username"` → ⭐⭐ id, thường duy nhất. Chú ý dạng đầy đủ có cả **package** (`com.example.app`) + `:id/` + tên (`username`).
+   - `content-desc="test-Username"` → ⭐⭐⭐ accessibility id — **bền nhất**.
+   - `class="android.widget.EditText"` → ⚠️ trùng với ô password (cả hai đều là `EditText`) → **không đủ** để phân biệt.
+   - `text=""` → đang trống (chưa gõ gì).
+   - `bounds="[80,420][1000,520]"` → toạ độ khung — ❌ đừng dùng làm locator.
 
-3. **Ô username:**
-   - `type="text"` → ô nhập chữ.
-   - `id="username"` → định danh duy nhất (⭐ selector tốt nhất: `#username`).
-   - `name="user"` → tên trường khi gửi form.
-   - `class="form-input"` → dùng chung với ô password để trang trí (⚠️ **trùng** → không phân biệt được 2 ô).
-   - `data-test="username-field"` → ⭐ thuộc tính dành cho test, rất bền.
-   - `placeholder="Nhập username của bạn"` → chữ mờ gợi ý.
+3. **Ô password:** giống username nhưng `resource-id=".../password"`, `content-desc="test-Password"`, và có `password="true"` (ẩn ký tự). **Cũng là** `android.widget.EditText` như username → đây là ví dụ điển hình việc `class` bị trùng.
 
-4. **Ô password:** tương tự username nhưng `type="password"` (che ký tự), `id="password"`, `data-test="password-field"`. Chú ý nó **cũng có** `class="form-input"` giống ô username.
+4. **CheckBox "Ghi nhớ":** `resource-id=".../remember"`, có `checkable="true"` và `checked="false"` (chưa tick). `content-desc` để trống → ở đây nên dùng `resource-id` hoặc `text`.
 
-5. **Checkbox "Ghi nhớ":** `<input type="checkbox" id="remember">` nằm trong một `<div class="options">`.
+5. **Nút "ĐĂNG NHẬP":** `resource-id=".../login_button"`, `content-desc="test-LOGIN"`, `text="ĐĂNG NHẬP"`. Chú ý: `text` là tiếng Việt in hoa — nếu app đổi sang tiếng Anh, `text` sẽ thành "LOGIN" → locator theo `text` sẽ gãy, còn `content-desc="test-LOGIN"` thì **không đổi**.
 
-6. **Nút đăng nhập:** `<button type="submit" id="login-btn" class="btn btn-primary" data-test="submit">`. Có tận **hai** class (`btn` và `btn-primary` — cách nhau bởi dấu cách).
+6. **Link "Quên mật khẩu?":** là một `TextView` nhưng `clickable="true"` (bấm được), có cả `content-desc="test-Forgot password"`.
 
-7. **Link quên mật khẩu:** `<a href="/forgot-password">` — một đường link, `href` là đích đến.
+> 🔑 **Bài học rút ra:** Cùng một View có **nhiều cách** để định vị. Ô username ở trên có thể trỏ tới bằng `content-desc`, `resource-id`, `class` (kèm điều kiện khác), hay `bounds`. Kỹ năng của automation tester là **chọn cách bền nhất** — ưu tiên **`content-desc` (accessibility id) → `resource-id`**, tránh phụ thuộc `text`, `class` đơn lẻ, hay `bounds`.
 
-> 🔑 **Bài học rút ra từ ví dụ này:** Cùng một element có **nhiều cách** để định vị. Ô username ở trên có thể được trỏ tới bằng `id`, `name`, `class`, `data-test`, hay `placeholder`. Kỹ năng của automation tester là **chọn cách bền nhất** — thường là `id` hoặc `data-test`, tránh phụ thuộc `class` hay vị trí.
+### 3.5. Bảng đối chiếu nhanh: Web (HTML/DOM) ↔ Mobile (Android UI)
+
+Nếu bạn đã biết web, bảng này giúp "chuyển ngữ". Nếu chưa, cứ đọc cột Mobile là đủ:
+
+| Khái niệm | Web (HTML/DOM) | Mobile (Android) |
+|-----------|----------------|------------------|
+| Đơn vị giao diện | Thẻ HTML (`<button>`, `<input>`) | View (`Button`, `EditText`) |
+| Hộp gom nhóm | `<div>`, `<form>` | ViewGroup (`LinearLayout`, `FrameLayout`) |
+| Cấu trúc tổng thể | Cây **DOM** | Cây **View (UI hierarchy)** |
+| Id duy nhất | `id="username"` | `resource-id="...:id/username"` |
+| Định danh cho test | `data-test="username"` | `content-desc="test-Username"` (accessibility id) |
+| Nội dung chữ | text giữa 2 thẻ | thuộc tính `text` |
+| "Loại" element | tên thẻ (tag) | thuộc tính `class` |
+| Cách định vị | CSS Selector, XPath | `AppiumBy` (accessibilityId, id, className, UIAutomator, XPath) |
+| Công cụ soi | Chrome DevTools (F12) | Appium Inspector |
+
+> 🌉 Nắm bảng này, bạn thấy rõ: **tư duy y hệt**, chỉ đổi "từ vựng". Giờ ta học cách viết "địa chỉ" element trong Appium — phần 4.
 
 ---
 
 <a id="4"></a>
-## 🎯 Phần 4 — CSS Selector
+## 🎯 Phần 4 — Chiến lược locator Appium
 
-### 4.1. CSS Selector là gì và tại sao phải học?
+> 🌐➡️📱 **Đây là phần thay cho CSS Selector của bản web.** Web viết "địa chỉ" element bằng CSS Selector; Appium viết bằng **`AppiumBy`**. Đây là kỹ năng quan trọng nhất bạn mang theo cả khóa.
 
-Trang web có thể có hàng nghìn element. Làm sao chỉ cho máy biết **chính xác** element nào? Bạn cần một cách viết "địa chỉ" của element. Cách phổ biến nhất chính là **CSS Selector**.
+### 4.1. Locator là gì?
 
-> **Ví von:** CSS Selector giống như **địa chỉ nhà**. "Số 5" (`#id`), "tất cả nhà sơn xanh" (`.class`), "mọi ngôi nhà trên phố này" (`tag`)... Bạn mô tả càng chính xác, máy tìm càng đúng element.
+Một màn hình app có thể có hàng chục, hàng trăm View. Làm sao chỉ cho Appium biết **chính xác** View nào? Bạn cần một cách mô tả "địa chỉ" của View — gọi là **locator**.
 
-CSS Selector vốn được tạo ra để **trang trí** trang web (CSS = Cascading Style Sheets), nhưng automation "mượn" nó để **định vị** element. Playwright, Selenium, và cả hàm `document.querySelector` trong trình duyệt đều hiểu CSS Selector. Học một lần, dùng khắp nơi.
+> **Ví von:** Locator giống **cách bạn chỉ một người trong đám đông**. "Người **tên Nam**" (theo id), "người mặc **áo có bảng tên 'nhân viên'**" (theo accessibility id), "**mọi người mặc áo xanh**" (theo class — có thể trúng nhiều người). Mô tả càng đặc trưng và duy nhất, máy tìm càng đúng.
 
-### 4.2. Các loại selector cơ bản
+Trong Appium (Java Client), ta tạo locator bằng lớp **`AppiumBy`** rồi đưa cho `driver.findElement(...)`. Ví dụ tối giản:
 
-Ta dùng lại form login ở Phần 3.5 để minh họa.
+```java
+import io.appium.java_client.AppiumBy;
 
-#### a) Selector theo `id` — dùng dấu `#`
-
-```css
-#username
+// "Tìm View có content-desc = test-Username"
+driver.findElement(AppiumBy.accessibilityId("test-Username"));
 ```
 
-→ Chọn element có `id="username"`. Vì `id` là **duy nhất**, đây là selector **chính xác và bền nhất**. Luôn ưu tiên nếu element có `id` tử tế.
+> 📌 `AppiumBy` là lớp của **Appium Java Client** (phiên bản 8/9 trở lên). Ở giai đoạn này bạn chưa cần viết cả chương trình — chỉ cần **hiểu từng loại locator**. Ta sẽ dùng chúng thật sự ở Giai đoạn sau. (Cú pháp có thể thay đổi chút theo phiên bản Java Client.)
 
-#### b) Selector theo `class` — dùng dấu `.`
+### 4.2. Các loại locator (AppiumBy) cho Android
 
-```css
-.form-input
+Đây là 5 "vũ khí" chính. Dùng lại cây UI Login ở Phần 3.4 để minh họa:
+
+#### a) `AppiumBy.accessibilityId` — theo `content-desc` ⭐⭐⭐
+
+```java
+driver.findElement(AppiumBy.accessibilityId("test-Username"));
 ```
 
-→ Chọn **TẤT CẢ** element có class `form-input`. Trong form của ta, cả ô username **và** ô password đều có class này → selector này khớp **2 element**. ⚠️ Cẩn thận: khớp nhiều element là nguồn gốc lỗi "strict mode" ở Playwright sau này.
+→ Tìm View có `content-desc="test-Username"`. **Ưu tiên số 1.** Bền, không đổi theo ngôn ngữ, chạy được cả Android lẫn iOS (nếu app đặt id chung).
 
-#### c) Selector theo tên thẻ (tag)
+#### b) `AppiumBy.id` — theo `resource-id` ⭐⭐
 
-```css
-button
+```java
+driver.findElement(AppiumBy.id("com.example.app:id/username"));
 ```
 
-→ Chọn **TẤT CẢ** thẻ `<button>` trong trang. Rất rộng, ít khi dùng một mình.
+→ Tìm View có `resource-id` khớp. Giống `id` bên web, thường **duy nhất** trong màn hình.
 
-#### d) Selector theo thuộc tính — dùng `[thuộc-tính=giá-trị]`
+> 💡 **Mẹo:** thường có thể ghi gọn phần tên id (`username`) thay vì đầy đủ `com.example.app:id/username` — nhưng ghi đầy đủ **chắc chắn** hơn, tránh nhầm khi có nhiều app.
 
-```css
-[data-test="username-field"]
+#### c) `AppiumBy.className` — theo `class` ⚠️
+
+```java
+driver.findElement(AppiumBy.className("android.widget.EditText"));
 ```
 
-→ Chọn element có thuộc tính `data-test` bằng đúng `username-field`. ⭐ **Rất được ưa chuộng** vì `data-test` thường dành riêng cho automation.
+→ Tìm View theo tên lớp Android. **Cẩn thận:** trong màn hình Login, cả ô username **và** password đều là `android.widget.EditText` → locator này khớp **2 View** → `findElement` sẽ trả về **cái đầu tiên**, dễ nhầm. Chỉ nên dùng khi class đó **duy nhất** trên màn hình.
 
-Các biến thể của selector thuộc tính:
+#### d) `AppiumBy.androidUIAutomator` — dùng UiSelector (mạnh & linh hoạt) ⭐
 
-| Cú pháp | Ý nghĩa | Ví dụ |
-|---------|---------|-------|
-| `[attr]` | Có thuộc tính `attr` (bất kể giá trị) | `[disabled]` — mọi element đang bị vô hiệu hóa |
-| `[attr="x"]` | `attr` **bằng đúng** `x` | `[type="password"]` |
-| `[attr^="x"]` | `attr` **bắt đầu bằng** `x` | `[href^="/user"]` |
-| `[attr$="x"]` | `attr` **kết thúc bằng** `x` | `[src$=".png"]` |
-| `[attr*="x"]` | `attr` **chứa** `x` | `[class*="btn"]` |
+Đây là locator **riêng của Android**, dùng ngôn ngữ **UiSelector** của Android để mô tả element theo **nhiều thuộc tính**:
 
-#### e) Kết hợp nhiều điều kiện (viết liền, không cách)
+```java
+// theo resource-id
+driver.findElement(AppiumBy.androidUIAutomator(
+    "new UiSelector().resourceId(\"com.example.app:id/login_button\")"));
 
-Viết dính nhau nghĩa là "thỏa **tất cả**":
+// theo text
+driver.findElement(AppiumBy.androidUIAutomator(
+    "new UiSelector().text(\"ĐĂNG NHẬP\")"));
 
-```css
-input#username            /* thẻ input VÀ có id="username" */
-input.form-input          /* thẻ input VÀ có class form-input */
-button.btn.btn-primary    /* thẻ button VÀ có CẢ HAI class btn và btn-primary */
-input[type="password"]    /* thẻ input VÀ có type="password" */
+// theo content-desc (accessibility)
+driver.findElement(AppiumBy.androidUIAutomator(
+    "new UiSelector().description(\"test-LOGIN\")"));
+
+// kết hợp nhiều điều kiện: là Button VÀ text chứa "ĐĂNG"
+driver.findElement(AppiumBy.androidUIAutomator(
+    "new UiSelector().className(\"android.widget.Button\").textContains(\"ĐĂNG\")"));
 ```
 
-> 💡 **Mẹo về nhiều class:** `class="btn btn-primary"` là **hai** class riêng biệt. Trong selector, viết `.btn.btn-primary` (hai dấu chấm dính liền) để yêu cầu element có **cả hai**.
+> 💡 UiSelector có nhiều "bộ lọc": `.text()`, `.textContains()`, `.textStartsWith()`, `.resourceId()`, `.description()`, `.className()`, `.checkable()`, `.index()`... Rất mạnh khi cần kết hợp điều kiện. Nhớ **escape dấu nháy** (`\"`) vì cả biểu thức nằm trong chuỗi Java. Đào sâu ở Giai đoạn 3.
 
-### 4.3. Quan hệ giữa các element: cha–con, hậu duệ
+#### e) `AppiumBy.xpath` — theo đường dẫn trên cây ⚠️ (dùng khi bí)
 
-Element trong HTML lồng nhau như hộp trong hộp. Ta có thể định vị theo **quan hệ**.
+XPath mô tả vị trí trong cây XML. Rất **linh hoạt** (định vị được gần như mọi thứ) nhưng **chậm hơn** và **dễ gãy hơn** — dùng khi các cách trên không được:
 
-#### Quan hệ hậu duệ (descendant) — dùng **dấu cách**
+```java
+// theo content-desc
+driver.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='test-LOGIN']"));
 
-```css
-form input
+// theo text
+driver.findElement(AppiumBy.xpath("//android.widget.EditText[@text='']"));
+
+// theo resource-id
+driver.findElement(AppiumBy.xpath("//*[@resource-id='com.example.app:id/password']"));
+
+// text chứa một chuỗi
+driver.findElement(AppiumBy.xpath("//*[contains(@text,'Quên mật khẩu')]"));
 ```
 
-→ Chọn mọi `<input>` **nằm bên trong** (ở bất kỳ độ sâu nào) một `<form>`. "Con, cháu, chắt" đều tính.
+> ⚠️ **Tránh XPath "tuyệt đối"** kiểu `/hierarchy/FrameLayout/LinearLayout/Button[2]` — nó phụ thuộc cấu trúc cây, chỉ cần dev thêm/bớt một lớp layout là gãy. Nếu buộc dùng XPath, hãy dựa vào **thuộc tính** (`@content-desc`, `@resource-id`, `@text`) chứ đừng dựa vào vị trí.
 
-```css
-#login-form .form-input
+### 4.3. 🏆 Thứ tự ưu tiên khi chọn locator (HỌC THUỘC)
+
+Khi một View có nhiều cách định vị, chọn theo thứ tự ưu tiên sau:
+
+| Hạng | Loại locator | Vì sao |
+|:----:|--------------|--------|
+| 1 ⭐⭐⭐ | `accessibilityId` (`content-desc`) | Bền nhất, không đổi theo ngôn ngữ, dev thường đặt sẵn cho test |
+| 2 ⭐⭐ | `id` (`resource-id`) | Thường duy nhất, ổn định (nếu app có đặt) |
+| 3 ⭐ | `androidUIAutomator` với thuộc tính ổn định | Linh hoạt, kết hợp nhiều điều kiện, nhanh |
+| 4 | `className` (nếu **duy nhất** trên màn hình) | Chỉ khi chỉ có 1 View loại đó |
+| 5 (cuối cùng) | `xpath` dựa trên thuộc tính | Khi hết cách; tránh XPath theo vị trí |
+| ❌ Tránh | Toạ độ (x, y), `bounds`, XPath tuyệt đối | Gãy ngay khi đổi máy/độ phân giải/cấu trúc |
+
+> **Câu thần chú:** *"accessibility id trước, resource-id sau, UIAutomator khi cần kết hợp, XPath là phương án cuối, toạ độ thì không bao giờ."*
+
+### 4.4. 📊 BẢNG VÀNG: locator → View nó trỏ tới
+
+Dùng lại cây UI Login ở **Phần 3.4**. Đối chiếu từng locator với View nó chọn và số lượng khớp:
+
+| # | Locator (Java) | Trỏ tới View | Số khớp | Ghi chú |
+|---|----------------|--------------|:-------:|---------|
+| 1 | `AppiumBy.accessibilityId("test-Username")` | Ô username | 1 | ⭐⭐⭐ Bền nhất |
+| 2 | `AppiumBy.accessibilityId("test-Password")` | Ô password | 1 | ⭐⭐⭐ |
+| 3 | `AppiumBy.accessibilityId("test-LOGIN")` | Nút ĐĂNG NHẬP | 1 | ⭐⭐⭐ |
+| 4 | `AppiumBy.id("com.example.app:id/username")` | Ô username | 1 | ⭐⭐ Theo resource-id |
+| 5 | `AppiumBy.id("com.example.app:id/login_button")` | Nút ĐĂNG NHẬP | 1 | ⭐⭐ |
+| 6 | `AppiumBy.className("android.widget.EditText")` | ô username **và** password | **2** | ⚠️ Trùng → trả về cái đầu |
+| 7 | `AppiumBy.className("android.widget.Button")` | Nút ĐĂNG NHẬP | 1 | ✅ Chỉ có 1 Button trên màn hình này |
+| 8 | `AppiumBy.androidUIAutomator("new UiSelector().text(\"ĐĂNG NHẬP\")")` | Nút ĐĂNG NHẬP | 1 | ✅ Theo text (⚠️ đổi ngôn ngữ là gãy) |
+| 9 | `AppiumBy.androidUIAutomator("new UiSelector().description(\"test-Password\")")` | Ô password | 1 | ✅ = accessibility id, viết kiểu UiSelector |
+| 10 | `AppiumBy.xpath("//android.widget.Button[@content-desc='test-LOGIN']")` | Nút ĐĂNG NHẬP | 1 | ✅ XPath theo thuộc tính (ổn) |
+| 11 | `AppiumBy.xpath("//*[contains(@text,'Quên mật khẩu')]")` | Link Quên mật khẩu | 1 | ✅ text chứa chuỗi |
+| 12 | `AppiumBy.id("com.example.app:id/remember")` | CheckBox Ghi nhớ | 1 | ⭐⭐ |
+
+> 🎓 **Bài học lớn:** Với ô password, ta có ít nhất **4 locator đúng**: `accessibilityId("test-Password")`, `id(".../password")`, `androidUIAutomator(...description("test-Password"))`, `xpath("//*[@resource-id='...password']")`. Nhưng **không phải cái nào cũng tốt như nhau** — hãy chọn theo thứ tự ưu tiên ở 4.3. Còn `className("android.widget.EditText")` thì **sai** vì khớp cả 2 ô.
+
+### 4.5. Nếu bạn đã biết code: khung một locator trong Java
+
+Chưa cần viết ngay, nhưng để bạn hình dung locator "sống" trong code test thế nào (Giai đoạn sau sẽ làm chi tiết):
+
+```java
+import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.WebElement;
+
+// Tìm ô username rồi gõ chữ vào
+WebElement usernameField = driver.findElement(AppiumBy.accessibilityId("test-Username"));
+usernameField.sendKeys("bob@example.com");
+
+// Tìm nút Login rồi chạm
+driver.findElement(AppiumBy.accessibilityId("test-LOGIN")).click();
 ```
 
-→ Mọi element có class `form-input` nằm trong element `#login-form`.
-
-#### Quan hệ cha–con trực tiếp (direct child) — dùng **dấu `>`**
-
-```css
-.options > input
-```
-
-→ Chỉ chọn `<input>` là **con TRỰC TIẾP** (ngay bên dưới một cấp) của `.options`. "Cháu, chắt" **không** tính — chỉ con ruột.
-
-**Minh họa sự khác biệt** với đoạn HTML:
-
-```html
-<div class="wrapper">           <!-- ông -->
-  <div class="box">             <!-- cha -->
-    <span>A</span>              <!-- con trực tiếp của .box -->
-    <p><span>B</span></p>       <!-- span B là "cháu" của .box -->
-  </div>
-</div>
-```
-
-| Selector | Khớp element nào | Vì sao |
-|----------|------------------|--------|
-| `.box span` | **Cả A và B** | Hậu duệ = con và cháu đều tính |
-| `.box > span` | **Chỉ A** | Con trực tiếp; B là cháu nên bị loại |
-| `.wrapper span` | **Cả A và B** | Đều là hậu duệ của wrapper |
-| `.wrapper > span` | **Không có gì** | wrapper không có `<span>` con trực tiếp |
-
-#### Các quan hệ khác (dùng nâng cao)
-
-| Selector | Ý nghĩa |
-|----------|---------|
-| `a + b` | Element `b` đứng **ngay sau** `a` (anh em liền kề) |
-| `a ~ b` | Mọi `b` là **anh em phía sau** `a` |
-| `ul li:first-child` | Con **đầu tiên** |
-| `ul li:last-child` | Con **cuối cùng** |
-| `ul li:nth-child(2)` | Con **thứ 2** |
-
-### 4.4. 📊 BẢNG VÀNG: Selector → element nó trỏ tới
-
-Dùng lại form login ở Phần 3.5. Hãy đối chiếu từng selector với element nó chọn:
-
-| # | CSS Selector | Trỏ tới element nào | Số element khớp | Ghi chú |
-|---|--------------|---------------------|:---------------:|---------|
-| 1 | `#username` | Ô nhập username | 1 | ⭐ Bền nhất — theo id duy nhất |
-| 2 | `#password` | Ô nhập password | 1 | ⭐ Theo id |
-| 3 | `#login-btn` | Nút "Đăng nhập" | 1 | ⭐ Theo id |
-| 4 | `.form-input` | **Cả** ô username **và** password | **2** | ⚠️ Khớp nhiều — dễ gây strict mode |
-| 5 | `input` | Cả 3 input (user, pass, checkbox) | **3** | ⚠️ Quá rộng |
-| 6 | `input[type="password"]` | Ô password | 1 | ✅ Kết hợp tag + thuộc tính |
-| 7 | `[data-test="username-field"]` | Ô username | 1 | ⭐ Theo data-test, rất bền |
-| 8 | `[data-test="submit"]` | Nút "Đăng nhập" | 1 | ⭐ Theo data-test |
-| 9 | `button.btn.btn-primary` | Nút "Đăng nhập" | 1 | ✅ Tag + 2 class |
-| 10 | `#login-form input` | Cả 3 input trong form | **3** | Quan hệ hậu duệ |
-| 11 | `#login-form > button` | Nút "Đăng nhập" | 1 | Con trực tiếp của form |
-| 12 | `.options > input` | Checkbox "Ghi nhớ" | 1 | Con trực tiếp của `.options` |
-| 13 | `a.link-forgot` | Link "Quên mật khẩu?" | 1 | Tag `a` + class |
-| 14 | `[href="/forgot-password"]` | Link "Quên mật khẩu?" | 1 | Theo thuộc tính href |
-| 15 | `input[name="user"]` | Ô username | 1 | Theo name |
-| 16 | `input[placeholder*="mật khẩu"]` | Ô password | 1 | placeholder **chứa** "mật khẩu" |
-
-> 🎓 **Bài học lớn:** Với ô username, ta có ít nhất **5 selector đúng**: `#username`, `[data-test="username-field"]`, `input[name="user"]`, `#login-form input:first-of-type`, `[placeholder="Nhập username của bạn"]`. Nhưng **không phải cái nào cũng tốt như nhau**. Thứ tự ưu tiên khi chọn:
->
-> 1. `id` hoặc `data-test` (bền, rõ ràng) — **ưu tiên cao nhất**.
-> 2. Thuộc tính ổn định khác (`name`, `type` kết hợp).
-> 3. Class có ý nghĩa (nếu không trùng).
-> 4. **Tránh:** phụ thuộc vị trí (`:nth-child`), class trang trí hay đổi, chuỗi hậu duệ quá dài.
+> Thấy chưa? Toàn bộ độ khó nằm ở việc **viết đúng cái locator** bên trong `AppiumBy.…(...)`. Đó là lý do ta luyện đọc cây UI và chọn locator ngay từ Giai đoạn 0. Còn `.sendKeys()`, `.click()` chỉ là hành động, học sau rất nhanh.
 
 ---
 
 <a id="5"></a>
-## 🌳 Phần 5 — DOM là gì
+## 🔧 Phần 5 — Dùng Appium Inspector (thay cho F12)
 
-### 5.1. Từ HTML "phẳng" đến cái cây DOM
+> 🌐➡️📱 **Đây là phần thay cho Chrome DevTools/F12 của bản web.** Web dùng F12 để soi DOM và đọc thuộc tính; mobile dùng **Appium Inspector** để soi cây UI và đọc `resource-id`/`content-desc`. Đây là **công cụ số 1** của automation mobile tester — thành thạo nó = tiết kiệm hàng giờ.
 
-Ở Phần 3, HTML là một **file văn bản** — các dòng chữ nối tiếp nhau. Nhưng khi trình duyệt đọc file đó, nó dựng lên trong bộ nhớ một **cấu trúc cây** gọi là **DOM** (*Document Object Model*).
+**Appium Inspector** kết nối tới Appium Server, mở một phiên (session) trên emulator, chụp lấy cây UI hiện tại, và hiển thị cho bạn: bên trái là **ảnh màn hình app**, ở giữa là **cây UI**, bên phải là **bảng thuộc tính** của View bạn chọn. Bạn click vào View trên ảnh → nó highlight trong cây → bạn đọc được `resource-id`, `content-desc`, `class`, `bounds`... và **copy** để làm locator.
 
-> **Ví von:** HTML là **kịch bản phim viết trên giấy** (văn bản tĩnh). DOM là **bộ phim đang chạy trong đầu đạo diễn** — sống động, có thể tua, sửa, thêm nhân vật. Trình duyệt "diễn" HTML thành DOM, và DOM mới là thứ đang thực sự sống trong trang.
+### 5.1. Chuẩn bị trước khi mở Inspector
 
-- **HTML** = văn bản gốc bạn viết ra (tĩnh).
-- **DOM** = cây các đối tượng mà trình duyệt tạo ra **từ** HTML đó, đang nằm trong bộ nhớ, **có thể thay đổi** bằng JavaScript.
+Inspector cần 3 thứ đang **sẵn sàng** (đã cài ở Phần 2):
 
-### 5.2. Vì sao gọi là "cây"?
+1. ✅ **Emulator đang chạy** (kiểm tra: `adb devices` thấy `emulator-5554 device`).
+2. ✅ **Appium Server đang chạy.** Mở một Terminal, gõ `appium`, để nguyên cửa sổ (thấy dòng `...listener started on http://127.0.0.1:4723`).
+3. ✅ **App mẫu đã cài** vào emulator (Phần 2C.7).
 
-Vì các element **lồng vào nhau** tạo thành quan hệ cha–con y như cây gia phả. Xét đoạn HTML rút gọn của form login:
+### 5.2. Hiểu về "Capabilities" — tờ khai để mở phiên
 
-```html
-<form id="login-form">
-  <h2>Đăng nhập hệ thống</h2>
-  <label for="username">Tên đăng nhập</label>
-  <input id="username">
-  <div class="options">
-    <input id="remember" type="checkbox">
-    <label for="remember">Ghi nhớ đăng nhập</label>
-  </div>
-  <button id="login-btn">Đăng nhập</button>
-</form>
+**Capabilities** (viết tắt "caps") là một **tờ khai** dạng JSON cho Appium biết: bạn muốn test **nền tảng nào, thiết bị nào, app nào**. Giống như điền phiếu trước khi vào phòng test. Các cap cơ bản cho Android:
+
+| Capability | Ý nghĩa | Ví dụ giá trị |
+|-----------|---------|---------------|
+| `platformName` | Nền tảng | `Android` |
+| `appium:automationName` | Driver dùng | `UiAutomator2` |
+| `appium:deviceName` | Tên thiết bị (Android khá "dễ tính", ghi gì cũng được) | `Android Emulator` |
+| `appium:app` | Đường dẫn tới file `.apk` (Appium tự cài & mở) | `/Users/ban/Downloads/app.apk` |
+| `appium:appPackage` | Package của app (nếu app **đã cài sẵn**) | `com.saucelabs.mydemoapp.rn` |
+| `appium:appActivity` | Activity khởi động | `com.saucelabs.mydemoapp.rn.MainActivity` |
+
+> 💡 **Hai cách chỉ định app:** (1) dùng `appium:app` = đường dẫn tới `.apk` → Appium tự cài rồi mở. (2) App **đã cài sẵn** thì dùng cặp `appium:appPackage` + `appium:appActivity` (lấy bằng lệnh `adb shell dumpsys window | grep mCurrentFocus` ở Phần 2C.7). Cách (2) nhanh hơn vì khỏi cài lại.
+
+> 📌 Chú ý tiền tố **`appium:`** ở đầu các cap dành riêng cho Appium (chuẩn W3C mới). `platformName` là cap chuẩn nên **không** cần tiền tố.
+
+**Ví dụ tờ khai caps đầy đủ (JSON — dán vào Inspector):**
+
+```json
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Android Emulator",
+  "appium:appPackage": "com.saucelabs.mydemoapp.rn",
+  "appium:appActivity": "com.saucelabs.mydemoapp.rn.MainActivity"
+}
 ```
 
-Trình duyệt dựng thành cây DOM như sau:
+### 5.3. Kết nối Inspector tới Appium Server (thao tác cầm tay)
+
+1. Mở **Appium Inspector**.
+2. Ở khu vực **Remote Host / Remote Port**, để mặc định:
+   - **Remote Host:** `127.0.0.1`
+   - **Remote Port:** `4723`
+   - **Remote Path:** `/` (Appium 2 dùng `/`; nếu là bản 1.x cũ mới là `/wd/hub`).
+3. Ở ô **Desired Capabilities**, chọn chế độ **JSON Representation** (biểu tượng `{}`) rồi **dán** đoạn JSON caps ở trên. (Hoặc điền từng dòng key/value ở chế độ bảng.)
+4. (Tuỳ chọn) bấm **Save As** để lưu bộ caps này, lần sau khỏi gõ lại.
+5. Bấm **Start Session**.
+6. Chờ vài giây → Inspector hiện: **ảnh màn hình app** bên trái, **cây UI** ở giữa, **bảng thuộc tính** bên phải. 🎉
+
+> ⚠️ **Lỗi thường gặp khi Start Session:**
+> - *"Could not connect / ECONNREFUSED"* → Appium Server chưa chạy (chưa gõ `appium`) hoặc sai Host/Port.
+> - *"No device / device not found"* → emulator chưa bật; kiểm tra `adb devices`.
+> - *"Activity ... never started"* → sai `appActivity`; lấy lại bằng lệnh `dumpsys` ở Phần 2C.7, hoặc thử thêm cap `appium:appWaitActivity` = `*`.
+
+### 5.4. Đọc thuộc tính element & lấy locator (phần quan trọng nhất)
+
+Đây là kỹ năng cốt lõi — làm y hệt việc "Inspect" một element bên web:
+
+1. **Click vào một element trên ảnh màn hình** bên trái (ví dụ ô Username). Element đó được **tô sáng** cả trên ảnh lẫn trong cây UI ở giữa.
+2. **Bảng thuộc tính bên phải** (mục *Selected Element* / *Attribute*) hiện toàn bộ "chứng minh thư" của View: `resource-id`, `content-desc`, `class`, `text`, `bounds`, `clickable`, `enabled`, `checked`...
+3. **Đọc và chọn locator bền nhất** (theo thứ tự ưu tiên Phần 4.3): ưu tiên `content-desc` → `resource-id`.
+4. **Inspector còn gợi ý sẵn locator!** Ở bảng bên phải thường có phần **"Find By"** liệt kê các chiến lược khả dụng (accessibility id, id, xpath...) kèm giá trị, và có nút **copy** (biểu tượng 📋) để chép ngay. Rất tiện — nhưng **đừng tin XPath dài nó gợi ý**; hãy tự ưu tiên accessibility id / id.
+
+**Ví dụ:** click vào ô Username của app, bảng thuộc tính có thể hiện:
 
 ```
-form#login-form                     ← nút gốc (cha của tất cả bên dưới)
-├── h2  ("Đăng nhập hệ thống")
-├── label[for=username]  ("Tên đăng nhập")
-├── input#username
-├── div.options                     ← nút cha con
-│   ├── input#remember (checkbox)
-│   └── label[for=remember]  ("Ghi nhớ đăng nhập")
-└── button#login-btn  ("Đăng nhập")
+content-desc : test-Username
+class        : android.widget.EditText
+resource-id  : (trống hoặc com.saucelabs...:id/...)
+bounds       : [48,506][1032,638]
+clickable    : true
+enabled      : true
 ```
 
-**Thuật ngữ quan hệ trong cây** (bạn sẽ gặp lại ở Playwright khi "đi" trong DOM):
+→ Locator tốt nhất: `AppiumBy.accessibilityId("test-Username")`.
 
-| Thuật ngữ | Nghĩa | Ví dụ trong cây trên |
-|-----------|-------|----------------------|
-| **Node (nút)** | Mỗi element là một nút | `form`, `input`, `div`... |
-| **Parent (cha)** | Nút bao ngoài trực tiếp | `div.options` là cha của `input#remember` |
-| **Child (con)** | Nút bên trong trực tiếp | `input#remember` là con của `div.options` |
-| **Sibling (anh em)** | Các nút cùng cha | `input#username` và `div.options` là anh em (cùng cha `form`) |
-| **Descendant (hậu duệ)** | Con, cháu, chắt... | `label[for=remember]` là hậu duệ của `form` |
-| **Ancestor (tổ tiên)** | Cha, ông, cụ... | `form` là tổ tiên của mọi nút bên dưới |
-| **Root (gốc)** | Nút trên cùng | `form#login-form` (trong ví dụ này) |
+### 5.5. Các nút hữu ích khác trong Inspector
 
-### 5.3. Vì sao Playwright thao tác trên DOM chứ không phải trên "hình ảnh"?
+| Nút / khu vực | Công dụng |
+|---------------|-----------|
+| **Tap** (chọn element rồi bấm) | Chạm thử vào element ngay trên emulator |
+| **Send Keys** | Gõ chữ thử vào ô nhập đang chọn |
+| **Refresh Source** (🔄) | Chụp lại cây UI sau khi màn hình thay đổi (rất hay dùng: cứ chuyển màn hình là bấm refresh) |
+| **Back** (◀) | Bấm nút Back của Android |
+| **Start/Stop Recording** (⏺) | Ghi lại thao tác thành **code mẫu** (nhiều ngôn ngữ, gồm Java) — tham khảo nhanh, đừng phụ thuộc |
+| **Swipe By Coordinates** | Vuốt thử theo toạ độ (chỉ để thử tay) |
+| **Search for element** | Tìm element theo một locator để kiểm chứng nó có khớp không |
 
-Đây là điểm cốt lõi giúp bạn hiểu bản chất automation:
+> 💡 **Quy trình "test locator" trong Inspector** (giống test selector trong Console web): sau khi đoán một locator, dùng chức năng **Search for element** → nhập chiến lược (accessibility id) + giá trị (`test-Username`) → Inspector cho biết có tìm thấy không và **bao nhiêu** element khớp. Đây là cách xác minh locator **trước khi** viết vào code Java — thử ở đây mất 5 giây, đoán mò trong code rồi chạy lại mất 5 phút.
 
-- Máy tính **không "nhìn" trang web bằng mắt** như bạn. Với con người, cái nút là một hình chữ nhật xanh có chữ. Với máy, cái nút là một **nút trong cây DOM**: `button#login-btn`.
-- Khi bạn viết `page.click("#login-btn")`, Playwright **không** đi tìm "hình chữ nhật xanh" trên ảnh chụp màn hình. Nó đi vào **cây DOM**, tìm nút có `id="login-btn"`, rồi ra lệnh click vào đúng nút đó.
-- Vì thao tác trên DOM, Playwright **chính xác** và **nhanh**: nó biết chính xác element ở đâu, có tồn tại chưa, đã hiện ra chưa, có bị disable không — những thông tin này đều nằm trong DOM.
+### 5.6. Công cụ thay thế / bổ trợ (biết để phòng khi)
 
-> 🔗 **Đây chính là lý do bạn phải học HTML + CSS Selector + DOM TRƯỚC khi học Playwright:** Playwright chỉ là công cụ ra lệnh "hãy tìm nút này trong DOM rồi click". Nhưng **bạn** phải viết được cái "nút này" đó — tức là **CSS Selector** trỏ vào đúng **node** trong **cây DOM** được dựng từ **HTML**. Bốn khái niệm này là một chuỗi liền mạch.
+Ngoài Appium Inspector, còn vài cách "soi" cây UI:
 
-### 5.4. DOM có thể thay đổi — và đây là nguồn gốc của flaky test
+- **`uiautomatorviewer`** — công cụ cũ đi kèm Android SDK (thư mục `tools/bin`). Chụp ảnh màn hình + cây UI tĩnh. Đơn giản nhưng không mở session Appium; một số bản SDK mới đã bỏ. Chạy: `uiautomatorviewer` (nếu có trong PATH).
+- **`adb shell uiautomator dump`** — dump cây UI hiện tại ra file XML ngay trên máy tính:
+  ```bash
+  adb shell uiautomator dump /sdcard/ui.xml
+  adb pull /sdcard/ui.xml ./ui.xml
+  ```
+  Mở `ui.xml` bằng trình soạn thảo để đọc `resource-id`, `content-desc`... Cách này **luôn dùng được**, tiện khi Inspector trục trặc.
+- **`adb shell dumpsys`** — xem thông tin hệ thống. Hữu ích nhất: tìm activity đang mở:
+  ```bash
+  adb shell dumpsys window | grep -i mCurrentFocus     # macOS/Linux
+  adb shell dumpsys window | Select-String mCurrentFocus  # Windows PowerShell
+  ```
+- **Android Studio → Layout Inspector** — soi layout của app (chủ yếu cho dev, nhưng xem được cây View).
 
-Điểm khác biệt lớn giữa HTML tĩnh và DOM sống: **DOM thay đổi liên tục** khi trang chạy. JavaScript có thể:
-
-- Thêm element mới (ví dụ: sau khi login, thêm nút "Đăng xuất").
-- Xóa element (ẩn thông báo lỗi sau vài giây).
-- Đổi nội dung/thuộc tính (đổi `class`, đổi text).
-
-Ví dụ: khi bạn bấm "Đăng nhập" với sai mật khẩu, JavaScript **chèn thêm** vào DOM một element báo lỗi:
-
-```html
-<div class="error-message" data-test="error">Sai tên đăng nhập hoặc mật khẩu.</div>
-```
-
-Element này **không có** trong HTML gốc — nó chỉ **xuất hiện trong DOM** sau hành động. Điều này giải thích một thử thách kinh điển của automation: **element có thể chưa tồn tại ngay lúc bạn muốn thao tác** (trang còn đang load, dữ liệu chưa về). Đây là lý do Playwright có tính năng **auto-wait** (tự chờ element xuất hiện) — bạn sẽ học sâu ở Giai đoạn 3. Còn bây giờ, chỉ cần nhớ: **DOM là một cái cây sống, luôn biến đổi.**
+> 📌 Ở Giai đoạn 0, mục tiêu chỉ cần: **mở được Inspector, Start Session vào app mẫu, click một element và đọc đúng `content-desc`/`resource-id`/`class` của nó, rồi copy ra làm locator.** Vậy là đủ.
 
 ---
 
 <a id="6"></a>
-## 🔧 Phần 6 — Chrome DevTools (F12)
+## 🛠️ Phần 6 — Bài thực hành có hướng dẫn: Sauce Labs My Demo App
 
-**Chrome DevTools** là "phòng thí nghiệm" tích hợp sẵn trong trình duyệt Chrome (Edge, Cốc Cốc cũng có, tương tự). Đây là **công cụ số 1** của automation tester — nơi bạn nhìn thấy DOM thật, đọc thuộc tính, và **test selector trước khi viết vào code**. Thành thạo DevTools = tiết kiệm hàng giờ debug.
+Giờ ta áp dụng mọi thứ vào một app **thật**: **Sauce Labs My Demo App** (bạn đã cài ở Phần 2C.7) — một app mua sắm giả lập được tạo riêng để luyện automation. Đây là "sân tập" bạn sẽ dùng suốt cả khóa (giống vai trò SauceDemo bên web).
 
-### 6.1. Mở DevTools
+> 🎯 **Mục tiêu:** Tự tay mở Appium Inspector, Start Session vào app, và tìm được locator của các element chính: **nút thêm giỏ hàng**, **ô Username / Password / nút Login** ở màn hình đăng nhập, và **tên sản phẩm**. Đây chính là kỹ năng bạn dùng ở mọi bài Appium sau này.
 
-Có 3 cách mở (dùng được trên cả macOS và Windows):
+> ⚠️ **Lưu ý quan trọng về giá trị locator:** Các `content-desc`/`resource-id` bên dưới là **giá trị điển hình** của app này (bản React Native). **Phiên bản app có thể thay đổi** → điều bắt buộc là bạn **tự mở Inspector kiểm chứng**, đừng chép đáp án. Chính việc "soi thật" mới là kỹ năng cần luyện.
 
-- Phím tắt: bấm **`F12`** (cách nhanh, giống nhau trên cả hai hệ). Hoặc:
-  - **macOS:** `Cmd + Option + I`
-  - **Windows:** `Ctrl + Shift + I`
-- Chuột phải vào bất kỳ chỗ nào trên trang → **Inspect** (Kiểm tra).
-- Menu Chrome (⋮ góc phải) → **More Tools → Developer Tools**.
+### Bước 1 — Khởi động bộ ba
 
-Một bảng công cụ hiện ra (thường ở bên phải hoặc dưới đáy). Bạn sẽ thấy nhiều tab: **Elements, Console, Network, Sources...**. Ta tập trung 3 tab quan trọng nhất.
+1. Bật **emulator** (Android Studio → Device Manager → ▶). Chờ boot xong.
+2. Mở Terminal, gõ `appium` để chạy server (để nguyên cửa sổ đó).
+3. Kiểm tra nhanh: `adb devices` thấy `emulator-5554 device`.
 
-> 💡 **Mẹo:** Bấm biểu tượng ⋮ trong DevTools → *Dock side* để chọn gắn bảng ở phải/dưới/tách rời cho dễ nhìn.
+### Bước 2 — Start Session bằng Appium Inspector
 
-### 6.2. Tab ELEMENTS — nhìn và đọc DOM
+1. Mở **Appium Inspector**. Remote Host `127.0.0.1`, Port `4723`, Path `/`.
+2. Dán caps (dùng package/activity của app; nếu app bạn tải khác version, lấy lại bằng `adb shell dumpsys window | grep mCurrentFocus`):
 
-Đây là nơi bạn thấy **cây DOM sống** của trang, và là tab bạn dùng nhiều nhất.
-
-**Thao tác cầm tay — Inspect một element:**
-
-1. Mở tab **Elements**.
-2. Bấm biểu tượng **mũi tên trong ô vuông** ở góc trên trái DevTools (phím tắt — macOS: `Cmd + Option + C`, Windows: `Ctrl + Shift + C`) — đây là công cụ **"Inspect/Select element"**.
-3. Di chuột lên trang web → element dưới con trỏ được **tô sáng**, kèm tooltip hiện tên thẻ, kích thước, class.
-4. **Click** vào element bạn quan tâm (ví dụ ô username).
-5. Trong tab Elements, dòng HTML tương ứng được **tô đậm/highlight**. Bạn đọc được ngay toàn bộ thuộc tính của nó.
-
-Ví dụ khi inspect ô username của form login, bạn sẽ thấy dòng như:
-
-```html
-<input type="text" id="username" name="user" class="form-input" data-test="username-field" placeholder="Nhập username của bạn">
-```
-
-→ Từ đây bạn **đọc được** mọi "chứng minh thư" của element: `id="username"`, `data-test="username-field"`... để chọn selector.
-
-**Các thao tác hữu ích khác trong tab Elements:**
-
-- **Xem quan hệ cây:** các element lồng nhau hiển thị thụt vào; bấm tam giác ▶ để mở/đóng nhánh — bạn thấy rõ cha–con.
-- **Copy selector:** chuột phải vào dòng HTML → **Copy → Copy selector** (Chrome tự sinh CSS selector) hoặc **Copy → Copy XPath**.
-  > ⚠️ **Cảnh báo:** Selector Chrome tự sinh thường **rất dài và mong manh** (kiểu `#root > div:nth-child(2) > form > input`). Dùng để **tham khảo nhanh** thì được, nhưng hãy tập **tự viết selector ngắn gọn dựa vào `id`/`data-test`** — đó mới là kỹ năng thật.
-- **Sửa thử tại chỗ:** double-click vào text hay thuộc tính để sửa (chỉ đổi tạm trên máy bạn, không ảnh hưởng server) — hữu ích để thử nghiệm.
-- **Tìm nhanh trong DOM:** bấm tìm ngay trong tab Elements (macOS: `Cmd + F`, Windows: `Ctrl + F`) → gõ text, id, hoặc **cả CSS selector** → nó tìm và nhảy tới element khớp, đồng thời cho biết **có bao nhiêu kết quả**. Đây là cách nhanh để đếm số element một selector khớp.
-
-### 6.3. Tab CONSOLE — "phòng thử" selector (quan trọng nhất với automation)
-
-Console là nơi bạn **gõ lệnh JavaScript** và xem kết quả ngay. Với automation, công dụng đắt giá nhất là: **kiểm tra selector có trỏ đúng element không, TRƯỚC khi viết vào code Java.** Thử ở đây mất 5 giây; đoán mò trong code Java rồi chạy lại mất 5 phút.
-
-**Hai hàm bạn phải thuộc:**
-
-#### `document.querySelectorAll("selector")` — tìm TẤT CẢ element khớp
-
-```javascript
-document.querySelectorAll(".form-input")
-```
-
-→ Trả về một **danh sách** (NodeList) mọi element khớp selector `.form-input`. Kết quả hiện `NodeList(2) [input#username, input#password]` — cho biết có **2** element khớp và chúng là gì.
-
-#### `document.querySelector("selector")` — tìm element ĐẦU TIÊN khớp
-
-```javascript
-document.querySelector("#username")
-```
-
-→ Trả về **một** element đầu tiên khớp (hoặc `null` nếu không có).
-
-#### `$$("selector")` và `$("selector")` — bản viết tắt tiện lợi
-
-DevTools cung cấp lối viết tắt (chỉ chạy trong Console, không phải JS chuẩn):
-
-```javascript
-$$("selector")    // giống querySelectorAll — trả về MẢNG mọi element khớp
-$("selector")     // giống querySelector    — trả về element ĐẦU TIÊN
-```
-
-**Thao tác cầm tay — quy trình "test selector":**
-
-1. Mở tab **Console**.
-2. Gõ selector bạn định dùng, ví dụ:
-   ```javascript
-   $$("[data-test='username-field']")
+   ```json
+   {
+     "platformName": "Android",
+     "appium:automationName": "UiAutomator2",
+     "appium:deviceName": "Android Emulator",
+     "appium:appPackage": "com.saucelabs.mydemoapp.rn",
+     "appium:appActivity": "com.saucelabs.mydemoapp.rn.MainActivity"
+   }
    ```
-   > 💡 Chú ý dấu nháy: selector nằm trong `"..."`, nên bên trong dùng `'...'` (nháy đơn) để không bị lẫn.
-3. Nhấn **Enter**. Đọc kết quả:
-   - `[input#username]` với **1** phần tử → ✅ selector chọn đúng **1** element. Tuyệt.
-   - `(2) [...]` hoặc `(3) [...]` → ⚠️ selector khớp **nhiều** element → cần cụ thể hơn (nếu không sẽ dính strict mode ở Playwright).
-   - `[]` (mảng rỗng) → ❌ **không** khớp element nào → selector sai, kiểm tra lại.
-4. **Đếm số element khớp** nhanh:
-   ```javascript
-   $$(".form-input").length
-   ```
-   → in ra `2`.
-5. **Rê chuột** lên kết quả trả về trong Console → element tương ứng được **tô sáng** trên trang → xác nhận bằng mắt là đúng element bạn muốn.
+3. Bấm **Start Session**. App mở ra màn hình danh sách sản phẩm (Products/Catalog).
 
-**Ví dụ thực chiến — so sánh selector tốt và xấu ngay trong Console:**
+### Bước 3 — Soi nút "Add to cart" của một sản phẩm
 
-```javascript
-$$("input").length                        // 3  → quá rộng, khớp cả 3 input
-$$(".form-input").length                  // 2  → vẫn khớp 2 (user + pass)
-$$("#username").length                     // 1  → ✅ chuẩn xác
-$$("[data-test='username-field']").length  // 1  → ✅ chuẩn xác, lại còn bền
+1. Trên ảnh màn hình trong Inspector, click vào **nút giỏ hàng nhỏ** (hoặc nút "Add to cart") của một sản phẩm.
+2. Đọc bảng thuộc tính bên phải: ghi lại `content-desc`, `class`.
+
+<details>
+<summary>💡 <b>Gợi ý đáp án — Nút Add to cart</b> (tự soi trước rồi mới mở)</summary>
+
+App này đặt accessibility id rất "thân thiện với test". Nút thêm giỏ hàng thường có:
+
+```
+content-desc : test-Add To Cart
+class        : android.widget.ImageView  (hoặc android.view.ViewGroup)
 ```
 
-→ Chỉ trong vài giây, bạn tự chứng minh được vì sao `#username` và `[data-test=...]` tốt hơn `.form-input`.
+**Locator tốt:** `AppiumBy.accessibilityId("test-Add To Cart")`.
 
-### 6.4. Tab NETWORK — xem request/response
+> 👀 Chú ý: app React Native thường **không có** `resource-id` cho nhiều element, nhưng **có** `content-desc` rất tốt → đây là minh chứng thực tế cho việc **ưu tiên accessibility id**. Nhiều sản phẩm cùng có `content-desc="test-Add To Cart"` → locator này khớp **nhiều** element (mỗi sản phẩm một nút) — đây là ví dụ thực tế của locator trỏ tới **danh sách**, bạn sẽ học cách lọc từng cái ở giai đoạn sau.
 
-Tab **Network** ghi lại **mọi cuộc trao đổi** giữa trình duyệt và server: tải trang, tải ảnh, và đặc biệt là các **lời gọi API** (dữ liệu chạy ngầm). Ở Giai đoạn 0 bạn chỉ cần **làm quen** — nó sẽ cực quan trọng khi học API testing và mock (Giai đoạn 4, 6).
+</details>
 
-**Thao tác cầm tay — xem một request đăng nhập:**
+### Bước 4 — Mở màn hình Login và soi ô Username
 
-1. Mở tab **Network**.
-2. **Quan trọng:** đảm bảo nút ghi hình tròn đỏ đang **bật** (đỏ = đang ghi). Nếu muốn danh sách gọn, bấm 🚫 (Clear) để xóa log cũ.
-3. Thực hiện hành động trên trang — ví dụ điền username/password rồi bấm **Đăng nhập**.
-4. Danh sách các request hiện ra. Dùng ô lọc **Fetch/XHR** ở thanh trên để chỉ xem các lời gọi API (bỏ bớt ảnh, CSS, font).
-5. **Click vào một request** (ví dụ request tên `login` hoặc `authenticate`). Bảng chi tiết mở ra với các mục:
-   - **Headers:** thông tin chung — **Request URL** (gọi tới đâu), **Request Method** (`GET`/`POST`...), và **Status Code** (`200` = OK, `401` = không có quyền, `404` = không tìm thấy, `500` = lỗi server).
-   - **Payload** (hoặc *Request*): dữ liệu **gửi đi** — ví dụ `{ "username": "...", "password": "..." }`.
-   - **Response:** dữ liệu server **trả về** — thường là JSON (ví dụ token đăng nhập, thông tin user, hoặc thông báo lỗi).
-   - **Preview:** bản xem đẹp mắt của Response.
+1. Trong app, mở **menu** (biểu tượng ☰ góc trái trên) → chọn **Log In** (hoặc **Login**). (Bấm trực tiếp trên cửa sổ emulator, rồi bấm **Refresh Source** 🔄 trong Inspector để cập nhật cây UI.)
+2. Click vào **ô Username** trên ảnh, đọc thuộc tính.
 
-**Vì sao automation tester cần Network?**
+<details>
+<summary>💡 <b>Gợi ý đáp án — Ô Username</b></summary>
 
-- **Hiểu ứng dụng hoạt động ra sao:** thấy được UI gọi API nào, gửi/nhận gì.
-- **Debug:** khi test fail, xem request có gửi đúng không, server trả về lỗi gì.
-- **Chuẩn bị cho API test & mock** (Giai đoạn 4, 6): sau này bạn sẽ **giả lập** (mock) response để test UI mà không cần server thật.
+```
+content-desc : test-Username
+class        : android.widget.EditText
+```
 
-> 📌 Ở Giai đoạn 0, mục tiêu chỉ là: **mở được tab Network, thực hiện một hành động, tìm được request tương ứng, và đọc được Status Code + Response.** Vậy là đủ.
+**Locator:** `AppiumBy.accessibilityId("test-Username")`.
 
-### 6.5. Bảng tổng hợp 3 tab
+> 💡 Tài khoản mẫu của app: username `bob@example.com`, password `10203040` (tiện để đăng nhập thử).
 
-| Tab | Dùng để | Lệnh/thao tác chính | Bạn cần thành thạo |
-|-----|---------|---------------------|--------------------|
-| **Elements** | Nhìn & đọc DOM, lấy thuộc tính | Inspect (Mac `Cmd+Opt+C` / Win `Ctrl+Shift+C`), tìm trong DOM (Mac `Cmd+F` / Win `Ctrl+F`) | ⭐⭐⭐ |
-| **Console** | Test selector | `$$("sel")`, `document.querySelectorAll("sel")`, `.length` | ⭐⭐⭐ |
-| **Network** | Xem request/response API | Lọc Fetch/XHR, đọc Status/Payload/Response | ⭐⭐ (làm quen) |
+</details>
+
+### Bước 5 — Soi ô Password và nút Login
+
+Làm y hệt Bước 4 cho **ô Password** và **nút LOGIN**.
+
+<details>
+<summary>💡 <b>Gợi ý đáp án — Password & Login</b></summary>
+
+**Ô Password:**
+```
+content-desc : test-Password
+class        : android.widget.EditText
+```
+→ `AppiumBy.accessibilityId("test-Password")`
+
+**Nút Login:**
+```
+content-desc : test-LOGIN
+class        : android.widget.ImageView / android.view.ViewGroup
+text         : LOGIN
+```
+→ `AppiumBy.accessibilityId("test-LOGIN")` (bền hơn dùng `text="LOGIN"` vì text đổi theo ngôn ngữ).
+
+</details>
+
+### Bước 6 — Soi tên một sản phẩm
+
+Quay lại màn hình danh sách (bấm Back ◀, Refresh Source). Click vào **tên một sản phẩm** (ví dụ "Sauce Labs Backpack").
+
+<details>
+<summary>💡 <b>Gợi ý đáp án — Tên sản phẩm</b></summary>
+
+```
+content-desc : test-Item title
+class        : android.widget.TextView
+text         : Sauce Labs Backpack   (đổi theo từng sản phẩm)
+```
+
+**Locator:** `AppiumBy.accessibilityId("test-Item title")` khớp **nhiều** (mỗi sản phẩm một cái). Muốn đúng 1 sản phẩm cụ thể, kết hợp thêm `text`:
+```java
+AppiumBy.androidUIAutomator(
+    "new UiSelector().description(\"test-Item title\").text(\"Sauce Labs Backpack\")");
+```
+Đây là bài học thực chiến: khi accessibility id **trùng**, ta **kết hợp** thêm điều kiện (text) để chỉ đích danh.
+
+</details>
+
+### Bước 7 — (Thử thách) Kiểm chứng locator bằng Search for element
+
+1. Trong Inspector, bấm **Search for element**.
+2. Chọn chiến lược **Accessibility ID**, nhập `test-Username` → **Search**.
+3. Inspector báo tìm thấy mấy element. Với `test-Username` kỳ vọng **1**; với `test-Add To Cart` (ở màn hình sản phẩm) sẽ là **nhiều**.
+
+> ✅ **Hoàn thành bài này nghĩa là bạn đã làm được kỹ năng cốt lõi của Giai đoạn 0:** Start Session, soi element bất kỳ, đọc thuộc tính, tự chọn và tự kiểm chứng locator trên một app thật. Đây đúng là việc một automation mobile tester làm hằng ngày.
 
 ---
 
 <a id="7"></a>
-## 🛠️ Phần 7 — Bài thực hành có hướng dẫn: SauceDemo
+## ✍️ Phần 7 — Bài tập tự làm
 
-Giờ ta áp dụng mọi thứ vào một trang **thật**: [https://www.saucedemo.com/](https://www.saucedemo.com/) — một website mua sắm giả lập được tạo riêng để luyện automation. Đây là "sân tập" bạn sẽ dùng suốt cả khóa.
+> Hãy **tự làm hết** rồi mới xem [Đáp án ở Phần 9](#9). Tự vật lộn 5 phút giá trị hơn đọc đáp án 5 giây. Nhiều bài yêu cầu bạn **thực sự mở Appium Inspector và soi app** — đừng chỉ nghĩ trong đầu.
 
-> 🎯 **Mục tiêu bài thực hành:** Tự tay F12, tìm được selector của ô **username**, ô **password**, và nút **Login** trên SauceDemo. Test chúng bằng Console. Đây chính là kỹ năng bạn sẽ dùng ở mọi bài Playwright sau này.
+Dùng lại **cây UI Login ở Phần 3.4** cho các bài 1–5 (chép nó ra, hoặc hình dung nó).
 
-### Bước 1 — Mở trang và DevTools
-
-1. Mở Chrome, vào [https://www.saucedemo.com/](https://www.saucedemo.com/).
-2. Bạn thấy một form login đơn giản: ô "Username", ô "Password", nút "Login". (Trang còn liệt kê sẵn các tài khoản mẫu như `standard_user` và mật khẩu `secret_sauce` — tiện cho việc login thử.)
-3. Mở DevTools: bấm **`F12`** (hoặc macOS: `Cmd + Option + I` / Windows: `Ctrl + Shift + I`).
-
-### Bước 2 — Inspect ô Username
-
-1. Bấm công cụ Inspect (macOS: `Cmd + Option + C` / Windows: `Ctrl + Shift + C`).
-2. Click vào **ô nhập Username** trên trang.
-3. Trong tab Elements, đọc dòng HTML được highlight. Ghi lại các thuộc tính bạn thấy: có `id` không? có `data-test` không? `name`, `class`, `placeholder`?
-
-<details>
-<summary>💡 <b>Gợi ý đáp án — Ô Username</b> (tự làm trước rồi mới mở)</summary>
-
-Dòng HTML của ô username trên SauceDemo trông giống:
-
-```html
-<input type="text" id="user-name" name="user-name" class="input_error form_input" data-test="username" placeholder="Username" autocorrect="off" autocapitalize="none">
+**Bài 1 (Đọc thuộc tính View).**
+Cho element sau:
+```xml
+<android.widget.EditText
+    resource-id="com.shop.app:id/email"
+    class="android.widget.EditText"
+    text=""
+    content-desc="test-Email"
+    clickable="true" enabled="true"
+    bounds="[64,410][1016,520]" />
 ```
+Hãy cho biết: (a) tên `class`, (b) giá trị `resource-id`, (c) giá trị `content-desc` (accessibility id), (d) thuộc tính nào **bền nhất** để làm locator và **vì sao**, (e) vì sao **không** nên dùng `bounds`.
 
-**Các selector đúng (test được trong Console):**
+**Bài 2 (Viết locator bền nhất).**
+Với cây UI Login ở Phần 3.4, viết locator `AppiumBy...` trỏ **duy nhất** tới:
+(a) ô password, (b) nút "ĐĂNG NHẬP", (c) checkbox "Ghi nhớ đăng nhập", (d) link "Quên mật khẩu?". Với mỗi câu, ưu tiên locator **bền nhất** theo thứ tự ở Phần 4.3.
 
-| Selector | Số khớp | Đánh giá |
-|----------|:-------:|----------|
-| `#user-name` | 1 | ⭐ Tốt — theo id |
-| `[data-test="username"]` | 1 | ⭐ Tốt nhất — data-test dành cho test |
-| `input[name="user-name"]` | 1 | ✅ Ổn — theo name |
-| `[placeholder="Username"]` | 1 | ✅ Được — theo placeholder |
+**Bài 3 (Đếm số khớp).**
+Cũng với cây UI đó, cho biết mỗi locator sau khớp **bao nhiêu** View, và **là View nào**:
+(a) `AppiumBy.className("android.widget.EditText")`
+(b) `AppiumBy.className("android.widget.Button")`
+(c) `AppiumBy.accessibilityId("test-Username")`
+(d) `AppiumBy.id("com.example.app:id/remember")`
+(e) `AppiumBy.xpath("//android.widget.TextView")`
 
-</details>
+**Bài 4 (Sửa locator xấu).**
+Một bạn viết locator sau để trỏ tới nút "ĐĂNG NHẬP":
+`AppiumBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.Button")`.
+Locator này có thể chạy đúng không? Có điểm gì **chưa tối ưu / dễ gãy**? Hãy đề xuất một locator **tốt hơn** và giải thích. (Gợi ý: nghĩ tới chuyện dev thêm một lớp layout, hoặc đổi ngôn ngữ.)
 
-### Bước 3 — Inspect ô Password
+**Bài 5 (Quan hệ cây UI).**
+Với cây UI Login ở Phần 3.4: (a) `LinearLayout (login_container)` là **con** của View nào? (b) Ô username và ô password có **quan hệ** gì với nhau? (c) Liệt kê tất cả **con trực tiếp** của `LinearLayout (login_container)`.
 
-Làm y hệt Bước 2 nhưng click vào **ô Password**.
+**Bài 6 (Mindset — chọn case để automate).**
+Với mỗi tình huống, quyết định **NÊN** hay **KHÔNG nên** ưu tiên automate ở thời điểm hiện tại, và giải thích ngắn:
+(a) Luồng đăng nhập của app, chạy lại mỗi lần build, đã ổn định 6 tháng.
+(b) Màn hình "khuyến mãi Tết" chỉ dùng 1 tuần rồi gỡ.
+(c) Test đăng nhập vân tay (fingerprint) trên thiết bị thật.
+(d) Kiểm tra danh sách 40 sản phẩm hiển thị đúng tên & giá sau khi lọc.
+(e) Đánh giá "animation chuyển trang có mượt và đẹp không".
 
-<details>
-<summary>💡 <b>Gợi ý đáp án — Ô Password</b></summary>
+**Bài 7 (Appium Inspector — làm thật).**
+Mở Appium Inspector, Start Session vào **Sauce Labs My Demo App**, mở màn hình **Login**. Dùng Inspector soi và ghi lại **locator** (ưu tiên accessibility id) cho: (a) ô Username, (b) ô Password, (c) nút Login. Sau đó dùng **Search for element** để xác nhận mỗi locator khớp đúng **1** element.
 
-```html
-<input type="password" id="password" name="password" class="input_error form_input" data-test="password" placeholder="Password" autocorrect="off" autocapitalize="none">
-```
-
-**Selector đúng:**
-
-| Selector | Số khớp | Đánh giá |
-|----------|:-------:|----------|
-| `#password` | 1 | ⭐ Tốt |
-| `[data-test="password"]` | 1 | ⭐ Tốt nhất |
-| `input[type="password"]` | 1 | ✅ Được (chỉ có 1 ô password trên trang này) |
-
-</details>
-
-### Bước 4 — Inspect nút Login
-
-Inspect **nút Login**.
-
-<details>
-<summary>💡 <b>Gợi ý đáp án — Nút Login</b></summary>
-
-```html
-<input type="submit" class="submit-button btn_action" id="login-button" name="login-button" data-test="login-button" value="Login">
-```
-
-> 👀 Lưu ý thú vị: nút Login của SauceDemo **không phải** thẻ `<button>` mà là `<input type="submit">` với `value="Login"` — chữ "Login" nằm ở thuộc tính `value`, không phải nội dung thẻ. Đây là lý do phải **inspect thật** thay vì đoán!
-
-**Selector đúng:**
-
-| Selector | Số khớp | Đánh giá |
-|----------|:-------:|----------|
-| `#login-button` | 1 | ⭐ Tốt |
-| `[data-test="login-button"]` | 1 | ⭐ Tốt nhất |
-| `input[type="submit"]` | 1 | ✅ Được |
-
-</details>
-
-### Bước 5 — Test selector trong Console
-
-Mở tab **Console**, gõ lần lượt và quan sát kết quả:
-
-```javascript
-$$("#user-name").length          // kỳ vọng: 1
-$$("#password").length           // kỳ vọng: 1
-$$("#login-button").length       // kỳ vọng: 1
-$$("[data-test='username']")     // kỳ vọng: [input#user-name]  (1 phần tử)
-$$(".form_input").length         // thử xem: khớp mấy element?
-```
-
-Rê chuột lên kết quả trả về để thấy element được highlight trên trang. Bạn vừa **tự xác minh** selector của mình — đúng quy trình một automation tester chuyên nghiệp làm hằng ngày.
-
-### Bước 6 — (Thử thách) Login thật và xem Network
-
-1. Mở tab **Network**, bật ghi, lọc **Fetch/XHR**.
-2. Trên trang, nhập username `standard_user`, password `secret_sauce`, bấm **Login**.
-3. Bạn được chuyển sang trang danh sách sản phẩm. Quay lại tab Network xem có request nào được ghi.
-4. Thử inspect một sản phẩm bất kỳ trên trang mới — tìm `data-test` của nút "Add to cart".
-
-<details>
-<summary>💡 <b>Gợi ý</b></summary>
-
-- SauceDemo là ứng dụng khá tĩnh, nên khi login có thể bạn thấy ít request XHR (nó chủ yếu điều hướng trang). Đừng lo nếu Network không nhiều — bạn vẫn thấy request tải trang mới.
-- Nút thêm giỏ hàng có `data-test` dạng `add-to-cart-sauce-labs-backpack` — mỗi sản phẩm một giá trị khác nhau. Quan sát cách dev đặt `data-test` có quy luật → sau này bạn khai thác được khi viết test data-driven.
-
-</details>
-
-> ✅ **Hoàn thành bài thực hành này nghĩa là bạn đã làm được kỹ năng cốt lõi của Giai đoạn 0:** inspect element bất kỳ, đọc thuộc tính, tự viết và tự kiểm chứng CSS selector trên một trang thật.
+**Bài 8 (Tổng hợp — nhiều locator cho 1 element).**
+Với **ô Username** trong cây UI Login ở Phần 3.4, hãy viết **4 locator KHÁC NHAU** cùng trỏ tới nó (dùng ít nhất 3 chiến lược khác nhau: accessibilityId, id, androidUIAutomator, xpath). Sau đó **xếp hạng** từ **bền nhất → dễ gãy nhất** và giải thích ngắn gọn từng cái. (Làm được bài này là bạn đã "chốt" Giai đoạn 0.)
 
 ---
 
 <a id="8"></a>
-## ✍️ Phần 8 — Bài tập tự làm
+## 🧪 Phần 8 — Quiz tự đánh giá
 
-> Hãy **tự làm hết** rồi mới xem [Đáp án ở Phần 10](#10). Tự vật lộn 5 phút giá trị hơn đọc đáp án 5 giây. Nhiều bài yêu cầu bạn **thực sự mở F12 và gõ trong Console** — đừng chỉ nghĩ trong đầu.
+> Chọn đáp án rồi đối chiếu [Phần 10](#10). Làm nghiêm túc, không xem trước.
 
-Dùng lại đoạn **HTML form login ở Phần 3.5** cho các bài 1–5 (chép nó ra, hoặc hình dung nó).
-
-**Bài 1 (HTML — đọc thuộc tính).**
-Cho thẻ: `<input type="email" id="email" name="userEmail" class="form-input required" data-test="email-input" placeholder="you@example.com">`.
-Hãy liệt kê: (a) tên thẻ, (b) giá trị của `id`, (c) `input` này có mấy class và là những class nào, (d) thuộc tính nào phù hợp nhất để automation dùng và vì sao.
-
-**Bài 2 (CSS Selector — viết selector).**
-Với form login ở Phần 3.5, hãy viết CSS selector trỏ **duy nhất** tới:
-(a) ô password, (b) nút "Đăng nhập", (c) checkbox "Ghi nhớ đăng nhập", (d) link "Quên mật khẩu?". Với mỗi câu, ưu tiên selector **bền nhất**.
-
-**Bài 3 (CSS Selector — đếm số khớp).**
-Cũng với form đó, cho biết mỗi selector sau khớp **bao nhiêu** element, và **là element nào**:
-(a) `.form-input` (b) `input` (c) `#login-form > input` (d) `[data-test]` (e) `button`.
-
-**Bài 4 (CSS Selector — sửa selector xấu).**
-Một bạn viết selector `#login-form > div > input` để trỏ tới checkbox "Ghi nhớ". Selector này có đúng không? Có điểm gì chưa tối ưu? Hãy đề xuất một selector tốt hơn.
-
-**Bài 5 (DOM — quan hệ cây).**
-Với form login ở Phần 3.5: (a) `<div class="options">` là **con** của element nào? (b) Element `<label for="remember">` và `<input id="remember">` có quan hệ gì với nhau? (c) Liệt kê tất cả **con trực tiếp** của `<form id="login-form">`.
-
-**Bài 6 (DevTools — Console, làm thật).**
-Mở [SauceDemo](https://www.saucedemo.com/), F12 → Console. Dùng `$$()` để trả lời:
-(a) Selector `.form_input` khớp mấy element? (b) Trên trang login, có bao nhiêu thẻ `input` tổng cộng? (c) `$$("#login-button").length` trả về gì?
-
-**Bài 7 (DevTools — Elements, làm thật).**
-Trên SauceDemo, sau khi login bằng `standard_user` / `secret_sauce`, inspect **nút giỏ hàng** (icon giỏ ở góc phải trên) và **một tên sản phẩm** bất kỳ. Ghi lại `data-test` (hoặc `id`/`class`) của chúng và viết selector trỏ tới từng cái.
-
-**Bài 8 (Tổng hợp — 5 selector cho 1 element).**
-Trên SauceDemo, hãy viết **5 CSS selector KHÁC NHAU** cùng trỏ tới **ô Username**, rồi test cả 5 trong Console để xác nhận mỗi cái đều khớp đúng 1 element. Sau đó xếp hạng chúng từ **bền nhất → dễ gãy nhất** và giải thích ngắn gọn. (Đây chính là bài tập trong giáo trình gốc — làm được bài này là bạn đã "chốt" Giai đoạn 0.)
-
----
-
-<a id="9"></a>
-## 🧪 Phần 9 — Quiz tự đánh giá
-
-> Chọn đáp án rồi đối chiếu [Phần 11](#11). Làm nghiêm túc, không xem trước.
-
-**Câu 1.** Phát biểu nào **ĐÚNG** về automation test?
+**Câu 1.** Phát biểu nào **ĐÚNG** về automation test mobile?
 - A. Automation thay thế hoàn toàn manual test.
 - B. Mọi test case đều nên được automate.
-- C. Automation phù hợp nhất cho các case regression, ổn định, chạy lặp nhiều lần.
+- C. Automation phù hợp nhất cho các case regression, ổn định, chạy lặp trên nhiều thiết bị.
 - D. Automation không cần biết lập trình.
 
-**Câu 2.** Trường hợp nào **KHÔNG nên** ưu tiên automate?
-- A. Luồng login chạy lại mỗi lần build.
-- B. Một tính năng đang thay đổi giao diện liên tục mỗi ngày.
-- C. Test data-driven với 50 bộ dữ liệu.
-- D. Smoke test các chức năng cốt lõi.
+**Câu 2.** Vì sao trên mobile **tuyệt đối tránh** chạm theo toạ độ (x, y) cố định?
+- A. Vì toạ độ khó gõ.
+- B. Vì toạ độ đổi theo độ phân giải/kích thước từng thiết bị → test gãy trên máy khác.
+- C. Vì Appium không hỗ trợ toạ độ.
+- D. Vì toạ độ luôn sai.
 
-**Câu 3.** Thuộc tính nào thường **bền nhất** để viết selector cho automation?
-- A. `class` (dùng để trang trí).
-- B. Vị trí `:nth-child(3)`.
-- C. `id` hoặc `data-test`.
-- D. Màu sắc của element.
+**Câu 3.** Thuộc tính nào **bền nhất** để làm locator cho một View Android?
+- A. `bounds` (toạ độ khung).
+- B. `text` (chữ hiển thị).
+- C. `content-desc` (accessibility id) hoặc `resource-id`.
+- D. `class` (như `android.widget.EditText`).
 
-**Câu 4.** CSS selector `.form-input` trong form login ở Phần 3.5 khớp bao nhiêu element?
+**Câu 4.** Trong cây UI Login ở Phần 3.4, `AppiumBy.className("android.widget.EditText")` khớp bao nhiêu View?
 - A. 0
 - B. 1
 - C. 2
 - D. 3
 
-**Câu 5.** Selector `.box > span` khác `.box span` ở điểm nào?
-- A. Không khác gì, chỉ là hai cách viết.
-- B. `>` chỉ chọn **con trực tiếp**; dấu cách chọn **mọi hậu duệ** (con, cháu...).
-- C. `>` chọn mọi hậu duệ; dấu cách chỉ chọn con trực tiếp.
-- D. `>` chọn anh em kế tiếp.
+**Câu 5.** Câu nào **ĐÚNG** về locator dùng `text` (ví dụ text = "ĐĂNG NHẬP")?
+- A. Rất bền, nên luôn ưu tiên.
+- B. Có thể **gãy khi app đổi ngôn ngữ** (ĐĂNG NHẬP → LOGIN), nên kém bền hơn accessibility id.
+- C. Không bao giờ dùng được.
+- D. Giống hệt `resource-id`.
 
-**Câu 6.** DOM là gì?
-- A. Một ngôn ngữ lập trình.
-- B. File HTML gốc lưu trên server.
-- C. Cấu trúc **cây** các đối tượng mà trình duyệt dựng ra từ HTML, có thể thay đổi khi trang chạy.
+**Câu 6.** Cây UI của một màn hình app Android là gì?
+- A. Một ảnh chụp màn hình.
+- B. Một file APK.
+- C. Cấu trúc **cây** các **View/ViewGroup** lồng nhau mà Android dựng ra, có thuộc tính đọc được.
 - D. Một loại CSS selector.
 
-**Câu 7.** Trong Console của DevTools, lệnh nào cho biết một selector khớp **bao nhiêu** element?
-- A. `document.querySelector("sel")`
-- B. `$$("sel").length`
-- C. `click("sel")`
-- D. `$("sel")`
+**Câu 7.** Địa chỉ mặc định của Appium Server (bản 2) là gì?
+- A. `http://127.0.0.1:4723`
+- B. `http://127.0.0.1:4723/wd/hub`
+- C. `http://localhost:8080`
+- D. `http://127.0.0.1:9515`
 
-**Câu 8.** Bạn muốn xem một lời gọi API trả về Status Code và dữ liệu gì khi bấm nút Login. Bạn mở tab nào của DevTools?
-- A. Elements
-- B. Console
-- C. Network
-- D. Sources
+**Câu 8.** Bạn muốn "soi" một element trong app để đọc `content-desc` và `resource-id`. Công cụ nào phù hợp nhất?
+- A. Chrome DevTools (F12)
+- B. Appium Inspector
+- C. Notepad
+- D. Android Studio Profiler
+
+**Câu 9.** Lệnh nào kiểm tra máy tính đã "nhìn thấy" emulator/thiết bị Android chưa?
+- A. `appium -v`
+- B. `adb devices`
+- C. `java -version`
+- D. `npm -v`
+
+**Câu 10.** Sau khi cài Appium 2, để điều khiển được app **Android** bạn cần cài thêm gì?
+- A. Không cần gì thêm.
+- B. Driver **XCUITest**.
+- C. Driver **UiAutomator2** (`appium driver install uiautomator2`).
+- D. Chrome DevTools.
+
+---
+
+<a id="9"></a>
+## ✅ Phần 9 — Đáp án bài tập
+
+**Bài 1.**
+(a) `class` = `android.widget.EditText`.
+(b) `resource-id` = `com.shop.app:id/email`.
+(c) `content-desc` (accessibility id) = `test-Email`.
+(d) Bền nhất: **`content-desc="test-Email"`** → dùng `AppiumBy.accessibilityId("test-Email")`. Lý do: accessibility id thường do dev cố ý đặt cho test, **không đổi theo ngôn ngữ**, ổn định khi giao diện thay đổi. (`resource-id="com.shop.app:id/email"` cũng rất tốt, hạng nhì.)
+(e) Không dùng `bounds` vì nó là **toạ độ pixel** — đổi theo độ phân giải/kích thước từng máy → locator gãy ngay trên thiết bị khác.
+
+**Bài 2.** (Có thể nhiều đáp án đúng; đây là lựa chọn bền nhất.)
+- (a) Ô password: `AppiumBy.accessibilityId("test-Password")` (hoặc `AppiumBy.id("com.example.app:id/password")`).
+- (b) Nút "ĐĂNG NHẬP": `AppiumBy.accessibilityId("test-LOGIN")` (hoặc `AppiumBy.id("com.example.app:id/login_button")`).
+- (c) Checkbox "Ghi nhớ": `AppiumBy.id("com.example.app:id/remember")` — vì `content-desc` của nó **để trống**, nên dùng `resource-id`.
+- (d) Link "Quên mật khẩu?": `AppiumBy.accessibilityId("test-Forgot password")` (hoặc `AppiumBy.id("com.example.app:id/forgot")`).
+
+**Bài 3.**
+- (a) `className("android.widget.EditText")` → **2** View: ô username và ô password.
+- (b) `className("android.widget.Button")` → **1** View: nút "ĐĂNG NHẬP".
+- (c) `accessibilityId("test-Username")` → **1** View: ô username.
+- (d) `id("com.example.app:id/remember")` → **1** View: checkbox "Ghi nhớ".
+- (e) `xpath("//android.widget.TextView")` → **2** View: tiêu đề "Đăng nhập" và link "Quên mật khẩu?" (cả hai đều là `TextView`).
+
+**Bài 4.**
+- Locator XPath tuyệt đối này **có thể chạy đúng** (trỏ tới Button là con của LinearLayout con của FrameLayout). Nhưng **rất dễ gãy** và chưa tối ưu vì:
+  - **Phụ thuộc cấu trúc cây:** chỉ cần dev thêm/bớt một lớp layout (ví dụ bọc thêm một `LinearLayout`), đường dẫn sai ngay.
+  - **Chậm hơn:** XPath phải duyệt cả cây; accessibility id/id thì tra thẳng.
+  - **Không rõ ràng:** người đọc không biết nó trỏ tới cái gì.
+- **Locator tốt hơn:** `AppiumBy.accessibilityId("test-LOGIN")` (hoặc `AppiumBy.id("com.example.app:id/login_button")`) — ngắn, bền, rõ ràng, không phụ thuộc vị trí.
+
+**Bài 5.**
+- (a) `LinearLayout (login_container)` là **con trực tiếp** của `FrameLayout` (nút gốc).
+- (b) Ô username và ô password là **anh em (sibling)** — cùng là con trực tiếp của `LinearLayout (login_container)`.
+- (c) Con trực tiếp của `LinearLayout (login_container)`, gồm **6** View: `TextView` (tiêu đề "Đăng nhập"), `EditText` (username), `EditText` (password), `CheckBox` (remember), `Button` (login_button), `TextView` (forgot — "Quên mật khẩu?").
+
+**Bài 6.**
+- (a) **NÊN** — luồng cốt lõi, ổn định lâu, chạy lại mỗi build. Đây là ứng viên automate hoàn hảo (nhiều dấu ✅).
+- (b) **KHÔNG** — chỉ dùng 1 tuần rồi gỡ, chi phí viết script lớn hơn lợi ích. Test tay là đủ.
+- (c) **KHÔNG (chưa)** — vân tay là **sinh trắc học/phần cứng**, emulator không mô phỏng tốt và tính năng này vốn thiết kế để chặn máy. Nên test tay trên thiết bị thật.
+- (d) **NÊN** — nhiều dữ liệu (40 sản phẩm), kết quả **xác định** (tên & giá đúng/sai rõ ràng), làm tay rất tốn công. Ứng viên tốt (data-driven).
+- (e) **KHÔNG** — đánh giá **cảm quan** (mượt/đẹp), máy không "cảm" được. Việc của manual/exploratory.
+
+**Bài 7.** (Giá trị tham khảo cho Sauce Labs My Demo App — hãy **tự soi để xác nhận**, vì có thể đổi theo version.)
+- (a) Ô Username: `AppiumBy.accessibilityId("test-Username")`.
+- (b) Ô Password: `AppiumBy.accessibilityId("test-Password")`.
+- (c) Nút Login: `AppiumBy.accessibilityId("test-LOGIN")`.
+- Dùng **Search for element** với chiến lược Accessibility ID cho từng giá trị → mỗi cái kỳ vọng khớp **1** element trên màn hình Login.
+
+**Bài 8.** (Ví dụ 4 locator cho ô Username ở Phần 3.4, xếp từ bền → dễ gãy.)
+
+| Hạng | Locator (Java) | Vì sao |
+|:----:|----------------|--------|
+| 1 (bền nhất) | `AppiumBy.accessibilityId("test-Username")` | accessibility id, dành cho test, không đổi theo ngôn ngữ |
+| 2 | `AppiumBy.id("com.example.app:id/username")` | `resource-id` duy nhất, rất ổn định |
+| 3 | `AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"com.example.app:id/username\")")` | Tương đương id nhưng dài hơn; vẫn dựa vào thuộc tính ổn định |
+| 4 (dễ gãy nhất) | `AppiumBy.xpath("(//android.widget.EditText)[1]")` | Phụ thuộc **thứ tự/vị trí** — đổi layout hoặc thêm ô nhập là gãy |
+
+Cả 4 đều trỏ đúng ô username. **Bài học:** cùng trỏ 1 element nhưng độ bền rất khác nhau — luôn chọn locator dựa trên thuộc tính ổn định (`content-desc`, `resource-id`), tránh vị trí. Lưu ý `AppiumBy.className("android.widget.EditText")` **không** hợp lệ ở đây vì nó khớp **2** View (cả password) → không "duy nhất".
 
 ---
 
 <a id="10"></a>
-## ✅ Phần 10 — Đáp án bài tập
+## 🎓 Phần 10 — Đáp án quiz
 
-**Bài 1.**
-(a) Tên thẻ: `input`.
-(b) `id` = `email`.
-(c) Có **2** class: `form-input` và `required` (phân tách bởi dấu cách).
-(d) Tốt nhất cho automation: **`data-test="email-input"`** (hoặc `id="email"`). Lý do: `data-test` thường được dev đặt riêng cho test nên rất bền; `id` thì duy nhất. Tránh dùng `class="form-input"` vì nó có thể trùng với input khác và hay bị đổi khi chỉnh giao diện.
+| Câu | Đáp án | Giải thích ngắn |
+|:---:|:------:|-----------------|
+| 1 | **C** | Automation mạnh nhất ở regression/case ổn định chạy lặp trên nhiều thiết bị. A, B, D là kỳ vọng sai. |
+| 2 | **B** | Toạ độ đổi theo độ phân giải/máy → chạm toạ độ cố định gãy ngay trên máy khác. Luôn dùng locator. |
+| 3 | **C** | `content-desc` (accessibility id) và `resource-id` bền nhất. `text` đổi theo ngôn ngữ, `class` trùng, `bounds` đổi theo màn hình. |
+| 4 | **C** | Cả ô username và password đều là `android.widget.EditText` → khớp **2**. |
+| 5 | **B** | Locator theo `text` gãy khi đổi ngôn ngữ (ĐĂNG NHẬP → LOGIN) → kém bền hơn accessibility id. |
+| 6 | **C** | Cây UI = cấu trúc cây các View/ViewGroup lồng nhau Android dựng ra, có thuộc tính đọc được. |
+| 7 | **A** | Appium 2 dùng `http://127.0.0.1:4723` (bỏ đuôi `/wd/hub` của bản 1.x). |
+| 8 | **B** | **Appium Inspector** là công cụ soi element của app (vai trò như F12 bên web). |
+| 9 | **B** | `adb devices` liệt kê thiết bị/emulator đang kết nối. |
+| 10 | **C** | Điều khiển app Android cần driver **UiAutomator2**. XCUITest là cho iOS. |
 
-**Bài 2.** (Có thể có nhiều đáp án đúng; đây là lựa chọn bền nhất.)
-- (a) Ô password: `#password` hoặc `[data-test="password-field"]`.
-- (b) Nút "Đăng nhập": `#login-btn` hoặc `[data-test="submit"]`.
-- (c) Checkbox "Ghi nhớ": `#remember`.
-- (d) Link "Quên mật khẩu?": `a.link-forgot` hoặc `[href="/forgot-password"]`.
-
-**Bài 3.**
-- (a) `.form-input` → **2** element: ô username và ô password.
-- (b) `input` → **3** element: username, password, checkbox `#remember`.
-- (c) `#login-form > input` → **2** element: username và password (chúng là con **trực tiếp** của form; còn checkbox `#remember` nằm trong `div.options` nên **không** phải con trực tiếp của form → không tính).
-- (d) `[data-test]` → **3** element: ô username (`username-field`), ô password (`password-field`), nút đăng nhập (`submit`).
-- (e) `button` → **1** element: nút "Đăng nhập".
-
-**Bài 4.**
-- Selector `#login-form > div > input` **có thể chạy đúng** (trỏ tới checkbox `#remember`, vì nó là `input` con của `div.options` con của form). Tuy nhiên **chưa tối ưu** vì:
-  - Phụ thuộc vào **cấu trúc lồng nhau** (`form > div > input`) — nếu dev thêm/bớt một lớp `div`, selector gãy.
-  - Không rõ ràng: người đọc không biết nó trỏ tới cái gì.
-  - Nếu trong `div` có nhiều `input`, selector sẽ khớp nhầm.
-- **Selector tốt hơn:** `#remember` (dùng thẳng id duy nhất) — ngắn, bền, rõ ràng.
-
-**Bài 5.**
-- (a) `<div class="options">` là con **trực tiếp** của `<form id="login-form">`.
-- (b) `<label for="remember">` và `<input id="remember">` là **anh em (sibling)** — cùng là con của `<div class="options">`. (Ngoài ra `for="remember"` liên kết logic nhãn với input.)
-- (c) Con trực tiếp của `<form id="login-form">`: `<h2>`, `<label for="username">`, `<input id="username">`, `<label for="password">`, `<input id="password">`, `<div class="options">`, `<button id="login-btn">`, và `<a class="link-forgot">`. (Checkbox `#remember` và nhãn của nó **không** phải con trực tiếp của form — chúng nằm trong `div.options`.)
-
-**Bài 6.** (Kết quả trên SauceDemo tại thời điểm biên soạn; con số có thể đổi nếu site cập nhật — điều quan trọng là bạn **tự chạy và đọc được kết quả**.)
-- (a) `.form_input` → thường khớp **2** (ô username và password đều mang class `form_input`).
-- (b) Tổng số `input` trên trang login: `$$("input").length` → thường là **3** (username, password, và nút submit — nhớ rằng nút Login là `<input type="submit">`, không phải `<button>`).
-- (c) `$$("#login-button").length` → **1**.
-
-**Bài 7.** (Giá trị tham khảo — hãy tự inspect để xác nhận.)
-- Nút giỏ hàng: có `data-test="shopping-cart-link"` (và class `shopping_cart_link`) → selector: `[data-test="shopping-cart-link"]` hoặc `.shopping_cart_link`.
-- Tên sản phẩm: nằm trong element có class `inventory_item_name` (thường là `data-test="inventory-item-name"`) → selector: `.inventory_item_name` (khớp **nhiều** vì có nhiều sản phẩm — đây là ví dụ thực tế của selector trỏ tới một **danh sách**, bạn sẽ học cách lọc từng cái ở Giai đoạn 4).
-
-**Bài 8.** (Ví dụ 5 selector cho ô Username của SauceDemo, xếp từ bền → dễ gãy.)
-
-| Hạng | Selector | Vì sao |
-|:----:|----------|--------|
-| 1 (bền nhất) | `[data-test="username"]` | `data-test` dành riêng cho test, ít khi đổi |
-| 2 | `#user-name` | `id` duy nhất, rất ổn định |
-| 3 | `input[name="user-name"]` | `name` khá ổn định (dùng khi gửi form) |
-| 4 | `[placeholder="Username"]` | placeholder có thể đổi khi đổi ngôn ngữ/wording |
-| 5 (dễ gãy nhất) | `form > div:first-child input` | Phụ thuộc **vị trí & cấu trúc** — đổi layout là gãy |
-
-Cả 5 khi test bằng `$$("...").length` đều cho kết quả **1**. Bài học: **cùng trỏ đúng 1 element, nhưng độ bền rất khác nhau** — luôn chọn selector dựa trên thuộc tính ổn định (`data-test`, `id`), tránh phụ thuộc vị trí.
+**Thang tự đánh giá:**
+- **9–10 đúng:** Xuất sắc — bạn nắm chắc nền tảng, sẵn sàng qua Giai đoạn 1.
+- **6–8 đúng:** Khá — xem lại các câu sai và phần lý thuyết tương ứng.
+- **Dưới 6:** Hãy đọc lại Phần 1–5 và **làm lại bài thực hành Appium Inspector**. Đừng vội qua giai đoạn sau — nền tảng này quá quan trọng.
 
 ---
 
 <a id="11"></a>
-## 🎓 Phần 11 — Đáp án quiz
-
-| Câu | Đáp án | Giải thích ngắn |
-|:---:|:------:|-----------------|
-| 1 | **C** | Automation mạnh nhất ở regression/case ổn định chạy lặp nhiều lần. A, B, D đều là kỳ vọng sai. |
-| 2 | **B** | Tính năng đang đổi liên tục → viết xong lại gãy → chưa nên automate. |
-| 3 | **C** | `id` (duy nhất) và `data-test` (dành cho test) là bền nhất. Class trang trí và vị trí dễ gãy. |
-| 4 | **C** | `.form-input` khớp **2**: ô username và password đều có class này. |
-| 5 | **B** | `>` = con trực tiếp; dấu cách = mọi hậu duệ (con, cháu, chắt...). |
-| 6 | **C** | DOM là cây đối tượng trình duyệt dựng từ HTML, sống động và thay đổi được. |
-| 7 | **B** | `$$("sel").length` đếm số element khớp. `$()`/`querySelector` chỉ lấy 1. |
-| 8 | **C** | Tab **Network** để xem request/response, Status Code, Payload. |
-
-**Thang tự đánh giá:**
-- **7–8 đúng:** Xuất sắc — bạn nắm chắc nền tảng, sẵn sàng qua Giai đoạn 1.
-- **5–6 đúng:** Khá — xem lại các câu sai và phần lý thuyết tương ứng.
-- **Dưới 5:** Hãy đọc lại Phần 1–6 và **làm lại bài thực hành F12**. Đừng vội qua giai đoạn sau — nền tảng này quá quan trọng.
-
----
-
-<a id="12"></a>
-## 🏁 Phần 12 — Checklist Milestone Giai đoạn 0
+## 🏁 Phần 11 — Checklist Milestone Giai đoạn 0
 
 Bạn hoàn thành Giai đoạn 0 khi tick được **TẤT CẢ** ô dưới đây. Hãy thành thật với chính mình.
 
 ### 🧠 Mindset
-- [ ] Giải thích được (bằng lời của mình) **vì sao học automation** và automation **khác** manual thế nào.
+- [ ] Giải thích được (bằng lời của mình) **vì sao học automation mobile** và nó **khác** manual thế nào.
 - [ ] Nêu được ít nhất **3 tiêu chí** để quyết định một case **có nên** automate không.
+- [ ] Kể được ít nhất **2 đặc thù/thách thức riêng của test mobile** (đa thiết bị, gesture, permission, toạ độ...).
 - [ ] Kể được ít nhất **2 kỳ vọng sai** về automation mà mình đã bỏ.
 
 ### 💻 Môi trường (macOS hoặc Windows)
-- [ ] Trình cài đặt chạy được: `brew --version` (macOS) **hoặc** `winget --version` (Windows) — nếu bạn dùng nó.
 - [ ] `java -version` ra bản **17+** (và `javac -version` chạy được).
-- [ ] `git --version` chạy được và đã `git config` tên + email.
-- [ ] `mvn -version` chạy được, dòng **Java version** khớp JDK đã cài.
-- [ ] Mở được **IntelliJ IDEA Community** và **chạy được chương trình "Hello World"** in ra màn hình.
+- [ ] Mở được **IntelliJ IDEA Community**.
+- [ ] Cài xong **Android Studio + SDK**; `echo $ANDROID_HOME` (mac) / `echo $env:ANDROID_HOME` (win) ra đúng đường dẫn.
+- [ ] `adb --version` chạy được và `adb devices` **thấy emulator/thiết bị**.
+- [ ] Tạo & khởi động được **một máy ảo Android (AVD)**.
+- [ ] `node -v` ra **v18+**; `appium -v` ra **2.x**; `appium driver list --installed` có **uiautomator2**.
+- [ ] Chạy được `appium` server (thấy dòng `...http://127.0.0.1:4723`).
+- [ ] Cài & mở được **Appium Inspector**.
+- [ ] Cài được **APK mẫu** vào emulator bằng `adb install` (thấy `Success`).
 
-### 🧱 HTML
-- [ ] Đọc được một thẻ HTML và chỉ ra: tên thẻ, các thuộc tính, nội dung.
-- [ ] Giải thích được vai trò của `id`, `class`, `name`, `data-*` và **vì sao `id`/`data-*` tốt cho automation**.
+### 🧱 Cấu trúc UI Android
+- [ ] Giải thích được app là **cây View/ViewGroup** (tương tự cây DOM).
+- [ ] Đọc được một element và chỉ ra: `class`, `resource-id`, `content-desc`, `text`.
+- [ ] Giải thích được **vì sao `content-desc`/`resource-id` tốt cho automation** còn `text`/`class`/`bounds` dễ gãy.
 
-### 🎯 CSS Selector
-- [ ] Viết được selector theo `#id`, `.class`, `tag`, `[attr=value]`.
-- [ ] Phân biệt được **con trực tiếp (`>`)** và **hậu duệ (dấu cách)**.
-- [ ] Với một element bất kỳ, viết được **ít nhất 2 selector đúng** và chọn được cái bền hơn.
+### 🎯 Locator Appium
+- [ ] Viết được locator bằng `AppiumBy.accessibilityId`, `AppiumBy.id`, `AppiumBy.className`, `AppiumBy.xpath`.
+- [ ] Nêu đúng **thứ tự ưu tiên** locator (accessibility id → resource-id → ... → xpath; tránh toạ độ).
+- [ ] Với một element bất kỳ, viết được **ít nhất 2 locator đúng** và chọn được cái bền hơn.
 
-### 🌳 DOM
-- [ ] Giải thích được DOM là **cây cấu trúc** dựng từ HTML.
-- [ ] Nêu đúng quan hệ cha / con / anh em / hậu duệ trên một ví dụ.
-- [ ] Giải thích được **vì sao Playwright thao tác trên DOM** (chứ không phải trên hình ảnh).
+### 🔧 Appium Inspector (bài chốt)
+- [ ] **Start Session** được vào app mẫu bằng bộ Capabilities cơ bản.
+- [ ] **Soi** được một element bất kỳ và đọc đúng `content-desc`/`resource-id`/`class` của nó.
+- [ ] Tự tìm được locator của **ô username, ô password, nút login** trên Sauce Labs My Demo App.
+- [ ] Viết được **4 locator khác nhau** cùng trỏ tới một element và giải thích cái nào bền hơn (Bài tập 8).
 
-### 🔧 Chrome DevTools
-- [ ] **Inspect** được một element bất kỳ và đọc đúng thuộc tính của nó (tab Elements).
-- [ ] **Test được selector** bằng `$$("...")` / `document.querySelectorAll("...")` trong Console và đọc được **số element khớp**.
-- [ ] Mở được tab **Network**, thực hiện một hành động và tìm được request tương ứng, đọc được **Status Code**.
-
-### 🛠️ Thực hành SauceDemo (bài chốt)
-- [ ] Tự F12 tìm được selector của **ô username, ô password, nút login** trên SauceDemo.
-- [ ] Viết được **5 CSS selector khác nhau** cùng trỏ tới một element và test đúng trong Console (Bài tập 8).
-
-> 🎉 **Tick hết? Chúc mừng — bạn đã hoàn thành Giai đoạn 0!** Bạn đã có xưởng làm việc sẵn sàng, tư duy đúng, và — quan trọng nhất — **đọc được cấu trúc bên trong của trang web**. Đây chính là nền tảng mà nhiều người bỏ qua rồi vấp ngã ở Playwright. Bạn đã đi đúng đường. Tiếp theo: **Giai đoạn 1 — Java cơ bản cho Tester.** 🚀
+> 🎉 **Tick hết? Chúc mừng — bạn đã hoàn thành Giai đoạn 0!** Bạn đã có xưởng làm việc mobile sẵn sàng, tư duy đúng, và — quan trọng nhất — **đọc được cấu trúc bên trong của một app Android**. Đây chính là nền tảng mà nhiều người bỏ qua rồi vấp ngã khi viết code Appium. Bạn đã đi đúng đường. Tiếp theo: **Giai đoạn 1 — Java cơ bản cho Tester.** 🚀
 
 ---
 
-<a id="13"></a>
-## 📚 Phần 13 — Tài nguyên tham khảo
+<a id="12"></a>
+## 📚 Phần 12 — Tài nguyên tham khảo
 
-**Cài đặt & công cụ (macOS):**
-- Homebrew (trình cài đặt): [https://brew.sh/](https://brew.sh/)
+**Cài đặt & công cụ:**
 - Eclipse Adoptium Temurin (JDK): [https://adoptium.net/temurin/releases/](https://adoptium.net/temurin/releases/)
 - IntelliJ IDEA Community: [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/)
-- Apache Maven: [https://maven.apache.org/](https://maven.apache.org/)
-- Git: [https://git-scm.com/](https://git-scm.com/)
+- Android Studio (kèm SDK, adb, emulator): [https://developer.android.com/studio](https://developer.android.com/studio)
+- Node.js (LTS): [https://nodejs.org/](https://nodejs.org/)
+- Homebrew (macOS): [https://brew.sh/](https://brew.sh/)
 
-**HTML / CSS / DOM (học nền tảng):**
-- MDN — HTML cơ bản (chuẩn mực nhất): [https://developer.mozilla.org/vi/docs/Web/HTML](https://developer.mozilla.org/vi/docs/Web/HTML)
-- MDN — CSS Selectors: [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors)
-- MDN — Giới thiệu về DOM: [https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
-- W3Schools — HTML: [https://www.w3schools.com/html/](https://www.w3schools.com/html/)
-- W3Schools — CSS Selectors Reference: [https://www.w3schools.com/cssref/css_selectors.php](https://www.w3schools.com/cssref/css_selectors.php)
-- Trò chơi luyện CSS Selector (rất vui, nên chơi): [https://flukeout.github.io/](https://flukeout.github.io/)
+**Appium:**
+- Trang chủ & tài liệu Appium: [https://appium.io/docs/en/latest/](https://appium.io/docs/en/latest/)
+- Cài đặt Appium (Quickstart): [https://appium.io/docs/en/latest/quickstart/](https://appium.io/docs/en/latest/quickstart/)
+- Driver UiAutomator2 (Android): [https://github.com/appium/appium-uiautomator2-driver](https://github.com/appium/appium-uiautomator2-driver)
+- Appium Inspector (tải bản desktop): [https://github.com/appium/appium-inspector/releases](https://github.com/appium/appium-inspector/releases)
+- Appium Java Client (thư viện Java): [https://github.com/appium/java-client](https://github.com/appium/java-client)
 
-**Chrome DevTools:**
-- Tài liệu chính thức DevTools: [https://developer.chrome.com/docs/devtools](https://developer.chrome.com/docs/devtools)
-- Console utilities (`$`, `$$`...): [https://developer.chrome.com/docs/devtools/console/utilities](https://developer.chrome.com/docs/devtools/console/utilities)
+**Android nền tảng:**
+- Cấu hình biến môi trường (ANDROID_HOME): [https://developer.android.com/tools/variables](https://developer.android.com/tools/variables)
+- adb (Android Debug Bridge): [https://developer.android.com/tools/adb](https://developer.android.com/tools/adb)
+- Tạo & quản lý AVD (Emulator): [https://developer.android.com/studio/run/managing-avds](https://developer.android.com/studio/run/managing-avds)
+- UiAutomator UiSelector (cho `androidUIAutomator`): [https://developer.android.com/reference/androidx/test/uiautomator/UiSelector](https://developer.android.com/reference/androidx/test/uiautomator/UiSelector)
 
-**Trang luyện tập (sân tập cả khóa):**
-- SauceDemo: [https://www.saucedemo.com/](https://www.saucedemo.com/)
-- The-Internet Herokuapp: [https://the-internet.herokuapp.com/](https://the-internet.herokuapp.com/)
-- Automation Exercise: [https://automationexercise.com/](https://automationexercise.com/)
-- OrangeHRM demo: [https://opensource-demo.orangehrmlive.com/](https://opensource-demo.orangehrmlive.com/)
+**App mẫu để luyện tập (sân tập cả khóa):**
+- Sauce Labs My Demo App (React Native): [https://github.com/saucelabs/my-demo-app-rn/releases](https://github.com/saucelabs/my-demo-app-rn/releases)
+- Sauce Labs Sample App (native, bản cũ): [https://github.com/saucelabs/sample-app-mobile/releases](https://github.com/saucelabs/sample-app-mobile/releases)
+- Appium ApiDemos (app demo kinh điển): [https://github.com/appium/android-apidemos/releases](https://github.com/appium/android-apidemos/releases)
 
 **Đón đầu (chưa cần đọc kỹ, để bookmark):**
-- Playwright Java Docs: [https://playwright.dev/java/docs/intro](https://playwright.dev/java/docs/intro)
+- Locator strategies trong Appium: [https://appium.io/docs/en/latest/guides/finding-elements/](https://appium.io/docs/en/latest/guides/finding-elements/)
+- Appium Java Client — Capabilities & Options: [https://github.com/appium/java-client](https://github.com/appium/java-client)
 
 ---
 
-> 💪 **Lời nhắn cuối:** Giai đoạn 0 nghe có vẻ "chưa code gì" nhưng thực ra là giai đoạn quyết định. Người đi đường dài trong automation là người **đọc được DOM trong giấc ngủ**. Mỗi khi mở một trang web bất kỳ, hãy tập phản xạ nhấn F12, inspect vài element, thử vài selector trong Console. Biến nó thành thói quen — và Playwright sau này sẽ nhẹ như trở bàn tay. Hẹn gặp ở Giai đoạn 1! ☕
-```
+> 💪 **Lời nhắn cuối:** Giai đoạn 0 nghe có vẻ "chưa code gì" nhưng thực ra là giai đoạn quyết định. Người đi đường dài trong automation mobile là người **đọc được cây UI của app trong giấc ngủ**. Mỗi khi mở một app bất kỳ, hãy tập phản xạ bật Appium Inspector, soi vài element, thử vài locator. Biến nó thành thói quen — và code Appium sau này sẽ nhẹ như trở bàn tay. Hẹn gặp ở Giai đoạn 1! ☕
 
-*Học liệu Giai đoạn 0 — Khóa Automation Test với Java + Playwright.*
+---
+
+*Học liệu Giai đoạn 0 — Khóa Automation Test Mobile với Java + Appium (Android).*
+
