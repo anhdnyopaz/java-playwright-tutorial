@@ -1,0 +1,53 @@
+# ===== Java / Build =====
+target/
+build/
+out/
+bin/
+*.class
+
+# ===== Maven =====
+.mvn/
+mvnw
+mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar
+
+# ===== Gradle =====
+.gradle/
+
+# ===== IntelliJ IDEA =====
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ===== Eclipse / VS Code =====
+.classpath
+.project
+.settings/
+.vscode/
+
+# ===== Playwright / Node =====
+node_modules/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ===== Reports =====
+allure-results/
+allure-report/
+.allure/
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== Secrets / config cục bộ (KHÔNG commit) =====
+.env
+*.local
+config.local.properties
+secrets.properties
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+desktop.ini
